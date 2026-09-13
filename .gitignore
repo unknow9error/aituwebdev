@@ -3,5 +3,4 @@
 .claude/**/*
 
 .vscode/**/*
-
-
+.DS_Store
