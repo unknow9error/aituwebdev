@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Compare three Golden Coffee breakfasts, their ingredients and reference prices before visiting the cafe.">
+    <meta name="author" content="Mukhitden Nurdaulet">
+    <title>Breakfast menu - Golden Coffee</title>
+  </head>
+  <body>
+    <!-- Author: Mukhitden Nurdaulet. -->
+    <header id="top">
+      <a href="index.html">Golden Coffee</a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html" aria-current="page">Menu</a></li>
+          <li><a href="visit.html">Visit</a></li>
+          <li><a href="colophon.html">About this site</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>Breakfast with your coffee</h1>
+      <p><a href="#breakfasts">Breakfast options</a> &middot; <a href="#ingredients">Compare ingredients</a></p>
+      <p>
+        I chose three dishes from an earlier Golden Coffee menu.
+        <mark>Check current availability and prices with the cafe.</mark>
+        Compare the <em>ingredients</em> and ask about any products you need to avoid.
+      </p>
+      <section id="breakfasts" aria-labelledby="breakfasts-title">
+        <h2 id="breakfasts-title">Three breakfast options</h2>
+        <!-- I used article for each breakfast because its description makes sense on its own. -->
+        <article>
+          <h3>Golden Breakfast</h3>
+          <p>
+            French baguette is served with eggs and salmon.
+            The ingredient list also mentions <q>salad mix</q>, meaning salad greens.
+          </p>
+        </article>
+        <article>
+          <h3>Chef's Breakfast</h3>
+          <p>
+            Eggs and salmon come with avocado, herbs, salad, toast and kurt.
+            This breakfast has different bread and more extras than Golden Breakfast.
+          </p>
+        </article>
+        <article>
+          <h3>Paradise Porridge</h3>
+          <p>Oatmeal with milk, dates, raisins and pistachios is the sweet breakfast option.</p>
+        </article>
+      </section>
+      <section id="ingredients" aria-labelledby="ingredients-title">
+        <h2 id="ingredients-title">Compare ingredients</h2>
+        <!-- A table makes it easier to compare ingredients and prices across the three dishes. -->
+        <table>
+          <caption>Ingredients and reference prices in <abbr title="Kazakhstani tenge">KZT</abbr><sup>1</sup></caption>
+          <thead>
+            <tr>
+              <th scope="col">Dish</th>
+              <th scope="col">Base</th>
+              <th scope="col">Extras</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Golden</th>
+              <td>Baguette, eggs</td>
+              <td>Salmon, salad</td>
+              <td>2&nbsp;400</td>
+            </tr>
+            <tr>
+              <th scope="row">Chef's</th>
+              <td>Toast, eggs</td>
+              <td>Salmon, avocado, herbs, salad, kurt</td>
+              <td>2&nbsp;800</td>
+            </tr>
+            <tr>
+              <th scope="row">Paradise Porridge</th>
+              <td>Oats, milk</td>
+              <td>Dates, raisins, pistachios</td>
+              <td>1&nbsp;800</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><small><sup>1</sup>Delivery prices come from an older Wolt menu and may have changed. Ask about ingredients if you have allergies.</small></p>
+      </section>
+      <aside aria-labelledby="terms-title">
+        <h2 id="terms-title">Menu terms</h2>
+        <dl>
+          <dt><b>Kurt</b></dt><dd>A dried fermented dairy product.</dd>
+          <dt>Salad mix</dt><dd>A mixture of salad greens.</dd>
+          <dt><i lang="fr">Baguette</i></dt><dd>A long French bread loaf.</dd>
+        </dl>
+      </aside>
+    </main>
+    <footer>
+      <address>65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
+      <p><small>&copy; 2026 Mukhitden Nurdaulet. A student project about Golden Coffee.</small></p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How I built the Golden Coffee website: local HTML files, semantic elements and the visit form.">
+    <meta name="author" content="Mukhitden Nurdaulet">
+    <title>How I built this site - Golden Coffee</title>
+  </head>
+  <body>
+    <!-- Author: Mukhitden Nurdaulet. -->
+    <header id="top">
+      <a href="index.html">Golden Coffee</a>
+      <!-- The same menu provides a way back to every page. -->
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="visit.html">Visit</a></li>
+          <li><a href="colophon.html" aria-current="page">About this site</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>How I built this site</h1>
+      <section aria-labelledby="structure-title">
+        <h2 id="structure-title">Four local pages</h2>
+        <p>
+          I chose Golden Coffee for my project and built the site with
+          <abbr title="HyperText Markup Language">HTML</abbr>.
+          This page is called a <i>colophon</i>: it explains how I made the site.
+          The project includes a home page, a menu, a visit page and this explanation.
+        </p>
+        <p>
+          The HTML files are in the same folder. I used their filenames in the
+          links, so the pages open directly from my computer without a server.
+          I did not add CSS or JavaScript. The browser uses its default
+          appearance for headings and form fields.
+        </p>
+      </section>
+      <section aria-labelledby="semantics-title">
+        <h2 id="semantics-title">Why I used these elements</h2>
+        <p>
+          Each breakfast is inside an <code>article</code> because its description
+          makes sense on its own. I used <code>main</code> for the page content
+          and <code>nav</code> for the links. These tags make the page structure
+          easier to understand. The address and phone number appear in every footer.
+        </p>
+        <!-- I used pre so the code example keeps its indentation and line breaks. -->
+        <pre><code>&lt;nav aria-label="Pages"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;a href="menu.html"&gt;
+        Menu
+      &lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+      </section>
+      <section aria-labelledby="browser-title">
+        <h2 id="browser-title">Opening the files and using the form</h2>
+        <p>
+          I open a file with <kbd>Ctrl</kbd> + <kbd>O</kbd> on Windows
+          or <kbd>Cmd</kbd> + <kbd>O</kbd> on a Mac.
+          The home tab shows <samp>Golden Coffee - Coffee shop in Astana</samp>.
+          I marked the required form fields and used the email input type.
+          Submitting opens the local file with values in its address.
+          There is no booking handler yet.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <address>65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
+      <p><small>&copy; 2026 Mukhitden Nurdaulet. A student project about Golden Coffee.</small></p>
+    </footer>
+  </body>
+</html>

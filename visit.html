@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Find Golden Coffee on Uly Dala Avenue in Astana, check its hours and fill in your visit details.">
+    <meta name="author" content="Mukhitden Nurdaulet">
+    <title>Plan your visit - Golden Coffee</title>
+  </head>
+  <body>
+    <!-- Author: Mukhitden Nurdaulet. -->
+    <header id="top">
+      <a href="index.html">Golden Coffee</a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="visit.html" aria-current="page">Visit</a></li>
+          <li><a href="colophon.html">About this site</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>Visit Golden Coffee</h1>
+      <section aria-labelledby="address-title">
+        <h2 id="address-title">Find the cafe</h2>
+        <!-- I used span to mark the brand name as text that should not be translated. -->
+        <p>In Astana, <span translate="no">Golden Coffee</span> is at <strong>65/2 Uly Dala <abbr title="Avenue">Ave.</abbr></strong></p>
+        <p>
+          Open daily: <time datetime="08:00">08:00</time>&ndash;<time datetime="23:00">23:00</time>.
+          The address and hours are listed on
+          <a href="https://2gis.kz/astana/firm/70000001091866178" target="_blank" rel="noopener noreferrer"><cite>Golden Coffee's 2GIS page</cite></a>.
+          Check holiday opening hours by phone.
+        </p>
+        <ol start="1">
+          <li>Find the location on the map.</li>
+          <li>Choose how to contact the cafe:
+            <ul>
+              <li><a href="tel:+77750729670">Call the cafe</a>.</li>
+              <li><a href="https://wa.me/77750729670" target="_blank" rel="noopener noreferrer">Send a WhatsApp message</a>.</li>
+            </ul>
+          </li>
+          <li>Confirm the time and number of guests.</li>
+        </ol>
+        <p><a href="mailto:?subject=Golden%20Coffee&amp;body=Golden%20Coffee%2C%20Astana%2C%20Uly%20Dala%2065%2F2.%20https%3A%2F%2F2gis.kz%2Fastana%2Ffirm%2F70000001091866178">Share the address by email</a>.</p>
+        <p>
+          Tell the staff when you plan to come and how many people will join you.
+          Agree on a time with your friends so everyone can plan their journey.
+        </p>
+      </section>
+      <hr>
+      <section id="booking" aria-labelledby="booking-title">
+        <h2 id="booking-title">Plan your visit</h2>
+        <p>
+          Enter the date, number of guests and your contact details.
+          Choose a reason for your visit and a contact method.
+          Add the time or other preferences in the notes field.
+        </p>
+        <form action="visit.html#booking" method="get">
+          <!-- There is no server handler yet. The form opens this local file and does not send a booking to the cafe. -->
+          <fieldset>
+            <legend>Contact details</legend>
+            <p>
+              <label for="guest-name">Name</label>
+              <br>
+              <input id="guest-name" name="guest-name" type="text" required placeholder="Name" autocomplete="off" maxlength="80">
+            </p>
+            <p>
+              <label for="guest-email">Email address</label>
+              <br>
+              <input id="guest-email" name="guest-email" type="email" required placeholder="guest@example.com" autocomplete="off">
+            </p>
+            <p>
+              <label for="guest-phone">Phone</label>
+              <br>
+              <input id="guest-phone" name="guest-phone" type="tel" required placeholder="Phone number" autocomplete="off" maxlength="30">
+            </p>
+          </fieldset>
+          <fieldset>
+            <legend>Visit details</legend>
+            <p>
+              <label for="guest-count">Number of guests</label>
+              <br>
+              <input id="guest-count" name="guest-count" type="number" min="1" step="1" required placeholder="2">
+            </p>
+            <p>
+              <label for="visit-date">Date</label>
+              <br>
+              <input id="visit-date" name="visit-date" type="date" required>
+            </p>
+            <p>
+              <label for="visit-reason">Reason for visiting</label>
+              <br>
+              <select id="visit-reason" name="visit-reason">
+                <option value="breakfast">Breakfast</option>
+                <option value="coffee">Coffee</option>
+                <option value="friends">Meeting friends</option>
+              </select>
+            </p>
+            <fieldset>
+              <legend>Preferred contact method</legend>
+              <p>
+                <input id="contact-phone" name="contact-method" type="radio" value="phone" required>
+                <label for="contact-phone">Phone</label>
+              </p>
+              <p>
+                <input id="contact-email" name="contact-method" type="radio" value="email">
+                <label for="contact-email">Email</label>
+              </p>
+            </fieldset>
+            <p>
+              <label for="guest-message">Notes</label>
+              <br>
+              <textarea id="guest-message" name="guest-message" rows="4" cols="24" maxlength="1000" placeholder="For example, your preferred time"></textarea>
+            </p>
+            <p>
+              <input id="window-seat" name="window-seat" type="checkbox" value="yes">
+              <label for="window-seat">I prefer a window seat</label>
+            </p>
+          </fieldset>
+          <!-- I grouped the buttons in div because they do not form a separate topic or section. -->
+          <div>
+            <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
+          </div>
+        </form>
+      </section>
+      <section aria-labelledby="instagram-title">
+        <h2 id="instagram-title">About the cafe</h2>
+        <figure>
+          <blockquote cite="https://www.instagram.com/goldencoffee.ast/">
+            <p>Coffee. Lunch. Desserts. Delivery.</p>
+          </blockquote>
+          <figcaption>From @goldencoffee.ast, translated. Accessed <time datetime="2026-09-12">12 September 2026</time>.</figcaption>
+        </figure>
+      </section>
+    </main>
+    <footer>
+      <address>65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
+      <p><small>&copy; 2026 Mukhitden Nurdaulet. A student project about Golden Coffee.</small></p>
+    </footer>
+  </body>
+</html>
