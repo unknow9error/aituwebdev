@@ -1,0 +1,6 @@
+.agents/**/*
+.frontend-workbench/**/*
+.claude/**/*
+
+.vscode/**/*
+.DS_Store
