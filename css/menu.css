@@ -1,0 +1,83 @@
+.page-menu .page-title {
+  max-width: 900px;
+  margin-bottom: 32px;
+}
+
+.section-links {
+  margin-bottom: 24px;
+  font-size: 16px;
+}
+
+.menu-intro {
+  max-width: 78ch;
+}
+
+.breakfast-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding: 36px 0;
+  border-top: 1px solid rgb(207, 187, 157);
+  border-bottom: 1px solid rgb(207, 187, 157);
+}
+
+.breakfast-list > h2 {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+.menu-card {
+  flex: 1 1 240px;
+  padding-right: 24px;
+}
+
+.menu-card p {
+  margin: 0;
+}
+
+.menu-comparison table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 17px;
+}
+
+.menu-comparison caption {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.menu-comparison th,
+.menu-comparison td {
+  padding: 18px 20px;
+  border-bottom: 1px solid rgb(207, 187, 157);
+  text-align: left;
+  vertical-align: top;
+}
+
+.menu-comparison thead {
+  background: #352315;
+  color: white;
+}
+
+.menu-comparison tbody tr:nth-child(even) {
+  background: white;
+}
+
+.menu-comparison > p {
+  margin-top: 16px;
+}
+
+.menu-terms dl {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 16px 28px;
+  margin: 0;
+}
+
+.menu-terms dd {
+  margin: 0;
+}
+
+h1 + .section-links {
+  margin-top: -4px;
+}

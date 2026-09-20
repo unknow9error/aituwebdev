@@ -6,12 +6,15 @@
     <meta name="description" content="Send feedback or inquire about pre-orders and events at Golden Coffee in Astana.">
     <meta name="author" content="Arlan Kudabay">
     <title>Feedback and Inquiries - Golden Coffee</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/feedback.css">
+    <link rel="icon" href="data:,">
   </head>
-  <body>
+  <body class="page-feedback">
     <!-- Author: Arlan Kudabay. -->
-    <header id="top">
-      <a href="index.html">Golden Coffee</a>
-      <nav aria-label="Main navigation">
+    <header id="top" class="site-header">
+      <a class="site-brand" href="index.html">Golden Coffee</a>
+      <nav class="site-nav" aria-label="Main navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="menu.html">Menu</a></li>
@@ -22,11 +25,11 @@
         </ul>
       </nav>
     </header>
-    <main>
-      <h1>Guest Feedback and Requests</h1>
-      <p><a href="#reviews">Guest Reviews</a> &middot; <a href="#inquiry-form">Send Inquiry</a></p>
+    <main class="site-main">
+      <h1 class="page-title">Guest Feedback and Requests</h1>
+      <p class="section-links"><a href="#reviews">Guest Reviews</a> &middot; <a href="#inquiry-form">Send Inquiry</a></p>
 
-      <section id="reviews" aria-labelledby="reviews-title">
+      <section class="content-section guest-reviews" id="reviews" aria-labelledby="reviews-title">
         <h2 id="reviews-title">Recent Guest Comments</h2>
         <figure>
           <blockquote cite="https://2gis.kz/astana/firm/70000001091866178">
@@ -56,16 +59,16 @@
 
       <hr>
 
-      <section id="inquiry-form" aria-labelledby="form-title">
+      <section class="content-section inquiry-section" id="inquiry-form" aria-labelledby="form-title">
         <h2 id="form-title">Send a Feedback or Pre-Order Inquiry</h2>
         <p>
           Tell us about your recent experience or send an inquiry for group coffee sets.
           Check our photos on 
           <a href="https://www.instagram.com/goldencoffee.ast/" target="_blank" rel="noopener noreferrer">Instagram</a>.
         </p>
-        <form action="feedback.html#inquiry-form" method="get">
+        <form class="feedback-form" action="feedback.html#inquiry-form" method="get">
           <!-- There is no server handler yet. The form submits with GET to this local file as required for Assignment 1. -->
-          <fieldset>
+          <fieldset class="sender-fields">
             <legend>Sender Information</legend>
             <p>
               <label for="client-name">Your Full Name</label>
@@ -84,9 +87,9 @@
             </p>
           </fieldset>
 
-          <fieldset>
+          <fieldset class="inquiry-fields">
             <legend>Inquiry Details</legend>
-            <p>
+            <p class="quantity-field">
               <label for="item-quantity">Number of Coffee Cups or Guests</label>
               <br>
               <input id="item-quantity" name="item-quantity" type="number" min="1" max="50" step="1" required placeholder="1">
@@ -96,7 +99,7 @@
               <br>
               <input id="order-date" name="order-date" type="date" required>
             </p>
-            <p>
+            <p class="topic-field">
               <label for="inquiry-type">Topic of Message</label>
               <br>
               <select id="inquiry-type" name="inquiry-type">
@@ -105,7 +108,7 @@
                 <option value="complaint">Service Issue</option>
               </select>
             </p>
-            <fieldset>
+            <fieldset class="recommendation-options">
               <legend>Would you recommend Golden Coffee?</legend>
               <p>
                 <input id="rec-yes" name="recommend" type="radio" value="yes" required>
@@ -116,26 +119,26 @@
                 <label for="rec-no">Not sure yet</label>
               </p>
             </fieldset>
-            <p>
+            <p class="message-field">
               <label for="client-comment">Your Message</label>
               <br>
               <textarea id="client-comment" name="client-comment" rows="4" cols="30" maxlength="800" placeholder="Write your comments or drink preferences here..."></textarea>
             </p>
-            <p>
+            <p class="newsletter-option">
               <input id="newsletter" name="newsletter" type="checkbox" value="subscribed">
               <label for="newsletter">Send me seasonal menu updates by email</label>
             </p>
           </fieldset>
 
           <!-- I wrapped the form buttons in a div because they only serve as inline controls without semantic section meaning. -->
-          <div>
+          <div class="feedback-actions">
             <button type="submit">Submit Inquiry</button>
             <button type="reset">Clear Form</button>
           </div>
         </form>
       </section>
 
-      <section aria-labelledby="cafe-views">
+      <section class="content-section atmosphere-gallery" aria-labelledby="cafe-views">
         <h2 id="cafe-views">Atmosphere Photos</h2>
         <figure>
           <img src="images/cafe-interior.jpg" alt="Interior view of seating tables and lighting in Golden Coffee Astana" width="320">
@@ -147,8 +150,8 @@
         </figure>
       </section>
     </main>
-    <footer>
-      <address>65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
+    <footer class="site-footer">
+      <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
       <p><small>&copy; 2026 Arlan Kudabay, Mukhitden Nurdaulet. A student project about Golden Coffee.</small></p>
     </footer>
   </body>

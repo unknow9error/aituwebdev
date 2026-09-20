@@ -6,12 +6,15 @@
     <meta name="description" content="Coffee, tea and seasonal drinks at Golden Coffee on Uly Dala Avenue in Astana.">
     <meta name="author" content="Arlan Kudabay">
     <title>Drinks and Coffee - Golden Coffee</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/drinks.css">
+    <link rel="icon" href="data:,">
   </head>
-  <body>
+  <body class="page-drinks">
     <!-- Author: Arlan Kudabay. -->
-    <header id="top">
-      <a href="index.html">Golden Coffee</a>
-      <nav aria-label="Main navigation">
+    <header id="top" class="site-header">
+      <a class="site-brand" href="index.html">Golden Coffee</a>
+      <nav class="site-nav" aria-label="Main navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="menu.html">Menu</a></li>
@@ -22,39 +25,39 @@
         </ul>
       </nav>
     </header>
-    <main>
-      <h1>Coffee and Warm Drinks</h1>
-      <p><a href="#espresso-bar">Espresso Drinks</a> &middot; <a href="#price-list">Drink Prices</a></p>
-      <p>
+    <main class="site-main">
+      <h1 class="page-title">Coffee and Warm Drinks</h1>
+      <p class="section-links"><a href="#espresso-bar">Espresso Drinks</a> &middot; <a href="#price-list">Drink Prices</a></p>
+      <p class="drinks-intro">
         We prepare classic espresso, filter coffee and signature teas every day.
         <mark>Milk alternatives such as oat or almond milk cost an extra 300 KZT.</mark>
         You can ask the barista for <em>less sweet</em> syrups or decaf options.
       </p>
 
-      <section id="espresso-bar" aria-labelledby="espresso-title">
+      <section class="content-section drink-list" id="espresso-bar" aria-labelledby="espresso-title">
         <h2 id="espresso-title">Popular Drinks</h2>
         <!-- I used article because each drink item represents an independent menu entry. -->
-        <article>
+        <article class="drink-card">
           <h3>Spanish Latte</h3>
           <p>
             A double shot of espresso combined with steamed milk and condensed milk.
             Our guests call it <q>the sweet fuel for cold mornings</q>.
           </p>
         </article>
-        <article>
+        <article class="drink-card">
           <h3>Raf Coffee</h3>
           <p>
             Espresso whipped together with cream and vanilla sugar into a thick foam.
             It originated in Moscow and remains a local favorite in Astana.
           </p>
         </article>
-        <article>
+        <article class="drink-card">
           <h3>Sea Buckthorn Tea</h3>
           <p>Warm berry tea brewed with fresh sea buckthorn, honey and orange slices.</p>
         </article>
       </section>
 
-      <section id="price-list" aria-labelledby="table-title">
+      <section class="content-section drink-prices" id="price-list" aria-labelledby="table-title">
         <h2 id="table-title">Drink Reference Prices</h2>
         <!-- A semantic table helps compare drink sizes, temperature and prices side by side. -->
         <table>
@@ -97,7 +100,7 @@
         <p><small>Reference menu data collected in September 2026. Prices may vary by season.</small></p>
       </section>
 
-      <aside aria-labelledby="beans-info">
+      <aside class="content-section beans-notes" aria-labelledby="beans-info">
         <h2 id="beans-info">Coffee Beans Notes</h2>
         <dl>
           <dt><b>Arabica</b></dt>
@@ -107,7 +110,7 @@
         </dl>
       </aside>
 
-      <section aria-labelledby="photos-title">
+      <section class="content-section drink-gallery" aria-labelledby="photos-title">
         <h2 id="photos-title">Coffee Bar Gallery</h2>
         <figure>
           <img src="images/coffee-cup.jpg" alt="A freshly poured cappuccino on a wooden table at Golden Coffee" width="320">
@@ -115,8 +118,8 @@
         </figure>
       </section>
     </main>
-    <footer>
-      <address>65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
+    <footer class="site-footer">
+      <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
       <p><small>&copy; 2026 Arlan Kudabay, Mukhitden Nurdaulet. A student project about Golden Coffee.</small></p>
     </footer>
   </body>

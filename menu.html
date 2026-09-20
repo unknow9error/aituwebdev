@@ -6,12 +6,15 @@
     <meta name="description" content="Compare three Golden Coffee breakfasts, their ingredients and reference prices before visiting the cafe.">
     <meta name="author" content="Mukhitden Nurdaulet, Arlan Kudabay">
     <title>Breakfast menu - Golden Coffee</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="icon" href="data:,">
   </head>
-  <body>
+  <body class="page-menu">
     <!-- Authors: Mukhitden Nurdaulet, Arlan Kudabay. -->
-    <header id="top">
-      <a href="index.html">Golden Coffee</a>
-      <nav aria-label="Main navigation">
+    <header id="top" class="site-header">
+      <a class="site-brand" href="index.html">Golden Coffee</a>
+      <nav class="site-nav" aria-label="Main navigation">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="menu.html" aria-current="page">Menu</a></li>
@@ -22,37 +25,37 @@
         </ul>
       </nav>
     </header>
-    <main>
-      <h1>Breakfast with your coffee</h1>
-      <p><a href="#breakfasts">Breakfast options</a> &middot; <a href="#ingredients">Compare ingredients</a></p>
-      <p>
+    <main class="site-main">
+      <h1 class="page-title">Breakfast with your coffee</h1>
+      <p class="section-links"><a href="#breakfasts">Breakfast options</a> &middot; <a href="#ingredients">Compare ingredients</a></p>
+      <p class="menu-intro">
         I chose three dishes from an earlier Golden Coffee menu.
         <mark>Check current availability and prices with the cafe.</mark>
         Compare the <em>ingredients</em> and ask about any products you need to avoid.
       </p>
-      <section id="breakfasts" aria-labelledby="breakfasts-title">
+      <section class="content-section breakfast-list" id="breakfasts" aria-labelledby="breakfasts-title">
         <h2 id="breakfasts-title">Three breakfast options</h2>
         <!-- I used article for each breakfast because its description makes sense on its own. -->
-        <article>
+        <article class="menu-card">
           <h3>Golden Breakfast</h3>
           <p>
             French baguette is served with eggs and salmon.
             The ingredient list also mentions <q>salad mix</q>, meaning salad greens.
           </p>
         </article>
-        <article>
+        <article class="menu-card">
           <h3>Chef's Breakfast</h3>
           <p>
             Eggs and salmon come with avocado, herbs, salad, toast and kurt.
             This breakfast has different bread and more extras than Golden Breakfast.
           </p>
         </article>
-        <article>
+        <article class="menu-card">
           <h3>Paradise Porridge</h3>
           <p>Oatmeal with milk, dates, raisins and pistachios is the sweet breakfast option.</p>
         </article>
       </section>
-      <section id="ingredients" aria-labelledby="ingredients-title">
+      <section class="content-section menu-comparison" id="ingredients" aria-labelledby="ingredients-title">
         <h2 id="ingredients-title">Compare ingredients</h2>
         <!-- A table makes it easier to compare ingredients and prices across the three dishes. -->
         <table>
@@ -88,7 +91,7 @@
         </table>
         <p><small><sup>1</sup>Delivery prices come from an older Wolt menu and may have changed. Ask about ingredients if you have allergies.</small></p>
       </section>
-      <aside aria-labelledby="terms-title">
+      <aside class="content-section menu-terms" aria-labelledby="terms-title">
         <h2 id="terms-title">Menu terms</h2>
         <dl>
           <dt><b>Kurt</b></dt><dd>A dried fermented dairy product.</dd>
@@ -97,8 +100,8 @@
         </dl>
       </aside>
     </main>
-    <footer>
-      <address>65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
+    <footer class="site-footer">
+      <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
       <p><small>&copy; 2026 Mukhitden Nurdaulet, Arlan Kudabay. A student project about Golden Coffee.</small></p>
     </footer>
   </body>
