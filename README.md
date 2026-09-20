@@ -1,6 +1,6 @@
 # Golden Coffee
 
-Author: Mukhitden Nurdaulet. Assignment 1: HTML Basics.
+Author: Mukhitden Nurdaulet, Arlan Kudabay. Assignment 1: HTML Basics.
 
 To open the website, double-click index.html. No installation or server is needed.
 

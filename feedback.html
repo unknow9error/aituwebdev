@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Send feedback or inquire about pre-orders and events at Golden Coffee in Astana.">
+    <meta name="author" content="Arlan Kudabay">
+    <title>Feedback and Inquiries - Golden Coffee</title>
+  </head>
+  <body>
+    <!-- Author: Arlan Kudabay. -->
+    <header id="top">
+      <a href="index.html">Golden Coffee</a>
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="drinks.html">Drinks</a></li>
+          <li><a href="feedback.html" aria-current="page">Feedback</a></li>
+          <li><a href="visit.html">Visit</a></li>
+          <li><a href="colophon.html">About this site</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>Guest Feedback and Requests</h1>
+      <p><a href="#reviews">Guest Reviews</a> &middot; <a href="#inquiry-form">Send Inquiry</a></p>
+
+      <section id="reviews" aria-labelledby="reviews-title">
+        <h2 id="reviews-title">Recent Guest Comments</h2>
+        <figure>
+          <blockquote cite="https://2gis.kz/astana/firm/70000001091866178">
+            <p>&quot;The atmosphere is quiet enough to study, and their Spanish latte is consistently great.&quot;</p>
+          </blockquote>
+          <figcaption>Review by Aigerim on <cite>2GIS Astana</cite>, accessed <time datetime="2026-09-14">14 September 2026</time>.</figcaption>
+        </figure>
+        <!-- I used span to mark a small phrase for inline styling or semantic grouping without adding a block. -->
+        <p>Overall guest rating is <span translate="no"><strong>4.7 / 5.0</strong></span> based on customer cards.</p>
+        <p>Order steps for takeaway pastries:</p>
+        <ol reversed>
+          <li>Pick up your warm box at the cashier.</li>
+          <li>Choose your buns from the glass display.</li>
+          <li>Check the bakery list by the entrance:
+            <ul>
+              <li>Croissants with almond paste</li>
+              <li>Cottage cheese rings</li>
+            </ul>
+          </li>
+        </ol>
+        <p>
+          For corporate coffee deliveries, you can also 
+          <a href="mailto:info@goldencoffee.kz?subject=Coffee%20Order">email the manager</a> or call
+          <a href="tel:+77750729670">+7 775 072 96 70</a>.
+        </p>
+      </section>
+
+      <hr>
+
+      <section id="inquiry-form" aria-labelledby="form-title">
+        <h2 id="form-title">Send a Feedback or Pre-Order Inquiry</h2>
+        <p>
+          Tell us about your recent experience or send an inquiry for group coffee sets.
+          Check our photos on 
+          <a href="https://www.instagram.com/goldencoffee.ast/" target="_blank" rel="noopener noreferrer">Instagram</a>.
+        </p>
+        <form action="feedback.html#inquiry-form" method="get">
+          <!-- There is no server handler yet. The form submits with GET to this local file as required for Assignment 1. -->
+          <fieldset>
+            <legend>Sender Information</legend>
+            <p>
+              <label for="client-name">Your Full Name</label>
+              <br>
+              <input id="client-name" name="client-name" type="text" required placeholder="Arlan Kudabay" autocomplete="off" maxlength="80">
+            </p>
+            <p>
+              <label for="client-email">Email Address</label>
+              <br>
+              <input id="client-email" name="client-email" type="email" required placeholder="arlan@example.kz" autocomplete="off">
+            </p>
+            <p>
+              <label for="client-tel">Phone Number</label>
+              <br>
+              <input id="client-tel" name="client-tel" type="tel" required placeholder="+7 701 000 00 00" autocomplete="off" maxlength="30">
+            </p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Inquiry Details</legend>
+            <p>
+              <label for="item-quantity">Number of Coffee Cups or Guests</label>
+              <br>
+              <input id="item-quantity" name="item-quantity" type="number" min="1" max="50" step="1" required placeholder="1">
+            </p>
+            <p>
+              <label for="order-date">Requested Date</label>
+              <br>
+              <input id="order-date" name="order-date" type="date" required>
+            </p>
+            <p>
+              <label for="inquiry-type">Topic of Message</label>
+              <br>
+              <select id="inquiry-type" name="inquiry-type">
+                <option value="review">General Feedback</option>
+                <option value="preorder">Group Coffee Pre-Order</option>
+                <option value="complaint">Service Issue</option>
+              </select>
+            </p>
+            <fieldset>
+              <legend>Would you recommend Golden Coffee?</legend>
+              <p>
+                <input id="rec-yes" name="recommend" type="radio" value="yes" required>
+                <label for="rec-yes">Yes, definitely</label>
+              </p>
+              <p>
+                <input id="rec-no" name="recommend" type="radio" value="no">
+                <label for="rec-no">Not sure yet</label>
+              </p>
+            </fieldset>
+            <p>
+              <label for="client-comment">Your Message</label>
+              <br>
+              <textarea id="client-comment" name="client-comment" rows="4" cols="30" maxlength="800" placeholder="Write your comments or drink preferences here..."></textarea>
+            </p>
+            <p>
+              <input id="newsletter" name="newsletter" type="checkbox" value="subscribed">
+              <label for="newsletter">Send me seasonal menu updates by email</label>
+            </p>
+          </fieldset>
+
+          <!-- I wrapped the form buttons in a div because they only serve as inline controls without semantic section meaning. -->
+          <div>
+            <button type="submit">Submit Inquiry</button>
+            <button type="reset">Clear Form</button>
+          </div>
+        </form>
+      </section>
+
+      <section aria-labelledby="cafe-views">
+        <h2 id="cafe-views">Atmosphere Photos</h2>
+        <figure>
+          <img src="images/cafe-interior.jpg" alt="Interior view of seating tables and lighting in Golden Coffee Astana" width="320">
+          <figcaption>Seating area near the window at Golden Coffee.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/dessert-counter.jpg" alt="Glass dessert display showing cakes and croissants" width="320">
+          <figcaption>Fresh pastry selection available daily.</figcaption>
+        </figure>
+      </section>
+    </main>
+    <footer>
+      <address>65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
+      <p><small>&copy; 2026 Arlan Kudabay, Mukhitden Nurdaulet. A student project about Golden Coffee.</small></p>
+    </footer>
+  </body>
+</html>
