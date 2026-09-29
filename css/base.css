@@ -84,6 +84,12 @@ h3 {
   transform: scaleX(0);
 }
 
+.test {
+  display:flex;
+  align-items:center;
+  justify-content: center;
+}
+
 .site-nav a:hover,
 .site-nav a[aria-current="page"] {
   color: #352315;

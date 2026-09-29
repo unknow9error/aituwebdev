@@ -1,80 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="How we built the Golden Coffee website: local HTML files, semantic elements and the visit form.">
-    <meta name="author" content="Mukhitden Nurdaulet, Arlan Kudabay">
-    <title>How we built this site - Golden Coffee</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/colophon.css">
-    <link rel="icon" href="data:,">
-  </head>
-  <body class="page-about">
-    <!-- Authors: Mukhitden Nurdaulet, Arlan Kudabay. -->
-    <header id="top" class="site-header">
-      <a class="site-brand" href="index.html">Golden Coffee</a>
-      <!-- The same menu provides a way back to every page. -->
-      <nav class="site-nav" aria-label="Main navigation">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="menu.html">Menu</a></li>
-          <li><a href="drinks.html">Drinks</a></li>
-          <li><a href="feedback.html">Feedback</a></li>
-          <li><a href="visit.html">Visit</a></li>
-          <li><a href="colophon.html" aria-current="page">About this site</a></li>
-        </ul>
-      </nav>
-    </header>
-    <main class="site-main">
-      <h1 class="page-title">How we built this site</h1>
-      <section class="content-section" aria-labelledby="structure-title">
-        <h2 id="structure-title">Six local pages</h2>
-        <p>
-          We chose Golden Coffee for our project and built the site with
-          <abbr title="HyperText Markup Language">HTML</abbr>.
-          This page is called a <i>colophon</i>: it explains how we made the site.
-          The project includes a <a href="index.html">home page</a>, a <a href="menu.html">breakfast menu</a>, a <a href="drinks.html">drinks page</a>, a <a href="feedback.html">feedback page</a>, a <a href="visit.html">visit page</a> and this colophon.
-        </p>
-        <p>
-          The HTML files are in the same folder. We used their filenames in the
-          links, so the pages open directly from our computers without a server.
-          Shared colours, fonts and page layout are defined in css/base.css.
-          We have not added JavaScript.
-        </p>
-      </section>
-      <section class="content-section" aria-labelledby="semantics-title">
-        <h2 id="semantics-title">Why we used these elements</h2>
-        <p>
-          Each breakfast and drink is inside an <code>article</code> because its description
-          makes sense on its own. We used <code>main</code> for the page content
-          and <code>nav</code> for the links. These tags make the page structure
-          easier to understand. The address and phone number appear in every footer.
-        </p>
-        <!-- We used pre so the code example keeps its indentation and line breaks. -->
-        <pre class="code-sample"><code>&lt;nav aria-label="Main navigation"&gt;
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="How we built the Golden Coffee website: local HTML files, semantic elements and the visit form.">
+  <meta name="author" content="Mukhitden Nurdaulet, Arlan Kudabay">
+  <title>How we built this site - Golden Coffee</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/colophon.css">
+  <link rel="icon" href="data:,">
+</head>
+
+<body class="page-about">
+  <header id="top" class="site-header">
+    <a class="site-brand" href="index.html">Golden Coffee</a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="drinks.html">Drinks</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="visit.html">Visit</a></li>
+        <li><a href="colophon.html" aria-current="page">About this site</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="site-main">
+    <h1 class="page-title">How we built this site</h1>
+    <section class="content-section" aria-labelledby="structure-title">
+      <h2 id="structure-title">Six local pages</h2>
+      <p>
+        We chose Golden Coffee for our project and built the site with
+        <abbr title="HyperText Markup Language">HTML</abbr>.
+        This page is called a <i>colophon</i>: it explains how we made the site.
+        The project includes a <a href="index.html">home page</a>, a <a href="menu.html">breakfast menu</a>, a <a
+          href="drinks.html">drinks page</a>, a <a href="feedback.html">feedback page</a>, a <a href="visit.html">visit
+          page</a> and this colophon.
+      </p>
+      <p>
+        The HTML files are in the same folder. We used their filenames in the
+        links, so the pages open directly from our computers without a server.
+        Shared colours, fonts and page layout are defined in css/base.css.
+        We have not added JavaScript.
+      </p>
+    </section>
+    <section class="content-section" aria-labelledby="semantics-title">
+      <h2 id="semantics-title">Why we used these elements</h2>
+      <p>
+        Each breakfast and drink is inside an <code>article</code> because its description
+        makes sense on its own. We used <code>main</code> for the page content
+        and <code>nav</code> for the links. These tags make the page structure
+        easier to understand. The address and phone number appear in every footer.
+      </p>
+      <pre class="code-sample"><code>&lt;nav aria-label="Main navigation"&gt;
   &lt;ul&gt;
     &lt;li&gt;
       &lt;a href="menu.html"&gt;Menu&lt;/a&gt;
     &lt;/li&gt;
   &lt;/ul&gt;
 &lt;/nav&gt;</code></pre>
-      </section>
-      <section class="content-section" aria-labelledby="browser-title">
-        <h2 id="browser-title">Opening the files and using the form</h2>
-        <p>
-          We open a file with <kbd>Ctrl</kbd> + <kbd>O</kbd> on Windows
-          or <kbd>Cmd</kbd> + <kbd>O</kbd> on a Mac.
-          The home tab shows <samp>Golden Coffee - Coffee shop in Astana</samp>.
-          We marked the required form fields and used email and date input types.
-          Submitting opens the local file with values in its address.
-          There is no booking handler yet.
-        </p>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a></address>
-      <p><small>&copy; 2026 Mukhitden Nurdaulet, Arlan Kudabay. A student project about Golden Coffee.</small></p>
-    </footer>
-  </body>
+    </section>
+    <section class="content-section" aria-labelledby="browser-title">
+      <h2 id="browser-title">Opening the files and using the form</h2>
+      <p>
+        We open a file with <kbd>Ctrl</kbd> + <kbd>O</kbd> on Windows
+        or <kbd>Cmd</kbd> + <kbd>O</kbd> on a Mac.
+        The home tab shows <samp>Golden Coffee - Coffee shop in Astana</samp>.
+        We marked the required form fields and used email and date input types.
+        Submitting opens the local file with values in its address.
+        There is no booking handler yet.
+      </p>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a>
+    </address>
+    <p><small>&copy; 2026 Mukhitden Nurdaulet, Arlan Kudabay. A student project about Golden Coffee.</small></p>
+  </footer>
+</body>
+
 </html>
