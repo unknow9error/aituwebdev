@@ -8,113 +8,168 @@
     content="Compare three Golden Coffee breakfasts, their ingredients and reference prices before visiting the cafe.">
   <meta name="author" content="Mukhitden Nurdaulet, Arlan Kudabay">
   <title>Breakfast menu - Golden Coffee</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/menu.css">
   <link rel="icon" href="data:,">
 </head>
 
-<body class="page-menu">
-  <header id="top" class="site-header">
-    <a class="site-brand" href="index.html">Golden Coffee</a>
-    <nav class="site-nav" aria-label="Main navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="menu.html" aria-current="page">Menu</a></li>
-        <li><a href="drinks.html">Drinks</a></li>
-        <li><a href="feedback.html">Feedback</a></li>
-        <li><a href="visit.html">Visit</a></li>
-        <li><a href="colophon.html">About this site</a></li>
-      </ul>
-    </nav>
+<body class="page-menu d-flex flex-column min-vh-100">
+  <header id="top" class="site-header navbar navbar-expand-lg bg-body border-bottom py-3">
+    <div class="container-fluid px-3 px-lg-5">
+      <a class="site-brand navbar-brand fs-3" href="index.html">Golden Coffee</a>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation" aria-controls="main-navigation"
+        aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navigation">
+        <ul class="navbar-nav ms-auto gap-lg-2 pt-3 pt-lg-0">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="menu.html" aria-current="page" class="nav-link active fw-semibold">Menu</a>
+          </li>
+          <li class="nav-item">
+            <a href="drinks.html" class="nav-link">Drinks</a>
+          </li>
+          <li class="nav-item">
+            <a href="feedback.html" class="nav-link">Feedback</a>
+          </li>
+          <li class="nav-item">
+            <a href="visit.html" class="nav-link">Visit</a>
+          </li>
+          <li class="nav-item">
+            <a href="colophon.html" class="nav-link">About this site</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <main class="site-main">
-    <div class="test">
-      <div>
-        <h1 class="page-title">Breakfast with your coffee</h1>
-        <p class="section-links"><a href="#breakfasts">Breakfast options</a> &middot; <a href="#ingredients">Compare
-            ingredients</a></p>
-        <p class="menu-intro">
+  <main class="site-main container py-4 py-lg-5 flex-grow-1">
+    <div class="row g-3 mb-4">
+      <div class="col-12 col-lg-10">
+        <h1 class="page-title display-3 mb-4">Breakfast with your coffee</h1>
+        <p class="section-links d-flex flex-wrap align-items-center gap-2 mb-4">
+          <a href="#breakfasts" class="btn btn-sm btn-dark">Breakfast options</a>
+          <a href="#ingredients" class="btn btn-sm btn-outline-dark">Compare
+            ingredients</a>
+        </p>
+        <p class="menu-intro lead mb-4">
           I chose three dishes from an earlier Golden Coffee menu.
-          <mark>Check current availability and prices with the cafe.</mark>
+          <mark class="rounded">Check current availability and prices with the cafe.</mark>
           Compare the <em>ingredients</em> and ask about any products you need to avoid.
         </p>
       </div>
-      <div style="width: 30px; height: 30px; border-radius: 50%; background-color: #fb0505; margin: 0 auto;"></div>
     </div>
-    <section class="content-section breakfast-list" id="breakfasts" aria-labelledby="breakfasts-title">
-      <h2 id="breakfasts-title">Three breakfast options</h2>
-      <article class="menu-card">
-        <h3>Golden Breakfast</h3>
-        <p>
-          French baguette is served with eggs and salmon.
-          The ingredient list also mentions <q>salad mix</q>, meaning salad greens.
-        </p>
-      </article>
-      <article class="menu-card">
-        <h3>Chef's Breakfast</h3>
-        <p>
-          Eggs and salmon come with avocado, herbs, salad, toast and kurt.
-          This breakfast has different bread and more extras than Golden Breakfast.
-        </p>
-      </article>
-      <article class="menu-card">
-        <h3>Paradise Porridge</h3>
-        <p>Oatmeal with milk, dates, raisins and pistachios is the sweet breakfast option.</p>
-      </article>
+    <section class="content-section breakfast-list mb-5 border-top border-bottom py-4" id="breakfasts"
+      aria-labelledby="breakfasts-title">
+      <h2 id="breakfasts-title" class="h2 mb-3">Three breakfast options</h2>
+      <div class="row g-4 align-items-stretch">
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="menu-card card h-100 bg-body-tertiary shadow-sm">
+            <div class="card-body p-4">
+              <h3 class="h3 mb-3 card-title">Golden Breakfast</h3>
+              <p class="card-text mb-0">
+                French baguette is served with eggs and salmon.
+                The ingredient list also mentions <q>salad mix</q>, meaning salad greens.
+              </p>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="menu-card card h-100 bg-body-tertiary shadow-sm">
+            <div class="card-body p-4">
+              <h3 class="h3 mb-3 card-title">Chef's Breakfast</h3>
+              <p class="card-text mb-0">
+                Eggs and salmon come with avocado, herbs, salad, toast and kurt.
+                This breakfast has different bread and more extras than Golden Breakfast.
+              </p>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="menu-card card h-100 bg-body-tertiary shadow-sm">
+            <div class="card-body p-4">
+              <h3 class="h3 mb-3 card-title">Paradise Porridge</h3>
+              <p class="card-text mb-0">Oatmeal with milk, dates, raisins and pistachios is the sweet breakfast option.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
-    <section class="content-section menu-comparison" id="ingredients" aria-labelledby="ingredients-title">
-      <h2 id="ingredients-title">Compare ingredients</h2>
-      <table>
-        <caption>Ingredients and reference prices in <abbr title="Kazakhstani tenge">KZT</abbr><sup>1</sup></caption>
-        <thead>
+    <section class="content-section menu-comparison mb-5" id="ingredients" aria-labelledby="ingredients-title">
+      <h2 id="ingredients-title" class="h2 mb-3">Compare ingredients</h2>
+      <table class="table table-striped table-hover align-middle caption-top small">
+        <caption class="text-body-secondary">Ingredients and reference prices in <abbr
+            title="Kazakhstani tenge">KZT</abbr>
+          <sup>1</sup>
+        </caption>
+        <thead class="table-dark">
           <tr>
-            <th scope="col">Dish</th>
-            <th scope="col">Base</th>
-            <th scope="col">Extras</th>
-            <th scope="col">Price</th>
+            <th scope="col" class="px-2 py-3">Dish</th>
+            <th scope="col" class="px-2 py-3">Base</th>
+            <th scope="col" class="px-2 py-3">Extras</th>
+            <th scope="col" class="px-2 py-3 text-nowrap text-end">Price</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Golden</th>
-            <td>Baguette, eggs</td>
-            <td>Salmon, salad</td>
-            <td>2&nbsp;400</td>
+            <th scope="row" class="px-2 py-3">Golden</th>
+            <td class="px-2 py-3">Baguette, eggs</td>
+            <td class="px-2 py-3">Salmon, salad</td>
+            <td class="px-2 py-3 text-nowrap text-end">2 400</td>
           </tr>
           <tr>
-            <th scope="row">Chef's</th>
-            <td>Toast, eggs</td>
-            <td>Salmon, avocado, herbs, salad, kurt</td>
-            <td>2&nbsp;800</td>
+            <th scope="row" class="px-2 py-3">Chef's</th>
+            <td class="px-2 py-3">Toast, eggs</td>
+            <td class="px-2 py-3">Salmon, avocado, herbs, salad, kurt</td>
+            <td class="px-2 py-3 text-nowrap text-end">2 800</td>
           </tr>
           <tr>
-            <th scope="row">Paradise Porridge</th>
-            <td>Oats, milk</td>
-            <td>Dates, raisins, pistachios</td>
-            <td>1&nbsp;800</td>
+            <th scope="row" class="px-2 py-3">Paradise Porridge</th>
+            <td class="px-2 py-3">Oats, milk</td>
+            <td class="px-2 py-3">Dates, raisins, pistachios</td>
+            <td class="px-2 py-3 text-nowrap text-end">1 800</td>
           </tr>
         </tbody>
       </table>
-      <p><small><sup>1</sup>Delivery prices come from an older Wolt menu and may have changed. Ask about ingredients if
-          you have allergies.</small></p>
+      <p>
+        <small>
+          <sup>1</sup>Delivery prices come from an older Wolt menu and may have changed. Ask about ingredients if
+          you have allergies.</small>
+      </p>
     </section>
-    <aside class="content-section menu-terms" aria-labelledby="terms-title">
-      <h2 id="terms-title">Menu terms</h2>
-      <dl>
-        <dt><b>Kurt</b></dt>
-        <dd>A dried fermented dairy product.</dd>
-        <dt>Salad mix</dt>
-        <dd>A mixture of salad greens.</dd>
-        <dt><i lang="fr">Baguette</i></dt>
-        <dd>A long French bread loaf.</dd>
+    <aside class="content-section menu-terms mb-5" aria-labelledby="terms-title">
+      <h2 id="terms-title" class="h2 mb-3">Menu terms</h2>
+      <dl class="row g-2 mb-0">
+        <dt class="col-12 col-sm-3">
+          <b>Kurt</b>
+        </dt>
+        <dd class="col-12 col-sm-9 mb-3">A dried fermented dairy product.</dd>
+        <dt class="col-12 col-sm-3">Salad mix</dt>
+        <dd class="col-12 col-sm-9 mb-3">A mixture of salad greens.</dd>
+        <dt class="col-12 col-sm-3">
+          <i lang="fr">Baguette</i>
+        </dt>
+        <dd class="col-12 col-sm-9 mb-3">A long French bread loaf.</dd>
       </dl>
     </aside>
   </main>
-  <footer class="site-footer">
-    <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a>
-    </address>
-    <p><small>&copy; 2026 Mukhitden Nurdaulet, Arlan Kudabay. A student project about Golden Coffee.</small></p>
+  <footer class="site-footer container border-top py-4 small">
+    <div class="row g-3 align-items-end">
+      <address class="contact-details col-12 col-md-5 text-center text-md-start mb-0">65/2 Uly Dala Avenue, Astana<br>
+        <a href="tel:+77750729670">+7 775 072 96 70</a>
+      </address>
+      <p class="col-12 col-md-7 text-center text-md-end mb-0">
+        <small>© 2026 Mukhitden Nurdaulet, Arlan Kudabay. A student project about Golden Coffee.</small>
+      </p>
+    </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

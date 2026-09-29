@@ -7,124 +7,173 @@
   <meta name="description" content="Coffee, tea and seasonal drinks at Golden Coffee on Uly Dala Avenue in Astana.">
   <meta name="author" content="Arlan Kudabay">
   <title>Drinks and Coffee - Golden Coffee</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/drinks.css">
   <link rel="icon" href="data:,">
 </head>
 
-<body class="page-drinks">
-  <header id="top" class="site-header">
-    <a class="site-brand" href="index.html">Golden Coffee</a>
-    <nav class="site-nav" aria-label="Main navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="drinks.html" aria-current="page">Drinks</a></li>
-        <li><a href="feedback.html">Feedback</a></li>
-        <li><a href="visit.html">Visit</a></li>
-        <li><a href="colophon.html">About this site</a></li>
-      </ul>
-    </nav>
+<body class="page-drinks d-flex flex-column min-vh-100">
+  <header id="top" class="site-header navbar navbar-expand-lg bg-body border-bottom py-3">
+    <div class="container-fluid px-3 px-lg-5">
+      <a class="site-brand navbar-brand fs-3" href="index.html">Golden Coffee</a>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation" aria-controls="main-navigation"
+        aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navigation">
+        <ul class="navbar-nav ms-auto gap-lg-2 pt-3 pt-lg-0">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="menu.html" class="nav-link">Menu</a>
+          </li>
+          <li class="nav-item">
+            <a href="drinks.html" aria-current="page" class="nav-link active fw-semibold">Drinks</a>
+          </li>
+          <li class="nav-item">
+            <a href="feedback.html" class="nav-link">Feedback</a>
+          </li>
+          <li class="nav-item">
+            <a href="visit.html" class="nav-link">Visit</a>
+          </li>
+          <li class="nav-item">
+            <a href="colophon.html" class="nav-link">About this site</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <main class="site-main">
-    <h1 class="page-title">Coffee and Warm Drinks</h1>
-    <p class="section-links"><a href="#espresso-bar">Espresso Drinks</a> &middot; <a href="#price-list">Drink Prices</a>
+  <main class="site-main container py-4 py-lg-5 flex-grow-1">
+    <h1 class="page-title display-3 mb-4">Coffee and Warm Drinks</h1>
+    <p class="section-links d-flex flex-wrap align-items-center gap-2 mb-4">
+      <a href="#espresso-bar" class="btn btn-sm btn-dark">Espresso Drinks</a>
+      <a href="#price-list" class="btn btn-sm btn-outline-dark">Drink Prices</a>
     </p>
-    <p class="drinks-intro">
+    <p class="drinks-intro lead mb-4">
       We prepare classic espresso, filter coffee and signature teas every day.
-      <mark>Milk alternatives such as oat or almond milk cost an extra 300 KZT.</mark>
+      <mark class="rounded">Milk alternatives such as oat or almond milk cost an extra 300 KZT.</mark>
       You can ask the barista for <em>less sweet</em> syrups or decaf options.
     </p>
-
-    <section class="content-section drink-list" id="espresso-bar" aria-labelledby="espresso-title">
-      <h2 id="espresso-title">Popular Drinks</h2>
-      <article class="drink-card">
-        <h3>Spanish Latte</h3>
-        <p>
-          A double shot of espresso combined with steamed milk and condensed milk.
-          Our guests call it <q>the sweet fuel for cold mornings</q>.
-        </p>
-      </article>
-      <article class="drink-card">
-        <h3>Raf Coffee</h3>
-        <p>
-          Espresso whipped together with cream and vanilla sugar into a thick foam.
-          It originated in Moscow and remains a local favorite in Astana.
-        </p>
-      </article>
-      <article class="drink-card">
-        <h3>Sea Buckthorn Tea</h3>
-        <p>Warm berry tea brewed with fresh sea buckthorn, honey and orange slices.</p>
-      </article>
+    <section class="content-section drink-list mb-5 border-top border-bottom py-4" id="espresso-bar"
+      aria-labelledby="espresso-title">
+      <h2 id="espresso-title" class="h2 mb-3">Popular Drinks</h2>
+      <div class="row g-4 align-items-stretch">
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="drink-card card h-100 bg-body-tertiary shadow-sm">
+            <div class="card-body p-4">
+              <h3 class="h3 mb-3 card-title">Spanish Latte</h3>
+              <p class="card-text mb-0">
+                A double shot of espresso combined with steamed milk and condensed milk.
+                Our guests call it <q>the sweet fuel for cold mornings</q>.
+              </p>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="drink-card card h-100 bg-body-tertiary shadow-sm">
+            <div class="card-body p-4">
+              <h3 class="h3 mb-3 card-title">Raf Coffee</h3>
+              <p class="card-text mb-0">
+                Espresso whipped together with cream and vanilla sugar into a thick foam.
+                It originated in Moscow and remains a local favorite in Astana.
+              </p>
+            </div>
+          </article>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <article class="drink-card card h-100 bg-body-tertiary shadow-sm">
+            <div class="card-body p-4">
+              <h3 class="h3 mb-3 card-title">Sea Buckthorn Tea</h3>
+              <p class="card-text mb-0">Warm berry tea brewed with fresh sea buckthorn, honey and orange slices.</p>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
-
-    <section class="content-section drink-prices" id="price-list" aria-labelledby="table-title">
-      <h2 id="table-title">Drink Reference Prices</h2>
-      <table>
-        <caption>Beverage prices in <abbr title="Kazakhstani tenge">KZT</abbr> and volume in <abbr
-            title="Milliliters">ml</abbr></caption>
-        <thead>
+    <section class="content-section drink-prices mb-5" id="price-list" aria-labelledby="table-title">
+      <h2 id="table-title" class="h2 mb-3">Drink Reference Prices</h2>
+      <table class="table table-striped table-hover align-middle caption-top small">
+        <caption class="text-body-secondary">Beverage prices in <abbr title="Kazakhstani tenge">KZT</abbr> and volume in
+          <abbr title="Milliliters">ml</abbr>
+        </caption>
+        <thead class="table-dark">
           <tr>
-            <th scope="col">Drink</th>
-            <th scope="col">Type</th>
-            <th scope="col">Volume (ml)</th>
-            <th scope="col">Price</th>
+            <th scope="col" class="px-2 py-3">Drink</th>
+            <th scope="col" class="px-2 py-3">Type</th>
+            <th scope="col" class="px-2 py-3">Volume (ml)</th>
+            <th scope="col" class="px-2 py-3 text-nowrap text-end">Price</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Americano</th>
-            <td>Hot</td>
-            <td>250</td>
-            <td>1&nbsp;100</td>
+            <th scope="row" class="px-2 py-3">Americano</th>
+            <td class="px-2 py-3">Hot</td>
+            <td class="px-2 py-3">250</td>
+            <td class="px-2 py-3 text-nowrap text-end">1 100</td>
           </tr>
           <tr>
-            <th scope="row">Cappuccino</th>
-            <td>Hot</td>
-            <td>300</td>
-            <td>1&nbsp;400</td>
+            <th scope="row" class="px-2 py-3">Cappuccino</th>
+            <td class="px-2 py-3">Hot</td>
+            <td class="px-2 py-3">300</td>
+            <td class="px-2 py-3 text-nowrap text-end">1 400</td>
           </tr>
           <tr>
-            <th scope="row">Spanish Latte</th>
-            <td>Hot / Iced</td>
-            <td>350</td>
-            <td>1&nbsp;800</td>
+            <th scope="row" class="px-2 py-3">Spanish Latte</th>
+            <td class="px-2 py-3">Hot / Iced</td>
+            <td class="px-2 py-3">350</td>
+            <td class="px-2 py-3 text-nowrap text-end">1 800</td>
           </tr>
           <tr>
-            <th scope="row">Berry Tea</th>
-            <td>Teapot</td>
-            <td>600</td>
-            <td>1&nbsp;900</td>
+            <th scope="row" class="px-2 py-3">Berry Tea</th>
+            <td class="px-2 py-3">Teapot</td>
+            <td class="px-2 py-3">600</td>
+            <td class="px-2 py-3 text-nowrap text-end">1 900</td>
           </tr>
         </tbody>
       </table>
-      <p><small>Reference menu data collected in September 2026. Prices may vary by season.</small></p>
+      <p>
+        <small>Reference menu data collected in September 2026. Prices may vary by season.</small>
+      </p>
     </section>
-
-    <aside class="content-section beans-notes" aria-labelledby="beans-info">
-      <h2 id="beans-info">Coffee Beans Notes</h2>
-      <dl>
-        <dt><b>Arabica</b></dt>
-        <dd>Medium roasted beans from Colombia with mild caramel notes.</dd>
-        <dt><i lang="it">Espresso</i></dt>
-        <dd>Concentrated coffee beverage brewed under high pressure.</dd>
-      </dl>
-    </aside>
-
-    <section class="content-section drink-gallery" aria-labelledby="photos-title">
-      <h2 id="photos-title">Coffee Bar Gallery</h2>
-      <figure>
-        <img src="images/coffee-cup.jpg" alt="A freshly poured cappuccino on a wooden table at Golden Coffee"
-          width="320">
-        <figcaption>Cappuccino served at the Uly Dala cafe counter.</figcaption>
-      </figure>
-    </section>
+    <div class="row g-4 g-lg-5">
+      <aside class="content-section beans-notes mb-5 col-12 col-md-6" aria-labelledby="beans-info">
+        <h2 id="beans-info" class="h2 mb-3">Coffee Beans Notes</h2>
+        <dl class="row g-2 mb-0">
+          <dt class="col-12 col-sm-3">
+            <b>Arabica</b>
+          </dt>
+          <dd class="col-12 col-sm-9 mb-3">Medium roasted beans from Colombia with mild caramel notes.</dd>
+          <dt class="col-12 col-sm-3">
+            <i lang="it">Espresso</i>
+          </dt>
+          <dd class="col-12 col-sm-9 mb-3">Concentrated coffee beverage brewed under high pressure.</dd>
+        </dl>
+      </aside>
+      <section class="content-section drink-gallery mb-5 col-12 col-md-6" aria-labelledby="photos-title">
+        <h2 id="photos-title" class="h2 mb-3">Coffee Bar Gallery</h2>
+        <figure class="figure w-100 mb-3">
+          <img src="images/coffee-cup.jpg" alt="A freshly poured cappuccino on a wooden table at Golden Coffee"
+            width="320" class="figure-img img-fluid rounded w-100 shadow-sm">
+          <figcaption class="figure-caption">Cappuccino served at the Uly Dala cafe counter.</figcaption>
+        </figure>
+      </section>
+    </div>
   </main>
-  <footer class="site-footer">
-    <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a>
-    </address>
-    <p><small>&copy; 2026 Arlan Kudabay, Mukhitden Nurdaulet. A student project about Golden Coffee.</small></p>
+  <footer class="site-footer container border-top py-4 small">
+    <div class="row g-3 align-items-end">
+      <address class="contact-details col-12 col-md-5 text-center text-md-start mb-0">65/2 Uly Dala Avenue, Astana<br>
+        <a href="tel:+77750729670">+7 775 072 96 70</a>
+      </address>
+      <p class="col-12 col-md-7 text-center text-md-end mb-0">
+        <small>© 2026 Arlan Kudabay, Mukhitden Nurdaulet. A student project about Golden Coffee.</small>
+      </p>
+    </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -1,75 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-    content="Golden Coffee in Astana: breakfast dishes, the Uly Dala Avenue address, opening hours and contact details.">
-  <meta name="author" content="Mukhitden Nurdaulet, Arlan Kudabay">
-  <title>Golden Coffee - Coffee shop in Astana</title>
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/index.css">
-  <link rel="icon" href="data:,">
-</head>
-
-<body class="page-home">
-  <header id="top" class="site-header">
-    <a class="site-brand" href="index.html">Golden Coffee</a>
-    <nav class="site-nav" aria-label="Main navigation">
-      <ul>
-        <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="drinks.html">Drinks</a></li>
-        <li><a href="feedback.html">Feedback</a></li>
-        <li><a href="visit.html">Visit</a></li>
-        <li><a href="colophon.html">About this site</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main class="site-main">
-    <header class="page-heading">
-      <h1 class="page-title">Golden Coffee</h1>
-      <p class="page-lead">Coffee shop &middot; Astana</p>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Golden Coffee in Astana: breakfast dishes, the Uly Dala Avenue address, opening hours and contact details.">
+    <meta name="author" content="Mukhitden Nurdaulet, Arlan Kudabay">
+    <title>Golden Coffee - Coffee shop in Astana</title>
+    <!-- Bootstrap 5.3.8 via CDN; the shared brand stylesheet loads after it. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="icon" href="data:,">
+  </head>
+  <body class="page-home d-flex flex-column min-vh-100">
+    <header id="top" class="site-header navbar navbar-expand-lg bg-body border-bottom py-3">
+      <div class="container-fluid px-3 px-lg-5">
+        <a class="site-brand navbar-brand fs-3" href="index.html">Golden Coffee</a>
+        <button type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation" aria-controls="main-navigation" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navigation">
+          <ul class="navbar-nav ms-auto gap-lg-2 pt-3 pt-lg-0">
+            <li class="nav-item">
+              <a href="index.html" aria-current="page" class="nav-link active fw-semibold">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="menu.html" class="nav-link">Menu</a>
+            </li>
+            <li class="nav-item">
+              <a href="drinks.html" class="nav-link">Drinks</a>
+            </li>
+            <li class="nav-item">
+              <a href="feedback.html" class="nav-link">Feedback</a>
+            </li>
+            <li class="nav-item">
+              <a href="visit.html" class="nav-link">Visit</a>
+            </li>
+            <li class="nav-item">
+              <a href="colophon.html" class="nav-link">About this site</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
-    <section class="content-section home-intro" aria-labelledby="about-title">
-      <h2 id="about-title">Coffee and breakfast on Uly Dala</h2>
-      <p>
+    <main class="site-main container py-4 py-lg-5 flex-grow-1">
+      <div class="row g-4 g-lg-5 align-items-center mb-5">
+        <header class="page-heading col-12 col-md-5 text-center text-md-start">
+          <h1 class="page-title display-1 mb-3">Golden Coffee</h1>
+          <p class="page-lead lead text-uppercase text-secondary mb-0">Coffee shop · Astana</p>
+        </header>
+        <section class="content-section home-intro mb-5 col-12 col-md-7 mb-md-0" aria-labelledby="about-title">
+          <h2 id="about-title" class="display-6 mb-4">Coffee and breakfast on Uly Dala</h2>
+          <p>
         Golden Coffee is a coffee shop at 65/2 Uly Dala Avenue in Astana.
         I collected the address, opening hours, phone number and a few
         breakfast dishes on this website. The contact details belong to this branch.
       </p>
-      <p>
-        The <a href="menu.html">menu page</a> lists three breakfasts:
+          <p>
+        The <a href="menu.html" class="fw-semibold">menu page</a> lists three breakfasts:
         baguette with salmon, eggs with avocado, and oatmeal with dried fruit.
         Their descriptions make it easier to compare ingredients.
         Check availability and prices with the cafe before ordering.
       </p>
-    </section>
-    <section class="content-section visit-overview" aria-labelledby="plan-title">
-      <h2 id="plan-title">Before your visit</h2>
-      <p>
+        </section>
+      </div>
+      <div class="row">
+
+        <section class="content-section visit-overview mb-5 border-top pt-4 col-12" aria-labelledby="plan-title">
+
+          <div class="row g-4">
+            <h2 id="plan-title" class="h2 mb-3 col-12 mb-0">Before your visit</h2>
+            <div class="col-12 col-md-6">
+              <p>
         The visit page has a map link and the cafe's phone number.
         You can check the location and plan your route. Call ahead if you
         need to ask about <em>breakfast ingredients</em> or holiday opening hours.
       </p>
-      <p>
+              <p>
         You can also share the address by email. The link opens a new message,
         and you choose who to send it to.
       </p>
-      <p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p>
         Contact the cafe by phone, WhatsApp or
         <a href="https://www.instagram.com/goldencoffee.ast/" target="_blank" rel="noopener noreferrer">Instagram</a>.
         The visit form lets you enter a date, number of guests,
         contact details and any preferences for your visit.
       </p>
-    </section>
-  </main>
-  <footer class="site-footer">
-    <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a>
-    </address>
-    <p><small>&copy; 2026 Mukhitden Nurdaulet, Arlan Kudabay. A student project about Golden Coffee.</small></p>
-  </footer>
-</body>
-
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer container border-top py-4 small">
+      <div class="row g-3 align-items-end">
+        <address class="contact-details col-12 col-md-5 text-center text-md-start mb-0">65/2 Uly Dala Avenue, Astana<br>
+          <a href="tel:+77750729670">+7 775 072 96 70</a>
+        </address>
+        <p class="col-12 col-md-7 text-center text-md-end mb-0">
+          <small>© 2026 Mukhitden Nurdaulet, Arlan Kudabay. A student project about Golden Coffee.</small>
+        </p>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
 </html>

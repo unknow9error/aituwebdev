@@ -8,152 +8,220 @@
     content="Find Golden Coffee on Uly Dala Avenue in Astana, check its hours and fill in your visit details.">
   <meta name="author" content="Mukhitden Nurdaulet, Arlan Kudabay">
   <title>Plan your visit - Golden Coffee</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/visit.css">
   <link rel="icon" href="data:,">
 </head>
 
-<body class="page-visit">
-  <header id="top" class="site-header">
-    <a class="site-brand" href="index.html">Golden Coffee</a>
-    <nav class="site-nav" aria-label="Main navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="drinks.html">Drinks</a></li>
-        <li><a href="feedback.html">Feedback</a></li>
-        <li><a href="visit.html" aria-current="page">Visit</a></li>
-        <li><a href="colophon.html">About this site</a></li>
-      </ul>
-    </nav>
+<body class="page-visit d-flex flex-column min-vh-100">
+  <header id="top" class="site-header navbar navbar-expand-lg bg-body border-bottom py-3">
+    <div class="container-fluid px-3 px-lg-5">
+      <a class="site-brand navbar-brand fs-3" href="index.html">Golden Coffee</a>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation" aria-controls="main-navigation"
+        aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navigation">
+        <ul class="navbar-nav ms-auto gap-lg-2 pt-3 pt-lg-0">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="menu.html" class="nav-link">Menu</a>
+          </li>
+          <li class="nav-item">
+            <a href="drinks.html" class="nav-link">Drinks</a>
+          </li>
+          <li class="nav-item">
+            <a href="feedback.html" class="nav-link">Feedback</a>
+          </li>
+          <li class="nav-item">
+            <a href="visit.html" aria-current="page" class="nav-link active fw-semibold">Visit</a>
+          </li>
+          <li class="nav-item">
+            <a href="colophon.html" class="nav-link">About this site</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <main class="site-main">
-    <h1 class="page-title">Visit Golden Coffee</h1>
-    <section class="content-section visit-location" aria-labelledby="address-title">
-      <h2 id="address-title">Find the cafe</h2>
-      <p>In Astana, <span translate="no">Golden Coffee</span> is at <strong>65/2 Uly Dala <abbr
-            title="Avenue">Ave.</abbr></strong></p>
-      <p>
-        Open daily: <time datetime="08:00">08:00</time>&ndash;<time datetime="23:00">23:00</time>.
-        The address and hours are listed on
-        <a href="https://2gis.kz/astana/firm/70000001091866178" target="_blank" rel="noopener noreferrer"><cite>Golden
-            Coffee's 2GIS page</cite></a>.
-        Check holiday opening hours by phone.
-      </p>
-      <ol start="1">
-        <li>Find the location on the map.</li>
-        <li>Choose how to contact the cafe:
-          <ul>
-            <li><a href="tel:+77750729670">Call the cafe</a>.</li>
-            <li><a href="https://wa.me/77750729670" target="_blank" rel="noopener noreferrer">Send a WhatsApp
-                message</a>.</li>
-          </ul>
-        </li>
-        <li>Confirm the time and number of guests.</li>
-      </ol>
-      <p><a
-          href="mailto:?subject=Golden%20Coffee&amp;body=Golden%20Coffee%2C%20Astana%2C%20Uly%20Dala%2065%2F2.%20https%3A%2F%2F2gis.kz%2Fastana%2Ffirm%2F70000001091866178">Share
-          the address by email</a>.</p>
-      <p>
-        Tell the staff when you plan to come and how many people will join you.
-        Agree on a time with your friends so everyone can plan their journey.
-      </p>
-    </section>
-    <hr>
-    <section class="content-section visit-booking" id="booking" aria-labelledby="booking-title">
-      <h2 id="booking-title">Plan your visit</h2>
-      <p>
-        Enter the date, number of guests and your contact details.
-        Choose a reason for your visit and a contact method.
-        Add the time or other preferences in the notes field.
-      </p>
-      <form class="visit-form" action="visit.html#booking" method="get">
-        <fieldset class="contact-fields">
-          <legend>Contact details</legend>
-          <p>
-            <label for="guest-name">Name</label>
-            <br>
-            <input id="guest-name" name="guest-name" type="text" required placeholder="Name" autocomplete="off"
-              maxlength="80">
-          </p>
-          <p>
-            <label for="guest-email">Email address</label>
-            <br>
-            <input id="guest-email" name="guest-email" type="email" required placeholder="guest@example.com"
-              autocomplete="off">
-          </p>
-          <p>
-            <label for="guest-phone">Phone</label>
-            <br>
-            <input id="guest-phone" name="guest-phone" type="tel" required placeholder="Phone number" autocomplete="off"
-              maxlength="30">
-          </p>
-        </fieldset>
-        <fieldset class="visit-fields">
-          <legend>Visit details</legend>
-          <p>
-            <label for="guest-count">Number of guests</label>
-            <br>
-            <input id="guest-count" name="guest-count" type="number" min="1" step="1" required placeholder="2">
-          </p>
-          <p>
-            <label for="visit-date">Date</label>
-            <br>
-            <input id="visit-date" name="visit-date" type="date" required>
-          </p>
-          <p class="visit-reason">
-            <label for="visit-reason">Reason for visiting</label>
-            <br>
-            <select id="visit-reason" name="visit-reason">
-              <option value="breakfast">Breakfast</option>
-              <option value="coffee">Coffee</option>
-              <option value="friends">Meeting friends</option>
-            </select>
-          </p>
-          <fieldset class="contact-preference">
-            <legend>Preferred contact method</legend>
-            <p>
-              <input id="contact-phone" name="contact-method" type="radio" value="phone" required>
-              <label for="contact-phone">Phone</label>
-            </p>
-            <p>
-              <input id="contact-email" name="contact-method" type="radio" value="email">
-              <label for="contact-email">Email</label>
-            </p>
+  <main class="site-main container py-4 py-lg-5 flex-grow-1">
+    <h1 class="page-title display-3 mb-4">Visit Golden Coffee</h1>
+    <div class="row g-4 g-lg-5">
+      <section class="content-section visit-location mb-5 col-12 col-lg-5" aria-labelledby="address-title">
+        <h2 id="address-title" class="h2 mb-3">Find the cafe</h2>
+        <p>In Astana, <span translate="no">Golden Coffee</span> is at <strong>65/2 Uly Dala <abbr
+              title="Avenue">Ave.</abbr>
+          </strong>
+        </p>
+        <p>
+          Open daily: <time datetime="08:00">08:00</time>–<time datetime="23:00">23:00</time>.
+          The address and hours are listed on
+          <a href="https://2gis.kz/astana/firm/70000001091866178" target="_blank" rel="noopener noreferrer">
+            <cite>Golden
+              Coffee's 2GIS page</cite>
+          </a>.
+          Check holiday opening hours by phone.
+        </p>
+        <ol start="1">
+          <li>Find the location on the map.</li>
+          <li>Choose how to contact the cafe:
+            <ul>
+              <li>
+                <a href="tel:+77750729670">Call the cafe</a>.
+              </li>
+              <li>
+                <a href="https://wa.me/77750729670" target="_blank" rel="noopener noreferrer">Send a WhatsApp
+                  message</a>.
+              </li>
+            </ul>
+          </li>
+          <li>Confirm the time and number of guests.</li>
+        </ol>
+        <p>
+          <a href="mailto:?subject=Golden%20Coffee&amp;body=Golden%20Coffee%2C%20Astana%2C%20Uly%20Dala%2065%2F2.%20https%3A%2F%2F2gis.kz%2Fastana%2Ffirm%2F70000001091866178"
+            class="btn btn-outline-dark btn-sm text-wrap">Share
+            the address by email</a>.
+        </p>
+        <p>
+          Tell the staff when you plan to come and how many people will join you.
+          Agree on a time with your friends so everyone can plan their journey.
+        </p>
+      </section>
+      <hr class="my-4 d-lg-none">
+      <section class="content-section visit-booking mb-5 col-12 col-lg-7" id="booking" aria-labelledby="booking-title">
+        <h2 id="booking-title" class="h2 mb-3">Plan your visit</h2>
+        <p>
+          Enter the date, number of guests and your contact details.
+          Choose a reason for your visit and a contact method.
+          Add the time or other preferences in the notes field.
+        </p>
+        <p id="visit-form-note" class="small text-body-secondary border-start border-3 ps-3">This practice form does not
+          send requests to the cafe. To arrange a visit or share feedback, <a href="tel:+77750729670">call the cafe</a>.
+        </p>
+        <form class="visit-form" action="visit.html#booking" method="get">
+          <fieldset class="contact-fields border rounded p-3 p-md-4 mb-4">
+            <legend class="float-none w-auto px-2 fs-6 fw-semibold">Contact details</legend>
+            <div class="row g-3">
+              <div class="col-12">
+                <p class="mb-0">
+                  <label for="guest-name" class="form-label">Name</label>
+                  <br class="d-none">
+                  <input id="guest-name" name="guest-name" type="text" required placeholder="Name" autocomplete="off"
+                    maxlength="80" class="form-control">
+                </p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p class="mb-0">
+                  <label for="guest-email" class="form-label">Email address</label>
+                  <br class="d-none">
+                  <input id="guest-email" name="guest-email" type="email" required placeholder="guest@example.com"
+                    autocomplete="off" class="form-control">
+                </p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p class="mb-0">
+                  <label for="guest-phone" class="form-label">Phone</label>
+                  <br class="d-none">
+                  <input id="guest-phone" name="guest-phone" type="tel" required placeholder="Phone number"
+                    autocomplete="off" maxlength="30" class="form-control">
+                </p>
+              </div>
+            </div>
           </fieldset>
-          <p class="visit-notes">
-            <label for="guest-message">Notes</label>
-            <br>
-            <textarea id="guest-message" name="guest-message" rows="4" cols="24" maxlength="1000"
-              placeholder="For example, your preferred time"></textarea>
-          </p>
-          <p class="window-preference">
-            <input id="window-seat" name="window-seat" type="checkbox" value="yes">
-            <label for="window-seat">I prefer a window seat</label>
-          </p>
-        </fieldset>
-        <div class="form-actions">
-          <button type="submit">Submit</button>
-          <button type="reset">Reset</button>
-        </div>
-      </form>
-    </section>
-    <section class="content-section cafe-quote" aria-labelledby="instagram-title">
-      <h2 id="instagram-title">About the cafe</h2>
-      <figure>
-        <blockquote cite="https://www.instagram.com/goldencoffee.ast/">
+          <fieldset class="visit-fields border rounded p-3 p-md-4 mb-4">
+            <legend class="float-none w-auto px-2 fs-6 fw-semibold">Visit details</legend>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <p class="mb-0">
+                  <label for="guest-count" class="form-label">Number of guests</label>
+                  <br class="d-none">
+                  <input id="guest-count" name="guest-count" type="number" min="1" step="1" required placeholder="2"
+                    class="form-control">
+                </p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p class="mb-0">
+                  <label for="visit-date" class="form-label">Date</label>
+                  <br class="d-none">
+                  <input id="visit-date" name="visit-date" type="date" required class="form-control">
+                </p>
+              </div>
+              <div class="col-12">
+                <p class="visit-reason mb-0">
+                  <label for="visit-reason" class="form-label">Reason for visiting</label>
+                  <br class="d-none">
+                  <select id="visit-reason" name="visit-reason" class="form-select">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="coffee">Coffee</option>
+                    <option value="friends">Meeting friends</option>
+                  </select>
+                </p>
+              </div>
+              <div class="col-12">
+                <fieldset class="contact-preference mb-0 border rounded p-3">
+                  <legend class="float-none w-auto px-2 fs-6">Preferred contact method</legend>
+                  <p class="form-check mb-2">
+                    <input id="contact-phone" name="contact-method" type="radio" value="phone" required
+                      class="form-check-input">
+                    <label for="contact-phone" class="form-check-label">Phone</label>
+                  </p>
+                  <p class="form-check mb-2">
+                    <input id="contact-email" name="contact-method" type="radio" value="email" class="form-check-input">
+                    <label for="contact-email" class="form-check-label">Email</label>
+                  </p>
+                </fieldset>
+              </div>
+              <div class="col-12">
+                <p class="visit-notes mb-0">
+                  <label for="guest-message" class="form-label">Notes</label>
+                  <br class="d-none">
+                  <textarea id="guest-message" name="guest-message" rows="4" cols="24" maxlength="1000"
+                    placeholder="For example, your preferred time" class="form-control"></textarea>
+                </p>
+              </div>
+              <div class="col-12">
+                <p class="window-preference mb-0 form-check mb-2">
+                  <input id="window-seat" name="window-seat" type="checkbox" value="yes" class="form-check-input">
+                  <label for="window-seat" class="form-check-label">I prefer a window seat</label>
+                </p>
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-actions d-flex flex-wrap align-items-center gap-3">
+            <button type="submit" class="btn btn-secondary btn-lg disabled" disabled
+              aria-describedby="visit-form-note">Submit</button>
+            <button type="reset" class="btn btn-outline-dark">Reset</button>
+          </div>
+        </form>
+      </section>
+    </div>
+    <section class="content-section cafe-quote mb-5" aria-labelledby="instagram-title">
+      <h2 id="instagram-title" class="h2 mb-3">About the cafe</h2>
+      <figure class="figure w-100 mb-3">
+        <blockquote cite="https://www.instagram.com/goldencoffee.ast/" class="blockquote border-start border-3 ps-3">
           <p>Coffee. Lunch. Desserts. Delivery.</p>
         </blockquote>
-        <figcaption>From @goldencoffee.ast, translated. Accessed <time datetime="2026-09-12">12 September 2026</time>.
+        <figcaption class="figure-caption">From @goldencoffee.ast, translated. Accessed <time datetime="2026-09-12">12
+            September 2026</time>.
         </figcaption>
       </figure>
     </section>
   </main>
-  <footer class="site-footer">
-    <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a>
-    </address>
-    <p><small>&copy; 2026 Mukhitden Nurdaulet, Arlan Kudabay. A student project about Golden Coffee.</small></p>
+  <footer class="site-footer container border-top py-4 small">
+    <div class="row g-3 align-items-end">
+      <address class="contact-details col-12 col-md-5 text-center text-md-start mb-0">65/2 Uly Dala Avenue, Astana<br>
+        <a href="tel:+77750729670">+7 775 072 96 70</a>
+      </address>
+      <p class="col-12 col-md-7 text-center text-md-end mb-0">
+        <small>© 2026 Mukhitden Nurdaulet, Arlan Kudabay. A student project about Golden Coffee.</small>
+      </p>
+    </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

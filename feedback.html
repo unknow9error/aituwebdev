@@ -7,159 +7,224 @@
   <meta name="description" content="Send feedback or inquire about pre-orders and events at Golden Coffee in Astana.">
   <meta name="author" content="Arlan Kudabay">
   <title>Feedback and Inquiries - Golden Coffee</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/feedback.css">
   <link rel="icon" href="data:,">
 </head>
 
-<body class="page-feedback">
-  <header id="top" class="site-header">
-    <a class="site-brand" href="index.html">Golden Coffee</a>
-    <nav class="site-nav" aria-label="Main navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="drinks.html">Drinks</a></li>
-        <li><a href="feedback.html" aria-current="page">Feedback</a></li>
-        <li><a href="visit.html">Visit</a></li>
-        <li><a href="colophon.html">About this site</a></li>
-      </ul>
-    </nav>
+<body class="page-feedback d-flex flex-column min-vh-100">
+  <header id="top" class="site-header navbar navbar-expand-lg bg-body border-bottom py-3">
+    <div class="container-fluid px-3 px-lg-5">
+      <a class="site-brand navbar-brand fs-3" href="index.html">Golden Coffee</a>
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation" aria-controls="main-navigation"
+        aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <nav class="site-nav collapse navbar-collapse" aria-label="Main navigation" id="main-navigation">
+        <ul class="navbar-nav ms-auto gap-lg-2 pt-3 pt-lg-0">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="menu.html" class="nav-link">Menu</a>
+          </li>
+          <li class="nav-item">
+            <a href="drinks.html" class="nav-link">Drinks</a>
+          </li>
+          <li class="nav-item">
+            <a href="feedback.html" aria-current="page" class="nav-link active fw-semibold">Feedback</a>
+          </li>
+          <li class="nav-item">
+            <a href="visit.html" class="nav-link">Visit</a>
+          </li>
+          <li class="nav-item">
+            <a href="colophon.html" class="nav-link">About this site</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <main class="site-main">
-    <h1 class="page-title">Guest Feedback and Requests</h1>
-    <p class="section-links"><a href="#reviews">Guest Reviews</a> &middot; <a href="#inquiry-form">Send Inquiry</a></p>
-
-    <section class="content-section guest-reviews" id="reviews" aria-labelledby="reviews-title">
-      <h2 id="reviews-title">Recent Guest Comments</h2>
-      <figure>
-        <blockquote cite="https://2gis.kz/astana/firm/70000001091866178">
-          <p>&quot;The atmosphere is quiet enough to study, and their Spanish latte is consistently great.&quot;</p>
-        </blockquote>
-        <figcaption>Review by Aigerim on <cite>2GIS Astana</cite>, accessed <time datetime="2026-09-14">14 September
-            2026</time>.</figcaption>
-      </figure>
-      <p>Overall guest rating is <span translate="no"><strong>4.7 / 5.0</strong></span> based on customer cards.</p>
-      <p>Order steps for takeaway pastries:</p>
-      <ol reversed>
-        <li>Pick up your warm box at the cashier.</li>
-        <li>Choose your buns from the glass display.</li>
-        <li>Check the bakery list by the entrance:
-          <ul>
-            <li>Croissants with almond paste</li>
-            <li>Cottage cheese rings</li>
-          </ul>
-        </li>
-      </ol>
-      <p>
-        For corporate coffee deliveries, you can also
-        <a href="mailto:info@goldencoffee.kz?subject=Coffee%20Order">email the manager</a> or call
-        <a href="tel:+77750729670">+7 775 072 96 70</a>.
-      </p>
-    </section>
-
-    <hr>
-
-    <section class="content-section inquiry-section" id="inquiry-form" aria-labelledby="form-title">
-      <h2 id="form-title">Send a Feedback or Pre-Order Inquiry</h2>
-      <p>
-        Tell us about your recent experience or send an inquiry for group coffee sets.
-        Check our photos on
-        <a href="https://www.instagram.com/goldencoffee.ast/" target="_blank" rel="noopener noreferrer">Instagram</a>.
-      </p>
-      <form class="feedback-form" action="feedback.html#inquiry-form" method="get">
-        <fieldset class="sender-fields">
-          <legend>Sender Information</legend>
-          <p>
-            <label for="client-name">Your Full Name</label>
-            <br>
-            <input id="client-name" name="client-name" type="text" required placeholder="Arlan Kudabay"
-              autocomplete="off" maxlength="80">
-          </p>
-          <p>
-            <label for="client-email">Email Address</label>
-            <br>
-            <input id="client-email" name="client-email" type="email" required placeholder="arlan@example.kz"
-              autocomplete="off">
-          </p>
-          <p>
-            <label for="client-tel">Phone Number</label>
-            <br>
-            <input id="client-tel" name="client-tel" type="tel" required placeholder="+7 701 000 00 00"
-              autocomplete="off" maxlength="30">
-          </p>
-        </fieldset>
-
-        <fieldset class="inquiry-fields">
-          <legend>Inquiry Details</legend>
-          <p class="quantity-field">
-            <label for="item-quantity">Number of Coffee Cups or Guests</label>
-            <br>
-            <input id="item-quantity" name="item-quantity" type="number" min="1" max="50" step="1" required
-              placeholder="1">
-          </p>
-          <p>
-            <label for="order-date">Requested Date</label>
-            <br>
-            <input id="order-date" name="order-date" type="date" required>
-          </p>
-          <p class="topic-field">
-            <label for="inquiry-type">Topic of Message</label>
-            <br>
-            <select id="inquiry-type" name="inquiry-type">
-              <option value="review">General Feedback</option>
-              <option value="preorder">Group Coffee Pre-Order</option>
-              <option value="complaint">Service Issue</option>
-            </select>
-          </p>
-          <fieldset class="recommendation-options">
-            <legend>Would you recommend Golden Coffee?</legend>
-            <p>
-              <input id="rec-yes" name="recommend" type="radio" value="yes" required>
-              <label for="rec-yes">Yes, definitely</label>
-            </p>
-            <p>
-              <input id="rec-no" name="recommend" type="radio" value="no">
-              <label for="rec-no">Not sure yet</label>
-            </p>
+  <main class="site-main container py-4 py-lg-5 flex-grow-1">
+    <h1 class="page-title display-3 mb-4">Guest Feedback and Requests</h1>
+    <p class="section-links d-flex flex-wrap align-items-center gap-2 mb-4">
+      <a href="#reviews" class="btn btn-sm btn-dark">Guest Reviews</a>
+      <a href="#inquiry-form" class="btn btn-sm btn-outline-dark">Send Inquiry</a>
+    </p>
+    <div class="row g-4 g-lg-5">
+      <section class="content-section guest-reviews mb-5 col-12 col-lg-5" id="reviews" aria-labelledby="reviews-title">
+        <h2 id="reviews-title" class="h2 mb-3">Recent Guest Comments</h2>
+        <figure class="figure w-100 mb-3">
+          <blockquote cite="https://2gis.kz/astana/firm/70000001091866178"
+            class="blockquote border-start border-3 ps-3">
+            <p>"The atmosphere is quiet enough to study, and their Spanish latte is consistently great."</p>
+          </blockquote>
+          <figcaption class="figure-caption">Review by Aigerim on <cite>2GIS Astana</cite>, accessed <time
+              datetime="2026-09-14">14 September
+              2026</time>.</figcaption>
+        </figure>
+        <p>Overall guest rating is <span translate="no">
+            <strong>4.7 / 5.0</strong>
+          </span> based on customer cards.</p>
+        <p>Order steps for takeaway pastries:</p>
+        <ol reversed>
+          <li>Pick up your warm box at the cashier.</li>
+          <li>Choose your buns from the glass display.</li>
+          <li>Check the bakery list by the entrance:
+            <ul>
+              <li>Croissants with almond paste</li>
+              <li>Cottage cheese rings</li>
+            </ul>
+          </li>
+        </ol>
+        <p>
+          For corporate coffee deliveries, you can also
+          <a href="mailto:info@goldencoffee.kz?subject=Coffee%20Order">email the manager</a> or call
+          <a href="tel:+77750729670">+7 775 072 96 70</a>.
+        </p>
+      </section>
+      <hr class="my-4 d-lg-none">
+      <section class="content-section inquiry-section mb-5 col-12 col-lg-7" id="inquiry-form"
+        aria-labelledby="form-title">
+        <h2 id="form-title" class="h2 mb-3">Send a Feedback or Pre-Order Inquiry</h2>
+        <p>
+          Tell us about your recent experience or send an inquiry for group coffee sets.
+          Check our photos on
+          <a href="https://www.instagram.com/goldencoffee.ast/" target="_blank" rel="noopener noreferrer">Instagram</a>.
+        </p>
+        <p id="feedback-form-note" class="small text-body-secondary border-start border-3 ps-3">This practice form does
+          not send requests to the cafe. To arrange a visit or share feedback, <a href="tel:+77750729670">call the
+            cafe</a>.</p>
+        <form class="feedback-form" action="feedback.html#inquiry-form" method="get">
+          <fieldset class="sender-fields border rounded p-3 p-md-4 mb-4">
+            <legend class="float-none w-auto px-2 fs-6 fw-semibold">Sender Information</legend>
+            <div class="row g-3">
+              <div class="col-12">
+                <p class="mb-0">
+                  <label for="client-name" class="form-label">Your Full Name</label>
+                  <br class="d-none">
+                  <input id="client-name" name="client-name" type="text" required placeholder="Arlan Kudabay"
+                    autocomplete="off" maxlength="80" class="form-control">
+                </p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p class="mb-0">
+                  <label for="client-email" class="form-label">Email Address</label>
+                  <br class="d-none">
+                  <input id="client-email" name="client-email" type="email" required placeholder="arlan@example.kz"
+                    autocomplete="off" class="form-control">
+                </p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p class="mb-0">
+                  <label for="client-tel" class="form-label">Phone Number</label>
+                  <br class="d-none">
+                  <input id="client-tel" name="client-tel" type="tel" required placeholder="+7 701 000 00 00"
+                    autocomplete="off" maxlength="30" class="form-control">
+                </p>
+              </div>
+            </div>
           </fieldset>
-          <p class="message-field">
-            <label for="client-comment">Your Message</label>
-            <br>
-            <textarea id="client-comment" name="client-comment" rows="4" cols="30" maxlength="800"
-              placeholder="Write your comments or drink preferences here..."></textarea>
-          </p>
-          <p class="newsletter-option">
-            <input id="newsletter" name="newsletter" type="checkbox" value="subscribed">
-            <label for="newsletter">Send me seasonal menu updates by email</label>
-          </p>
-        </fieldset>
-
-        <div class="feedback-actions">
-          <button type="submit">Submit Inquiry</button>
-          <button type="reset">Clear Form</button>
+          <fieldset class="inquiry-fields border rounded p-3 p-md-4 mb-4">
+            <legend class="float-none w-auto px-2 fs-6 fw-semibold">Inquiry Details</legend>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <p class="quantity-field mb-0">
+                  <label for="item-quantity" class="form-label">Number of Coffee Cups or Guests</label>
+                  <br class="d-none">
+                  <input id="item-quantity" name="item-quantity" type="number" min="1" max="50" step="1" required
+                    placeholder="1" class="form-control">
+                </p>
+              </div>
+              <div class="col-12 col-md-6">
+                <p class="mb-0">
+                  <label for="order-date" class="form-label">Requested Date</label>
+                  <br class="d-none">
+                  <input id="order-date" name="order-date" type="date" required class="form-control">
+                </p>
+              </div>
+              <div class="col-12">
+                <p class="topic-field mb-0">
+                  <label for="inquiry-type" class="form-label">Topic of Message</label>
+                  <br class="d-none">
+                  <select id="inquiry-type" name="inquiry-type" class="form-select">
+                    <option value="review">General Feedback</option>
+                    <option value="preorder">Group Coffee Pre-Order</option>
+                    <option value="complaint">Service Issue</option>
+                  </select>
+                </p>
+              </div>
+              <div class="col-12">
+                <fieldset class="recommendation-options mb-0 border rounded p-3">
+                  <legend class="float-none w-auto px-2 fs-6">Would you recommend Golden Coffee?</legend>
+                  <p class="form-check mb-2">
+                    <input id="rec-yes" name="recommend" type="radio" value="yes" required class="form-check-input">
+                    <label for="rec-yes" class="form-check-label">Yes, definitely</label>
+                  </p>
+                  <p class="form-check mb-2">
+                    <input id="rec-no" name="recommend" type="radio" value="no" class="form-check-input">
+                    <label for="rec-no" class="form-check-label">Not sure yet</label>
+                  </p>
+                </fieldset>
+              </div>
+              <div class="col-12">
+                <p class="message-field mb-0">
+                  <label for="client-comment" class="form-label">Your Message</label>
+                  <br class="d-none">
+                  <textarea id="client-comment" name="client-comment" rows="4" cols="30" maxlength="800"
+                    placeholder="Write your comments or drink preferences here..." class="form-control"></textarea>
+                </p>
+              </div>
+              <div class="col-12">
+                <p class="newsletter-option mb-0 form-check mb-2">
+                  <input id="newsletter" name="newsletter" type="checkbox" value="subscribed" class="form-check-input">
+                  <label for="newsletter" class="form-check-label">Send me seasonal menu updates by email</label>
+                </p>
+              </div>
+            </div>
+          </fieldset>
+          <div class="feedback-actions d-flex flex-wrap align-items-center gap-3">
+            <button type="submit" class="btn btn-secondary btn-lg disabled" disabled
+              aria-describedby="feedback-form-note">Submit Inquiry</button>
+            <button type="reset" class="btn btn-outline-dark">Clear Form</button>
+          </div>
+        </form>
+      </section>
+    </div>
+    <section class="content-section atmosphere-gallery mb-5" aria-labelledby="cafe-views">
+      <h2 id="cafe-views" class="h2 mb-3">Atmosphere Photos</h2>
+      <div class="row g-4">
+        <div class="col-12 col-md-6">
+          <figure class="figure w-100 mb-3">
+            <img src="images/cafe-interior.jpg"
+              alt="Interior view of seating tables and lighting in Golden Coffee Astana" width="320"
+              class="figure-img img-fluid rounded w-100 shadow-sm">
+            <figcaption class="figure-caption">Seating area near the window at Golden Coffee.</figcaption>
+          </figure>
         </div>
-      </form>
-    </section>
-
-    <section class="content-section atmosphere-gallery" aria-labelledby="cafe-views">
-      <h2 id="cafe-views">Atmosphere Photos</h2>
-      <figure>
-        <img src="images/cafe-interior.jpg" alt="Interior view of seating tables and lighting in Golden Coffee Astana"
-          width="320">
-        <figcaption>Seating area near the window at Golden Coffee.</figcaption>
-      </figure>
-      <figure>
-        <img src="images/dessert-counter.jpg" alt="Glass dessert display showing cakes and croissants" width="320">
-        <figcaption>Fresh pastry selection available daily.</figcaption>
-      </figure>
+        <div class="col-12 col-md-6">
+          <figure class="figure w-100 mb-3">
+            <img src="images/dessert-counter.jpg" alt="Glass dessert display showing cakes and croissants" width="320"
+              class="figure-img img-fluid rounded w-100 shadow-sm">
+            <figcaption class="figure-caption">Fresh pastry selection available daily.</figcaption>
+          </figure>
+        </div>
+      </div>
     </section>
   </main>
-  <footer class="site-footer">
-    <address class="contact-details">65/2 Uly Dala Avenue, Astana<br><a href="tel:+77750729670">+7 775 072 96 70</a>
-    </address>
-    <p><small>&copy; 2026 Arlan Kudabay, Mukhitden Nurdaulet. A student project about Golden Coffee.</small></p>
+  <footer class="site-footer container border-top py-4 small">
+    <div class="row g-3 align-items-end">
+      <address class="contact-details col-12 col-md-5 text-center text-md-start mb-0">65/2 Uly Dala Avenue, Astana<br>
+        <a href="tel:+77750729670">+7 775 072 96 70</a>
+      </address>
+      <p class="col-12 col-md-7 text-center text-md-end mb-0">
+        <small>© 2026 Arlan Kudabay, Mukhitden Nurdaulet. A student project about Golden Coffee.</small>
+      </p>
+    </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
