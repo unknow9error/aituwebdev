@@ -2,6 +2,32 @@
 
 Paths are relative to `new/`. Author of all JavaScript: Arlan Kudabay.
 
+## jQuery assignment
+
+| Requirement | File:line |
+| --- | --- |
+| jQuery from a CDN before our scripts, with a comment | every page, above the Bootstrap script tag; `js/main.js:3-5` |
+| Code inside `$(function () { ... })` | `js/main.js:97`; `js/menu.js:32`; `js/drinks.js:3`; `js/feedback.js:84`; `js/visit.js:71` |
+| Three rewritten features with comparison comments | order list `js/main.js:132`; menu `js/menu.js:9`; validation `js/main.js:316` |
+| Old versions, not linked | `js/old-js-version.js` |
+| Selectors: id, class, element, attribute | `$('#order-date')` `js/feedback.js`; `$('.drink-entry')` `js/drinks.js:5`; `$('main')` `js/main.js:214`; `[data-action]` `js/main.js:192` |
+| Filters | `:first` `js/main.js:369`, `js/menu.js:86`; `:checked` `js/feedback.js:111`, `js/visit.js:83`; `:not()` `js/main.js:156` |
+| Traversal | `.find()` and `.closest()` `js/main.js:217`; `.siblings()` `js/main.js:218`; `.parent()` `js/main.js:343`; `.each()` `js/drinks.js:5` |
+| `$(this)` in handlers | `js/main.js:193`, `js/main.js:215`; `js/menu.js:55` |
+| Chains of 3+ methods, one explained | explained `js/main.js:311-313`; `js/main.js:226`; `js/visit.js:100` |
+| `.text()`, `.html()`, `.val()`, `.attr()`, `.prop()` | `.html()` `js/main.js:112`; `.text()` `js/main.js:226`; `.val()` `js/menu.js`; `.attr()` `js/main.js:194`; `.prop()` `js/feedback.js` (checkbox) |
+| Class methods | `.addClass()`, `.removeClass()` `js/main.js:313`; `.toggleClass()` `js/main.js:166`; `.hasClass()` `js/main.js:349` |
+| List built from an array | `js/menu.js` (`renderMenu`), `.appendTo()` `js/drinks.js:12` |
+| Event types through `.on()` | click, submit, input, change, reset, `hidden.bs.modal` (see lines above) |
+| Delegated handlers, with the reason in a comment | `js/main.js:189-192`; `js/main.js:213-214`; `js/main.js:347` |
+| `event.preventDefault()`, with the reason | `js/feedback.js:133-134`; `js/visit.js:112-113` |
+| Effects | `.fadeIn()` `js/main.js:253`, `js/main.js:392`; `.fadeOut()` `js/main.js:226`; `.slideUp()` `js/main.js:200`; `.slideToggle()` `js/menu.js:54`; `.slideDown()` `js/menu.js:71` |
+| Durations and callbacks | all of the above; callbacks `js/main.js:200`, `js/main.js:253`, `js/menu.js:54` |
+| Validation in jQuery | helpers `js/main.js:309-396`; rules `js/feedback.js`, `js/visit.js` |
+| Why the browser check does not replace the server | `js/main.js:306-308` |
+
+The sections below describe the plain JavaScript of Assignments 4 and 5. Their line numbers and DOM calls refer to that version (commit `9807064`). The rules themselves are unchanged.
+
 ## Setup
 
 | Requirement | File:line |

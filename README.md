@@ -1,4 +1,4 @@
-# Golden Coffee — Assignment 4–5 (JavaScript)
+# Golden Coffee — Assignment 4–5 (JavaScript) and final jQuery assignment
 
 A front-end website for **Golden Coffee**, a coffee shop at 65/2 Uly Dala Avenue, Astana.
 The working site is in the [`new/`](new/) folder; open [`new/index.html`](new/index.html) in a browser.
@@ -15,7 +15,19 @@ Student: Arlan Kudabay (individual submission).
 | [`new/js/feedback.js`](new/js/feedback.js) | `feedback.html` | Guest review cards and the inquiry form flow |
 | [`new/js/visit.js`](new/js/visit.js) | `visit.html` | Visit request (booking) flow with live summary |
 
-All scripts use `'use strict'` and are loaded with `defer`. No libraries besides the Bootstrap bundle from the midterm.
+All scripts use `'use strict'` and are loaded with `defer`. The only libraries are the Bootstrap bundle from the midterm and jQuery 3.7.1 from a CDN, so the site needs an internet connection for its scripts to work.
+
+## jQuery version
+
+Every page links jQuery before our own scripts. `main.js`, `menu.js`, `drinks.js`, `feedback.js` and `visit.js` now use jQuery for all page work, inside `$(function () { ... })`. Sign-in (`auth.js`, `ncalayer.js`) is a separate feature and stays in plain JavaScript.
+
+| Rewritten feature | New code | Old code |
+| --- | --- | --- |
+| Order list | `new/js/main.js` | `new/js/old-js-version.js` |
+| Menu catalogue and filter | `new/js/menu.js` | `new/js/old-js-version.js` |
+| Form validation | `new/js/main.js`, `new/js/feedback.js`, `new/js/visit.js` | `new/js/old-js-version.js` |
+
+`old-js-version.js` is not linked from any page; it exists only for comparison. Requirements are mapped to exact lines in the [JavaScript checklist](JS-CHECKLIST.md).
 
 ## Functionality Plan
 
@@ -40,9 +52,9 @@ Nothing is sent to a server. Every confirmation says it is a demonstration and t
 
 ## HTML/CSS freeze
 
-- HTML files changed only by adding `<script>` tags.
-- No CSS rules were added. New elements use Bootstrap classes and classes from the midterm `site.css` (`menu-entry`, `dish-title`, `form-note`, `review-quote`, `source-note`, …).
-- Visual states use `classList`: `d-none` (hidden), `is-invalid` (error), `d-block` (shown error), `btn-primary` / `btn-secondary` (active / disabled button).
+- HTML files changed only by adding `<script>` tags, and for jQuery one comment above its tag.
+- No CSS rules were added. New elements use Bootstrap classes and classes from the midterm `site.css` (`menu-entry`, `dish-title`, `form-note`, `review-quote`, `source-note`, …). `add-to-order` is a hook for the delegated handler and has no CSS.
+- Visual states use `.addClass()`, `.removeClass()`, `.toggleClass()` and `.hasClass()`: `d-none` (hidden), `is-invalid` (error), `d-block` (shown error), `btn-primary` / `btn-secondary` (active / disabled button). jQuery effects set `display` themselves.
 - JavaScript replaces some midterm content at runtime: the three static breakfast cards are replaced by the rendered catalogue (and the heading becomes "Breakfast and drinks"); the static review is rendered from the `reviews` array; the disabled midterm submit buttons are enabled because validation now runs in JavaScript. Without JavaScript, the midterm content is still shown.
 - Midterm corrections: none.
 

@@ -130,7 +130,7 @@ $(function () {
   const order = buildOrderModal();
 
   // REWRITE 1, order list. $('<li>', {...}) replaced createElement() plus className, .attr() replaced setAttribute(),
-  // and one delegated .on() replaced three addEventListener() calls per line. Clearly shorter (about a quarter fewer lines) and clearer.
+  // and one delegated .on() replaced three addEventListener() calls per line. Clearly shorter (about a fifth fewer lines) and clearer.
   function createCartLine(line) {
     const item = findItem(line.id);
     const $row = $('<li>', { class: 'd-flex flex-wrap align-items-center gap-2 py-3 border-bottom', 'data-id': item.id });
