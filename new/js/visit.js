@@ -1,6 +1,5 @@
 'use strict';
 
-const visitForm = document.querySelector('#booking .practice-form');
 const OPENING_HOUR = 8;
 const LAST_SEATING_HOUR = 22; // the cafe closes at 23:00
 const MAX_GUESTS = 12;
@@ -15,35 +14,14 @@ function toTimeValue(minutes) {
 
 // Time select, created here because the midterm form only had a free-text notes field for the time.
 function createTimeField() {
-  const column = createElement('div', 'col-12 col-md-4');
-  const wrapper = createElement('p', 'mb-0');
-  const label = createElement('label', 'form-label', 'Time');
-  label.htmlFor = 'visit-time';
-  const select = createElement('select', 'form-select');
-  select.id = 'visit-time';
-  select.name = 'visit-time';
-  select.append(new Option('Choose a time', ''));
+  const $label = $('<label>', { class: 'form-label', for: 'visit-time', text: 'Time' });
+  const $select = $('<select>', { id: 'visit-time', name: 'visit-time', class: 'form-select' });
+  $('<option>', { value: '', text: 'Choose a time' }).appendTo($select);
   for (let minutes = OPENING_HOUR * 60; minutes <= LAST_SEATING_HOUR * 60; minutes += 30) {
-    select.append(new Option(toTimeValue(minutes), toTimeValue(minutes)));
+    $('<option>', { value: toTimeValue(minutes), text: toTimeValue(minutes) }).appendTo($select);
   }
-  wrapper.append(label, select);
-  column.append(wrapper);
-  return column;
-}
-
-function readVisit() {
-  return {
-    name: visitForm.elements['guest-name'].value.trim(),
-    email: visitForm.elements['guest-email'].value.trim(),
-    phone: visitForm.elements['guest-phone'].value.trim(),
-    guests: Number(visitForm.elements['guest-count'].value),
-    date: visitForm.elements['visit-date'].value,
-    time: visitForm.elements['visit-time'].value,
-    reason: visitForm.elements['visit-reason'].selectedOptions[0].textContent,
-    contact: visitForm.elements['contact-method'].value,
-    window: visitForm.elements['window-seat'].checked,
-    notes: visitForm.elements['guest-message'].value.trim()
-  };
+  const $wrapper = $('<p>', { class: 'mb-0' }).append($label, $select);
+  return $('<div>', { class: 'col-12 col-md-4' }).append($wrapper);
 }
 
 function validateVisit(visit) {
@@ -90,50 +68,66 @@ function describeVisit(visit) {
   return visit.reason + ' · ' + guests + ' · ' + date + ' · ' + time + (visit.window ? ' · window seat' : '');
 }
 
-// Setup
-const dateColumn = visitForm.elements['visit-date'].closest('.col-12');
-dateColumn.after(createTimeField());
+$(function () {
+  const $visitForm = $('#booking .practice-form');
 
-enableForm(visitForm);
-visitForm.elements['visit-date'].min = addDays(0);
-visitForm.elements['visit-date'].max = addDays(BOOKING_DAYS);
-visitForm.elements['guest-count'].max = MAX_GUESTS;
-const reportVisitErrors = setUpFieldErrors(visitForm, visitFields);
-const visitSummary = createSummaryBox(visitForm);
-
-// Live summary under the visit details
-const liveSummary = createElement('p', 'source-note mb-0');
-const liveColumn = createElement('div', 'col-12');
-liveColumn.append(liveSummary);
-visitForm.elements['window-seat'].closest('.col-12').after(liveColumn);
-
-function updateLiveSummary() {
-  liveSummary.textContent = 'Your visit: ' + describeVisit(readVisit());
-}
-
-visitForm.addEventListener('input', updateLiveSummary);
-visitForm.addEventListener('change', updateLiveSummary);
-visitForm.addEventListener('reset', () => setTimeout(updateLiveSummary, 0));
-
-visitForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const visit = readVisit();
-  if (!reportVisitErrors(validateVisit(visit))) {
-    return;
+  function readVisit() {
+    return {
+      name: $('#guest-name').val().trim(),
+      email: $('#guest-email').val().trim(),
+      phone: $('#guest-phone').val().trim(),
+      guests: Number($('#guest-count').val()),
+      date: $('#visit-date').val(),
+      time: $('#visit-time').val(),
+      reason: $('#visit-reason option:selected').text(),
+      contact: $visitForm.find('input[name="contact-method"]:checked').val() || '',
+      window: $('#window-seat').prop('checked'),
+      notes: $('#guest-message').val().trim()
+    };
   }
 
-  visitForm.reset();
-  showSummary(visitSummary, 'Thank you, ' + visit.name + '. Your visit request is ready.', [
-    ['Visit', describeVisit(visit)],
-    ['Name', visit.name],
-    ['Email', visit.email],
-    ['Phone', visit.phone],
-    ['Contact me by', visit.contact === 'phone' ? 'Phone' : 'Email'],
-    ['Notes', visit.notes !== '' ? visit.notes : 'No notes']
-  ], [
-    'This is a demonstration request: nothing was sent to Golden Coffee and no table is reserved.',
-    'To book a table, call +7 775 072 96 70 or send a WhatsApp message.'
-  ]);
-});
+  // Setup
+  $('#visit-date').closest('.col-12').after(createTimeField());
 
-updateLiveSummary();
+  enableForm($visitForm);
+  $('#visit-date').attr({ min: addDays(0), max: addDays(BOOKING_DAYS) });
+  $('#guest-count').attr('max', MAX_GUESTS);
+  const reportVisitErrors = setUpFieldErrors($visitForm, visitFields, () => validateVisit(readVisit()));
+  const $visitSummary = createSummaryBox($visitForm);
+
+  // Live summary under the visit details
+  const $liveSummary = $('<p>', { class: 'source-note mb-0' });
+  $('<div>', { class: 'col-12' }).append($liveSummary).insertAfter($('#window-seat').closest('.col-12'));
+
+  function updateLiveSummary() {
+    $liveSummary.text('Your visit: ' + describeVisit(readVisit()));
+  }
+
+  $visitForm.on('input change', updateLiveSummary);
+  $visitForm.on('reset', function () {
+    setTimeout(updateLiveSummary, 0);
+  });
+
+  $visitForm.on('submit', function (event) {
+    event.preventDefault();
+    const visit = readVisit();
+    if (!reportVisitErrors(validateVisit(visit))) {
+      return;
+    }
+
+    $visitForm.trigger('reset');
+    showSummary($visitSummary, 'Thank you, ' + visit.name + '. Your visit request is ready.', [
+      ['Visit', describeVisit(visit)],
+      ['Name', visit.name],
+      ['Email', visit.email],
+      ['Phone', visit.phone],
+      ['Contact me by', visit.contact === 'phone' ? 'Phone' : 'Email'],
+      ['Notes', visit.notes !== '' ? visit.notes : 'No notes']
+    ], [
+      'This is a demonstration request: nothing was sent to Golden Coffee and no table is reserved.',
+      'To book a table, call +7 775 072 96 70 or send a WhatsApp message.'
+    ]);
+  });
+
+  updateLiveSummary();
+});

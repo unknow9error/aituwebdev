@@ -16,18 +16,6 @@ const categoryLabels = { breakfast: 'Breakfast', coffee: 'Coffee', tea: 'Tea' };
 const CART_KEY = 'golden-coffee-order';
 const MAX_QUANTITY = 10;
 
-// Plain helper kept for the form code below until that code moves to jQuery too.
-function createElement(tag, className, text) {
-  const element = document.createElement(tag);
-  if (className) {
-    element.className = className;
-  }
-  if (text !== undefined) {
-    element.textContent = text;
-  }
-  return element;
-}
-
 function makeButton(className, text) {
   return $('<button>', { type: 'button', class: className, text: text });
 }
@@ -297,91 +285,84 @@ function validateContact(name, email, phone) {
   return errors;
 }
 
-// The midterm forms had a disabled submit button; JavaScript validation now replaces the browser's.
-function enableForm(form) {
-  const submitButton = form.querySelector('button[type="submit"]');
-  form.noValidate = true;
-  submitButton.disabled = false;
-  submitButton.classList.replace('btn-secondary', 'btn-primary');
+// The midterm forms had a disabled submit button; jQuery validation now replaces the browser's.
+function enableForm($form) {
+  $form.prop('noValidate', true);
+  $form.find('button[type="submit"]').prop('disabled', false).removeClass('btn-secondary').addClass('btn-primary');
 }
 
 // Adds an error message under each listed field and returns the function that reports errors.
-function setUpFieldErrors(form, names) {
-  const errorElements = {};
-
+// getErrors reads the form again and returns the current errors, so a field is cleared only once it is really fixed.
+function setUpFieldErrors($form, names, getErrors) {
   function controlsOf(name) {
-    const control = form.elements[name];
-    return control instanceof RadioNodeList ? Array.from(control) : [control];
+    return $form.find('[name="' + name + '"]');
+  }
+
+  function errorOf(name) {
+    return $('#' + name + '-error');
   }
 
   function showError(name, message) {
-    controlsOf(name).forEach((control) => {
-      control.classList.add('is-invalid');
-      control.setAttribute('aria-invalid', 'true');
-    });
-    errorElements[name].textContent = message;
-    errorElements[name].classList.add('d-block');
+    controlsOf(name).addClass('is-invalid').attr('aria-invalid', 'true');
+    errorOf(name).text(message).addClass('d-block');
   }
 
   function clearError(name) {
-    controlsOf(name).forEach((control) => {
-      control.classList.remove('is-invalid');
-      control.removeAttribute('aria-invalid');
-    });
-    errorElements[name].textContent = '';
-    errorElements[name].classList.remove('d-block');
+    controlsOf(name).removeClass('is-invalid').removeAttr('aria-invalid');
+    errorOf(name).text('').removeClass('d-block');
   }
 
   // For radio buttons the message goes under the last option.
   names.forEach((name) => {
-    const controls = controlsOf(name);
-    const last = controls[controls.length - 1];
-    const error = createElement('span', 'invalid-feedback');
-    error.id = name + '-error';
-    (last.type === 'radio' ? last.parentElement : last).after(error);
-    controls.forEach((control) => control.setAttribute('aria-describedby', error.id));
-    errorElements[name] = error;
+    const $last = controlsOf(name).last();
+    const $error = $('<span>', { id: name + '-error', class: 'invalid-feedback' });
+    ($last.is(':radio') ? $last.parent() : $last).after($error);
+    controlsOf(name).attr('aria-describedby', $error.attr('id'));
   });
 
-  // Clear an outdated error as soon as the visitor changes that field.
-  ['input', 'change'].forEach((type) => {
-    form.addEventListener(type, (event) => {
-      if (errorElements[event.target.name] !== undefined) {
-        clearError(event.target.name);
-      }
-    });
+  $form.on('input change', '[name]', function () {
+    const name = $(this).attr('name');
+    if (!$(this).hasClass('is-invalid')) {
+      return;
+    }
+    const message = getErrors()[name];
+    if (message === undefined) {
+      clearError(name);
+    } else {
+      showError(name, message);
+    }
   });
-  form.addEventListener('reset', () => names.forEach(clearError));
+  $form.on('reset', function () {
+    names.forEach(clearError);
+  });
 
-  // Shows the errors in page order, focuses the first invalid field and returns true when there are none.
+  // Shows the errors, focuses the first invalid field and returns true when there are none.
   return function report(errors) {
     names.forEach(clearError);
     const invalid = names.filter((name) => errors[name] !== undefined);
     invalid.forEach((name) => showError(name, errors[name]));
-    if (invalid.length > 0) {
-      controlsOf(invalid[0])[0].focus();
-    }
+    $form.find('.is-invalid:first').trigger('focus');
     return invalid.length === 0;
   };
 }
 
-function createSummaryBox(form) {
-  const summary = createElement('div', 'form-note p-3 p-md-4 mt-4 d-none');
-  summary.tabIndex = -1;
-  summary.setAttribute('role', 'status');
-  form.after(summary);
-  form.addEventListener('reset', () => summary.classList.add('d-none'));
-  return summary;
+function createSummaryBox($form) {
+  const $summary = $('<div>', { class: 'form-note p-3 p-md-4 mt-4 d-none', tabindex: -1, role: 'status' });
+  $form.after($summary).on('reset', function () {
+    $summary.addClass('d-none');
+  });
+  return $summary;
 }
 
-function showSummary(summary, title, rows, notes) {
-  const list = createElement('dl', 'row mb-3');
+function showSummary($summary, title, rows, notes) {
+  const $list = $('<dl>', { class: 'row mb-3' });
   rows.forEach((row) => {
-    list.append(createElement('dt', 'col-sm-4 fw-semibold', row[0]), createElement('dd', 'col-sm-8 mb-2', row[1]));
+    $list.append($('<dt>', { class: 'col-sm-4 fw-semibold', text: row[0] }), $('<dd>', { class: 'col-sm-8 mb-2', text: row[1] }));
   });
-  summary.replaceChildren(createElement('h3', 'subheading', title), list);
-  notes.forEach((note) => summary.append(createElement('p', '', note)));
-  summary.lastElementChild.classList.add('mb-0');
-  summary.classList.remove('d-none');
-  summary.focus();
+  $summary.empty().append($('<h3>', { class: 'subheading', text: title }), $list);
+  notes.forEach((note) => {
+    $('<p>', { text: note }).appendTo($summary);
+  });
+  $summary.children().last().addClass('mb-0');
+  $summary.removeClass('d-none').trigger('focus');
 }

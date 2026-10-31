@@ -18,61 +18,25 @@ function recommendLabel(answer) {
 }
 
 function createReviewCard(review) {
-  const figure = createElement('figure', 'review-quote mb-4');
-  const quote = createElement('blockquote', 'blockquote mb-3');
-  quote.append(createElement('p', '', review.text));
+  const $quote = $('<blockquote>', { class: 'blockquote mb-3' }).append($('<p>', { text: review.text }));
 
-  const caption = createElement('figcaption', 'source-note');
   const parts = [review.name, recommendLabel(review.recommend)].filter((part) => part !== '');
-  caption.append(parts.join(' · ') + ' · ' + (review.source !== '' ? review.source + ', accessed ' : 'Added '));
+  const $intro = $('<span>', { text: parts.join(' · ') + ' · ' + (review.source !== '' ? review.source + ', accessed ' : 'Added ') });
 
   // Reviews from other sites have only a date; reviews written here also show the time.
   const options = review.source !== ''
     ? { day: 'numeric', month: 'long', year: 'numeric' }
     : { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
-  const time = createElement('time', '', review.date.toLocaleString('en-GB', options));
-  time.dateTime = review.date.toISOString();
-  caption.append(time, '.');
+  const $time = $('<time>', { datetime: review.date.toISOString(), text: review.date.toLocaleString('en-GB', options) });
+  const $caption = $('<figcaption>', { class: 'source-note' }).append($intro, $time, '.');
 
-  figure.append(quote, caption);
-  return figure;
+  return $('<figure>', { class: 'review-quote mb-4' }).append($quote, $caption);
 }
 
-const reviewsList = createElement('div', '');
-document.querySelector('#reviews .review-quote').replaceWith(reviewsList);
-
-function renderReviews() {
-  reviewsList.replaceChildren(...reviews.map(createReviewCard));
-  if (reviews.length === 0) {
-    reviewsList.append(createElement('p', 'source-note', 'No guest comments yet.'));
-  }
-}
-
-renderReviews();
-
-// ---------- Inquiry form ----------
-
-const form = document.querySelector('.practice-form');
-const messageField = document.getElementById('client-comment');
 const MIN_MESSAGE = 20;
 
 // Field names in page order, so the first error found is the first one on screen.
 const checkedFields = ['client-name', 'client-email', 'client-tel', 'item-quantity', 'order-date', 'recommend', 'client-comment'];
-
-function readValues() {
-  return {
-    name: form.elements['client-name'].value.trim(),
-    email: form.elements['client-email'].value.trim(),
-    phone: form.elements['client-tel'].value.trim(),
-    quantity: Number(form.elements['item-quantity'].value),
-    date: form.elements['order-date'].value,
-    topic: form.elements['inquiry-type'].value,
-    topicLabel: form.elements['inquiry-type'].selectedOptions[0].textContent,
-    recommend: form.elements.recommend.value,
-    message: messageField.value.trim(),
-    newsletter: form.elements.newsletter.checked
-  };
-}
 
 function validateInquiry(values) {
   const contact = validateContact(values.name, values.email, values.phone);
@@ -116,54 +80,89 @@ function validateInquiry(values) {
   return errors;
 }
 
-enableForm(form);
-form.elements['order-date'].min = addDays(0);
-const reportErrors = setUpFieldErrors(form, checkedFields);
-const summary = createSummaryBox(form);
+$(function () {
+  const $reviewsList = $('<div>');
+  $('#reviews .review-quote').replaceWith($reviewsList);
 
-// Character counter for the message
-const counter = createElement('span', 'form-text d-block');
-counter.id = 'client-comment-counter';
-document.getElementById('client-comment-error').after(counter);
-messageField.setAttribute('aria-describedby', 'client-comment-error client-comment-counter');
-
-function updateCounter() {
-  counter.textContent = messageField.value.length + ' / ' + messageField.maxLength + ' characters';
-}
-
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const values = readValues();
-  if (!reportErrors(validateInquiry(values))) {
-    return;
+  function renderReviews() {
+    $reviewsList.empty().append(reviews.map(createReviewCard));
+    if (reviews.length === 0) {
+      $('<p>', { class: 'source-note', text: 'No guest comments yet.' }).appendTo($reviewsList);
+    }
   }
 
-  if (values.topic === 'review') {
-    reviews.unshift({ name: values.name, text: values.message, recommend: values.recommend, date: new Date(), source: '' });
-    renderReviews();
+  renderReviews();
+
+  // ---------- Inquiry form ----------
+
+  const $form = $('.practice-form');
+  const $messageField = $('#client-comment');
+
+  function readValues() {
+    return {
+      name: $('#client-name').val().trim(),
+      email: $('#client-email').val().trim(),
+      phone: $('#client-tel').val().trim(),
+      quantity: Number($('#item-quantity').val()),
+      date: $('#order-date').val(),
+      topic: $('#inquiry-type').val(),
+      topicLabel: $('#inquiry-type option:selected').text(),
+      recommend: $form.find('input[name="recommend"]:checked').val() || '',
+      message: $messageField.val().trim(),
+      newsletter: $('#newsletter').prop('checked')
+    };
   }
 
-  const notes = ['This is a demonstration: nothing was sent to Golden Coffee and no booking or order was created. To reach the cafe, call +7 775 072 96 70.'];
-  if (values.topic === 'review') {
-    notes.unshift('Your comment now appears under Recent Guest Comments on this page until you reload it.');
+  enableForm($form);
+  $('#order-date').attr('min', addDays(0));
+  const reportErrors = setUpFieldErrors($form, checkedFields, () => validateInquiry(readValues()));
+  const $summary = createSummaryBox($form);
+
+  // Character counter for the message
+  const $counter = $('<span>', { id: 'client-comment-counter', class: 'form-text d-block' });
+  $('#client-comment-error').after($counter);
+  $messageField.attr('aria-describedby', 'client-comment-error client-comment-counter');
+
+  function updateCounter() {
+    $counter.text($messageField.val().length + ' / ' + $messageField.attr('maxlength') + ' characters');
   }
 
-  form.reset();
-  showSummary(summary, 'Thank you, ' + values.name + '. Your inquiry is ready.', [
-    ['Name', values.name],
-    ['Email', values.email],
-    ['Phone', values.phone],
-    ['Cups or guests', String(values.quantity)],
-    ['Date', formatDate(values.date)],
-    ['Topic', values.topicLabel],
-    ['Would recommend', recommendLabel(values.recommend)],
-    ['Message', values.message !== '' ? values.message : 'No message'],
-    ['Seasonal menu emails', values.newsletter ? 'Yes' : 'No']
-  ], notes);
+  $form.on('submit', function (event) {
+    event.preventDefault();
+    const values = readValues();
+    if (!reportErrors(validateInquiry(values))) {
+      return;
+    }
+
+    if (values.topic === 'review') {
+      reviews.unshift({ name: values.name, text: values.message, recommend: values.recommend, date: new Date(), source: '' });
+      renderReviews();
+    }
+
+    const notes = ['This is a demonstration: nothing was sent to Golden Coffee and no booking or order was created. To reach the cafe, call +7 775 072 96 70.'];
+    if (values.topic === 'review') {
+      notes.unshift('Your comment now appears under Recent Guest Comments on this page until you reload it.');
+    }
+
+    $form.trigger('reset');
+    showSummary($summary, 'Thank you, ' + values.name + '. Your inquiry is ready.', [
+      ['Name', values.name],
+      ['Email', values.email],
+      ['Phone', values.phone],
+      ['Cups or guests', String(values.quantity)],
+      ['Date', formatDate(values.date)],
+      ['Topic', values.topicLabel],
+      ['Would recommend', recommendLabel(values.recommend)],
+      ['Message', values.message !== '' ? values.message : 'No message'],
+      ['Seasonal menu emails', values.newsletter ? 'Yes' : 'No']
+    ], notes);
+  });
+
+  $messageField.on('input', updateCounter);
+  // The browser empties the fields after the reset event, so update the counter on the next tick.
+  $form.on('reset', function () {
+    setTimeout(updateCounter, 0);
+  });
+
+  updateCounter();
 });
-
-messageField.addEventListener('input', updateCounter);
-// The browser empties the fields after the reset event, so update the counter on the next tick.
-form.addEventListener('reset', () => setTimeout(updateCounter, 0));
-
-updateCounter();
