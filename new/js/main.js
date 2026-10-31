@@ -1,5 +1,9 @@
 'use strict';
 
+// jQuery 3.7.1 is linked from a CDN in every page, before this file, because $ must exist before our code calls it.
+// $(function () { ... }) is the short form of $(document).ready(): the code inside waits until the page is parsed.
+// Data and helpers stay outside it, so that menu.js, drinks.js, feedback.js and visit.js can use them.
+
 // Golden Coffee menu. Prices in KZT match the price tables on menu.html and drinks.html.
 const menuItems = [
   { id: 'golden-breakfast', name: 'Golden Breakfast', category: 'breakfast', price: 2400, description: 'French baguette with eggs, salmon and salad mix.', photo: 'dish-photo dish-photo-0' },
@@ -125,6 +129,8 @@ $(function () {
   const $orderButton = buildOrderButton();
   const order = buildOrderModal();
 
+  // REWRITE 1, order list. $('<li>', {...}) replaced createElement() plus className, .attr() replaced setAttribute(),
+  // and one delegated .on() replaced three addEventListener() calls per line. Clearly shorter (about a quarter fewer lines) and clearer.
   function createCartLine(line) {
     const item = findItem(line.id);
     const $row = $('<li>', { class: 'd-flex flex-wrap align-items-center gap-2 py-3 border-bottom', 'data-id': item.id });
@@ -180,6 +186,9 @@ $(function () {
     renderCart();
   }
 
+  // Delegation: the handler sits on #order-list, which always exists, and catches clicks that bubble up from its buttons.
+  // Binding directly to [data-action] would not work: .on() attaches only to elements that exist at that moment,
+  // and renderCart() throws the buttons away and creates new ones after every change.
   order.$list.on('click', '[data-action]', function () {
     const $button = $(this);
     const id = $button.closest('li').attr('data-id');
@@ -201,6 +210,7 @@ $(function () {
     restoreFocus(id, action);
   });
 
+  // Delegated too: on menu.html the cards are rebuilt on every filter, so the buttons come and go while <main> stays.
   $('main').on('click', '.add-to-order', function () {
     const $button = $(this);
     const id = $button.attr('data-id');
@@ -293,11 +303,18 @@ function validateContact(name, email, phone) {
 }
 
 // The midterm forms had a disabled submit button; jQuery validation now replaces the browser's.
+// .prop() and not .attr(): noValidate and disabled are live properties of the element, not text in the markup.
+// The required attributes stay in the HTML as the first line of defence: without JavaScript the browser still enforces them.
+// No browser check replaces a check on the server: the visitor controls the browser and can switch it off or send the request directly.
 function enableForm($form) {
   $form.prop('noValidate', true);
+  // Chain, each link returns the same button: .find() gets it from the form, .prop() switches it on,
+  // .removeClass() takes away the grey look and .addClass() gives it the active brown look.
   $form.find('button[type="submit"]').prop('disabled', false).removeClass('btn-secondary').addClass('btn-primary');
 }
 
+// REWRITE 3, form validation. .addClass()/.removeClass() replaced classList, .text() replaced textContent, $form.find() replaced form.elements,
+// and $form.on('input change', '[name]', ...) replaced two addEventListener() calls in a loop. Somewhat shorter, and no RadioNodeList special case.
 // Adds an error message under each listed field and returns the function that reports errors.
 // getErrors reads the form again and returns the current errors, so a field is cleared only once it is really fixed.
 function setUpFieldErrors($form, names, getErrors) {
@@ -348,6 +365,7 @@ function setUpFieldErrors($form, names, getErrors) {
     names.forEach(clearError);
     const invalid = names.filter((name) => errors[name] !== undefined);
     invalid.forEach((name) => showError(name, errors[name]));
+    // :first keeps only the first match, which is the first invalid field on the page.
     $form.find('.is-invalid:first').trigger('focus');
     return invalid.length === 0;
   };

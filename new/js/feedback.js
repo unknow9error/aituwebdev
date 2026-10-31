@@ -21,6 +21,7 @@ function createReviewCard(review) {
   const $quote = $('<blockquote>', { class: 'blockquote mb-3' }).append($('<p>', { text: review.text }));
 
   const parts = [review.name, recommendLabel(review.recommend)].filter((part) => part !== '');
+  // text: is .text(), so a review with <b> in it is shown as plain characters. .html() would run it as markup.
   const $intro = $('<span>', { text: parts.join(' · ') + ' · ' + (review.source !== '' ? review.source + ', accessed ' : 'Added ') });
 
   // Reviews from other sites have only a date; reviews written here also show the time.
@@ -109,6 +110,7 @@ $(function () {
       topicLabel: $('#inquiry-type option:selected').text(),
       recommend: $form.find('input[name="recommend"]:checked').val() || '',
       message: $messageField.val().trim(),
+      // .prop('checked') is the current state of the box; .attr('checked') only says what the HTML said at page load.
       newsletter: $('#newsletter').prop('checked')
     };
   }
@@ -128,6 +130,7 @@ $(function () {
   }
 
   $form.on('submit', function (event) {
+    // Without this the browser would send the form and reload the page, and the error messages would be lost.
     event.preventDefault();
     const values = readValues();
     if (!reportErrors(validateInquiry(values))) {

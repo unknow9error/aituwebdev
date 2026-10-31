@@ -109,6 +109,7 @@ $(function () {
   });
 
   $visitForm.on('submit', function (event) {
+    // Without this the browser would reload visit.html with the answers in the address bar.
     event.preventDefault();
     const visit = readVisit();
     if (!reportVisitErrors(validateVisit(visit))) {

@@ -6,6 +6,8 @@ function filterItems(items, category, query) {
     (text === '' || item.name.toLowerCase().includes(text) || item.description.toLowerCase().includes(text)));
 }
 
+// REWRITE 2, menu catalogue. $('<div>', {...}) and .append() replaced createElement() with append(), .val() replaced .value,
+// and .empty().append(cards) replaced replaceChildren(). Only a little shorter: the logic is the same, it just reads more compactly.
 function createMenuCard(item) {
   const $article = $('<article>', { class: 'menu-entry' });
 
@@ -61,6 +63,7 @@ $(function () {
 
   function renderMenu() {
     const results = filterItems(menuItems, $categorySelect.val(), $searchInput.val());
+    // The cards exist nowhere in menu.html: they are built here from the menuItems array.
     $grid.empty().append(results.map(createMenuCard));
     $resultCount.text('Showing ' + results.length + ' of ' + menuItems.length + ' items.');
     $emptyState.stop(true, true);
