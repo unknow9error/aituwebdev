@@ -1,8 +1,5 @@
 'use strict';
 
-const breakfastsSection = document.getElementById('breakfasts');
-const staticCards = breakfastsSection.querySelector('.row');
-
 function filterItems(items, category, query) {
   const text = query.trim().toLowerCase();
   return items.filter((item) => (category === 'all' || item.category === category) &&
@@ -10,76 +7,65 @@ function filterItems(items, category, query) {
 }
 
 function createMenuCard(item) {
-  const column = createElement('div', 'col-12 col-md-6 col-lg-4');
-  const article = createElement('article', 'menu-entry');
+  const $article = $('<article>', { class: 'menu-entry' });
 
   if (item.photo !== '') {
-    const photo = createElement('div', item.photo);
-    photo.setAttribute('role', 'img');
-    photo.setAttribute('aria-label', 'Illustration of ' + item.name);
-    article.append(photo);
+    $('<div>', { class: item.photo, role: 'img', 'aria-label': 'Illustration of ' + item.name }).appendTo($article);
   }
-  article.append(
-    createElement('p', 'eyebrow mb-2', categoryLabels[item.category]),
-    createElement('h3', 'dish-title', item.name),
-    createElement('p', 'menu-description mb-0', item.description),
+  $article.append(
+    $('<p>', { class: 'eyebrow mb-2', text: categoryLabels[item.category] }),
+    $('<h3>', { class: 'dish-title', text: item.name }),
+    $('<p>', { class: 'menu-description mb-0', text: item.description }),
     createAddButton(item)
   );
 
-  column.append(article);
-  return column;
+  return $('<div>', { class: 'col-12 col-md-6 col-lg-4' }).append($article);
 }
 
-function createField(labelText, control) {
-  const column = createElement('div', 'col-12 col-md-5');
-  const label = createElement('label', 'form-label', labelText);
-  label.htmlFor = control.id;
-  column.append(label, control);
-  return column;
+function createField(labelText, $control) {
+  const $label = $('<label>', { class: 'form-label', for: $control.attr('id'), text: labelText });
+  return $('<div>', { class: 'col-12 col-md-5' }).append($label, $control);
 }
 
-// Controls
-const categorySelect = createElement('select', 'form-select');
-categorySelect.id = 'menu-category';
-categorySelect.append(new Option('All dishes and drinks', 'all'));
-const categories = [...new Set(menuItems.map((item) => item.category))];
-categories.forEach((category) => {
-  categorySelect.append(new Option(categoryLabels[category], category));
-});
+$(function () {
+  // Controls
+  const $categorySelect = $('<select>', { id: 'menu-category', class: 'form-select' });
+  $('<option>', { value: 'all', text: 'All dishes and drinks' }).appendTo($categorySelect);
+  const categories = [...new Set(menuItems.map((item) => item.category))];
+  categories.forEach((category) => {
+    $('<option>', { value: category, text: categoryLabels[category] }).appendTo($categorySelect);
+  });
 
-const searchInput = createElement('input', 'form-control');
-searchInput.id = 'menu-search';
-searchInput.type = 'search';
-searchInput.placeholder = 'Salmon, latte, honey...';
+  const $searchInput = $('<input>', { id: 'menu-search', class: 'form-control', type: 'search', placeholder: 'Salmon, latte, honey...' });
+  const $resetButton = makeButton('btn btn-outline-primary w-100', 'Reset');
+  const $resetColumn = $('<div>', { class: 'col-12 col-md-2' }).append($resetButton);
 
-const resetButton = createButton('btn btn-outline-primary w-100', 'Reset');
-const resetColumn = createElement('div', 'col-12 col-md-2');
-resetColumn.append(resetButton);
+  const $controls = $('<div>', { class: 'row g-3 align-items-end mb-3' }).append(
+    createField('Category', $categorySelect),
+    createField('Search by name or ingredient', $searchInput),
+    $resetColumn
+  );
 
-const controls = createElement('div', 'row g-3 align-items-end mb-3');
-controls.append(createField('Category', categorySelect), createField('Search by name or ingredient', searchInput), resetColumn);
+  const $resultCount = $('<p>', { class: 'source-note mb-4', role: 'status' });
+  const $emptyState = $('<p>', { class: 'form-note p-3 p-md-4 d-none', text: 'Nothing matches your search. Try another word or press Reset to see the whole menu.' });
+  const $grid = $('<div>', { id: 'menu-grid', class: 'row g-4' });
 
-const resultCount = createElement('p', 'source-note mb-4');
-resultCount.setAttribute('role', 'status');
-const emptyState = createElement('p', 'form-note p-3 p-md-4 d-none', 'Nothing matches your search. Try another word or press Reset to see the whole menu.');
-const grid = createElement('div', 'row g-4');
+  function renderMenu() {
+    const results = filterItems(menuItems, $categorySelect.val(), $searchInput.val());
+    $grid.empty().append(results.map(createMenuCard));
+    $resultCount.text('Showing ' + results.length + ' of ' + menuItems.length + ' items.');
+    $emptyState.toggleClass('d-none', results.length !== 0);
+  }
 
-function renderMenu() {
-  const results = filterItems(menuItems, categorySelect.value, searchInput.value);
-  grid.replaceChildren(...results.map(createMenuCard));
-  resultCount.textContent = 'Showing ' + results.length + ' of ' + menuItems.length + ' items.';
-  emptyState.classList.toggle('d-none', results.length !== 0);
-}
+  $categorySelect.on('change', renderMenu);
+  $searchInput.on('input', renderMenu);
+  $resetButton.on('click', function () {
+    $categorySelect.val('all');
+    $searchInput.val('').trigger('focus');
+    renderMenu();
+  });
 
-categorySelect.addEventListener('change', renderMenu);
-searchInput.addEventListener('input', renderMenu);
-resetButton.addEventListener('click', () => {
-  categorySelect.value = 'all';
-  searchInput.value = '';
+  $('#breakfasts-title').text('Breakfast and drinks');
+  $('#breakfasts .row:first').before($controls, $resultCount, $emptyState, $grid).remove();
   renderMenu();
-  searchInput.focus();
 });
-
-document.getElementById('breakfasts-title').textContent = 'Breakfast and drinks';
-staticCards.replaceWith(controls, resultCount, emptyState, grid);
-renderMenu();

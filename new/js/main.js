@@ -16,6 +16,7 @@ const categoryLabels = { breakfast: 'Breakfast', coffee: 'Coffee', tea: 'Tea' };
 const CART_KEY = 'golden-coffee-order';
 const MAX_QUANTITY = 10;
 
+// Plain helper kept for the form code below until that code moves to jQuery too.
 function createElement(tag, className, text) {
   const element = document.createElement(tag);
   if (className) {
@@ -27,18 +28,14 @@ function createElement(tag, className, text) {
   return element;
 }
 
-function createButton(className, text) {
-  const button = createElement('button', className, text);
-  button.type = 'button';
-  return button;
+function makeButton(className, text) {
+  return $('<button>', { type: 'button', class: className, text: text });
 }
 
 // site.css has no disabled colours for the brown buttons, so a disabled button switches to Bootstrap's grey variant.
-function setButtonDisabled(button, disabled, activeClass) {
+function setButtonDisabled($button, disabled, activeClass) {
   const greyClass = activeClass.replace('primary', 'secondary');
-  button.disabled = disabled;
-  button.classList.toggle(activeClass, !disabled);
-  button.classList.toggle(greyClass, disabled);
+  $button.prop('disabled', disabled).toggleClass(activeClass, !disabled).toggleClass(greyClass, disabled);
 }
 
 function formatPrice(amount) {
@@ -98,208 +95,168 @@ function makeReference() {
   return 'GC-' + Math.floor(1000 + Math.random() * 9000);
 }
 
-function buildOrderButton() {
-  const nav = document.querySelector('#main-navigation .navbar-nav');
-  const item = createElement('li', 'nav-item');
-  const button = createButton('nav-link fw-semibold text-nowrap');
-  button.setAttribute('data-bs-toggle', 'modal');
-  button.setAttribute('data-bs-target', '#order-modal');
-  item.append(button);
-  nav.append(item);
-  return button;
-}
-
-function buildOrderModal() {
-  const modal = createElement('div', 'modal fade');
-  modal.id = 'order-modal';
-  modal.tabIndex = -1;
-  modal.setAttribute('aria-labelledby', 'order-title');
-
-  const dialog = createElement('div', 'modal-dialog modal-dialog-scrollable');
-  const content = createElement('div', 'modal-content');
-
-  const header = createElement('div', 'modal-header');
-  const title = createElement('h2', 'modal-title subheading mb-0', 'Your order');
-  title.id = 'order-title';
-  title.tabIndex = -1;
-  const close = createButton('btn-close');
-  close.setAttribute('data-bs-dismiss', 'modal');
-  close.setAttribute('aria-label', 'Close');
-  header.append(title, close);
-
-  const body = createElement('div', 'modal-body');
-  const status = createElement('p', 'source-note mb-2');
-  status.setAttribute('role', 'status');
-  const confirmation = createElement('div', 'form-note p-3 mb-3 d-none');
-  confirmation.tabIndex = -1;
-  const empty = createElement('p', 'mb-0', 'Your order is empty. ');
-  const menuLink = createElement('a', '', 'Browse the menu');
-  menuLink.href = 'menu.html';
-  empty.append(menuLink, ' to add breakfasts or drinks.');
-  const list = createElement('ul', 'list-unstyled mb-0');
-  const totals = createElement('p', 'fw-semibold mt-3 mb-0');
-  const note = createElement('p', 'source-note mt-2 mb-0', 'Demonstration only: no order is sent to the cafe and no payment is taken.');
-  body.append(status, confirmation, empty, list, totals, note);
-
-  const footer = createElement('div', 'modal-footer');
-  const clear = createButton('btn', 'Clear order');
-  const checkout = createButton('btn', 'Place demo order');
-  footer.append(clear, checkout);
-
-  content.append(header, body, footer);
-  dialog.append(content);
-  modal.append(dialog);
-  document.body.append(modal);
-
-  return { modal, title, status, confirmation, empty, list, totals, clear, checkout };
-}
-
-const orderButton = buildOrderButton();
-const order = buildOrderModal();
-
-function createCartLine(line) {
-  const item = findItem(line.id);
-  const row = createElement('li', 'd-flex flex-wrap align-items-center gap-2 py-3 border-bottom');
-
-  const info = createElement('div', 'flex-grow-1');
-  info.append(
-    createElement('p', 'fw-semibold mb-0', item.name),
-    createElement('p', 'source-note mb-0', formatPrice(item.price) + ' each')
-  );
-
-  const minus = createButton('btn px-3 py-1', '−');
-  minus.setAttribute('aria-label', 'Remove one ' + item.name);
-  setButtonDisabled(minus, line.quantity === 1, 'btn-outline-primary');
-  const quantity = createElement('span', 'px-1', String(line.quantity));
-  const plus = createButton('btn px-3 py-1', '+');
-  plus.setAttribute('aria-label', 'Add one more ' + item.name);
-  setButtonDisabled(plus, line.quantity === MAX_QUANTITY, 'btn-outline-primary');
-  const subtotal = createElement('span', 'text-nowrap ms-2', formatPrice(lineSubtotal(line)));
-  const remove = createButton('btn btn-link p-0 ms-2', 'Remove');
-  remove.setAttribute('aria-label', 'Remove ' + item.name + ' from the order');
-
-  minus.dataset.action = 'minus';
-  plus.dataset.action = 'plus';
-  [minus, plus].forEach((button) => {
-    button.dataset.id = item.id;
-  });
-
-  minus.addEventListener('click', () => {
-    setQuantity(item.id, line.quantity - 1);
-    order.status.textContent = item.name + ': ' + getQuantity(item.id) + '.';
-    restoreFocus(item.id, 'minus');
-  });
-  plus.addEventListener('click', () => {
-    setQuantity(item.id, line.quantity + 1);
-    order.status.textContent = item.name + ': ' + getQuantity(item.id) + '.';
-    restoreFocus(item.id, 'plus');
-  });
-  remove.addEventListener('click', () => {
-    setQuantity(item.id, 0);
-    order.status.textContent = item.name + ' was removed from your order.';
-    order.title.focus();
-  });
-
-  row.append(info, minus, quantity, plus, subtotal, remove);
-  return row;
-}
-
-// The list is rebuilt after every change, so keyboard focus goes back to the same button.
-function restoreFocus(id, action) {
-  const target = order.list.querySelector('[data-id="' + id + '"][data-action="' + action + '"]');
-  if (target && !target.disabled) {
-    target.focus();
-  } else {
-    order.title.focus();
-  }
-}
-
-function renderCart() {
-  const totals = cartTotals(cart);
-  const isEmpty = cart.length === 0;
-
-  order.list.replaceChildren(...cart.map(createCartLine));
-  order.empty.classList.toggle('d-none', !isEmpty);
-  order.totals.classList.toggle('d-none', isEmpty);
-  order.totals.textContent = countLabel(totals.quantity) + ' · Total ' + formatPrice(totals.price);
-  setButtonDisabled(order.clear, isEmpty, 'btn-outline-primary');
-  setButtonDisabled(order.checkout, isEmpty, 'btn-primary');
-  orderButton.textContent = 'Order (' + totals.quantity + ')';
-
-  // "Added" notes under the menu buttons would be out of date now.
-  document.querySelectorAll('[data-add-note]').forEach((note) => {
-    note.textContent = '';
-  });
-}
-
-function setQuantity(id, quantity) {
-  const line = cart.find((entry) => entry.id === id);
-  if (quantity <= 0) {
-    cart = cart.filter((entry) => entry.id !== id);
-  } else if (line) {
-    line.quantity = Math.min(quantity, MAX_QUANTITY);
-  } else {
-    cart.push({ id: id, quantity: Math.min(quantity, MAX_QUANTITY) });
-  }
-  order.confirmation.classList.add('d-none');
-  saveCart();
-  renderCart();
-}
-
 // "Add to order" button with a short status note, used on the menu and drinks pages.
 function createAddButton(item) {
-  const wrapper = createElement('div', 'd-flex flex-wrap align-items-center gap-3 mt-3');
-  const button = createButton('btn btn-outline-primary', 'Add to order · ' + formatPrice(item.price));
-  const note = createElement('span', 'source-note');
-  note.setAttribute('role', 'status');
-  note.dataset.addNote = '';
-
-  button.addEventListener('click', () => {
-    const quantity = getQuantity(item.id);
-    if (quantity === MAX_QUANTITY) {
-      note.textContent = 'You already have the maximum of ' + MAX_QUANTITY + '.';
-      return;
-    }
-    setQuantity(item.id, quantity + 1);
-    note.textContent = 'Added. ' + (quantity + 1) + ' in your order.';
-  });
-
-  wrapper.append(button, note);
-  return wrapper;
+  const $button = makeButton('btn btn-outline-primary add-to-order', 'Add to order · ' + formatPrice(item.price)).attr('data-id', item.id);
+  const $note = $('<span>', { class: 'source-note', role: 'status', 'data-add-note': '' });
+  return $('<div>', { class: 'd-flex flex-wrap align-items-center gap-3 mt-3' }).append($button, $note);
 }
 
-order.clear.addEventListener('click', () => {
-  cart = [];
-  saveCart();
+$(function () {
+  function buildOrderButton() {
+    const $button = makeButton('nav-link fw-semibold text-nowrap').attr({ 'data-bs-toggle': 'modal', 'data-bs-target': '#order-modal' });
+    $('<li>', { class: 'nav-item' }).append($button).appendTo('#main-navigation .navbar-nav');
+    return $button;
+  }
+
+  function buildOrderModal() {
+    const $title = $('<h2>', { id: 'order-title', class: 'modal-title subheading mb-0', tabindex: -1, text: 'Your order' });
+    const $close = makeButton('btn-close').attr({ 'data-bs-dismiss': 'modal', 'aria-label': 'Close' });
+    const $header = $('<div>', { class: 'modal-header' }).append($title, $close);
+
+    const $status = $('<p>', { class: 'source-note mb-2', role: 'status' });
+    const $confirmation = $('<div>', { class: 'form-note p-3 mb-3 d-none', tabindex: -1 });
+    // .html() and not .text(): this string is our own markup with a link in it, and .text() would print the tags.
+    const $empty = $('<p>', { class: 'mb-0' }).html('Your order is empty. <a href="menu.html">Browse the menu</a> to add breakfasts or drinks.');
+    const $list = $('<ul>', { id: 'order-list', class: 'list-unstyled mb-0' });
+    const $totals = $('<p>', { class: 'fw-semibold mt-3 mb-0' });
+    const $note = $('<p>', { class: 'source-note mt-2 mb-0', text: 'Demonstration only: no order is sent to the cafe and no payment is taken.' });
+    const $body = $('<div>', { class: 'modal-body' }).append($status, $confirmation, $empty, $list, $totals, $note);
+
+    const $clear = makeButton('btn', 'Clear order');
+    const $checkout = makeButton('btn', 'Place demo order');
+    const $footer = $('<div>', { class: 'modal-footer' }).append($clear, $checkout);
+
+    const $content = $('<div>', { class: 'modal-content' }).append($header, $body, $footer);
+    const $dialog = $('<div>', { class: 'modal-dialog modal-dialog-scrollable' }).append($content);
+    const $modal = $('<div>', { id: 'order-modal', class: 'modal fade', tabindex: -1, 'aria-labelledby': 'order-title' }).append($dialog).appendTo('body');
+
+    return { $modal, $title, $status, $confirmation, $empty, $list, $totals, $clear, $checkout };
+  }
+
+  const $orderButton = buildOrderButton();
+  const order = buildOrderModal();
+
+  function createCartLine(line) {
+    const item = findItem(line.id);
+    const $row = $('<li>', { class: 'd-flex flex-wrap align-items-center gap-2 py-3 border-bottom', 'data-id': item.id });
+
+    const $info = $('<div>', { class: 'flex-grow-1' }).append(
+      $('<p>', { class: 'fw-semibold mb-0', text: item.name }),
+      $('<p>', { class: 'source-note mb-0', text: formatPrice(item.price) + ' each' })
+    );
+
+    const $minus = makeButton('btn px-3 py-1', '−').attr({ 'data-action': 'minus', 'aria-label': 'Remove one ' + item.name });
+    setButtonDisabled($minus, line.quantity === 1, 'btn-outline-primary');
+    const $quantity = $('<span>', { class: 'px-1', text: line.quantity });
+    const $plus = makeButton('btn px-3 py-1', '+').attr({ 'data-action': 'plus', 'aria-label': 'Add one more ' + item.name });
+    setButtonDisabled($plus, line.quantity === MAX_QUANTITY, 'btn-outline-primary');
+    const $subtotal = $('<span>', { class: 'text-nowrap ms-2', text: formatPrice(lineSubtotal(line)) });
+    const $remove = makeButton('btn btn-link p-0 ms-2', 'Remove').attr({ 'data-action': 'remove', 'aria-label': 'Remove ' + item.name + ' from the order' });
+
+    return $row.append($info, $minus, $quantity, $plus, $subtotal, $remove);
+  }
+
+  // The list is rebuilt after every change, so keyboard focus goes back to the same button.
+  function restoreFocus(id, action) {
+    const $target = order.$list.find('li[data-id="' + id + '"] [data-action="' + action + '"]:not(:disabled)');
+    ($target.length > 0 ? $target : order.$title).trigger('focus');
+  }
+
+  function renderCart() {
+    const totals = cartTotals(cart);
+    const isEmpty = cart.length === 0;
+
+    order.$list.empty().append(cart.map(createCartLine));
+    order.$empty.toggleClass('d-none', !isEmpty);
+    order.$totals.toggleClass('d-none', isEmpty).text(countLabel(totals.quantity) + ' · Total ' + formatPrice(totals.price));
+    setButtonDisabled(order.$clear, isEmpty, 'btn-outline-primary');
+    setButtonDisabled(order.$checkout, isEmpty, 'btn-primary');
+    $orderButton.text('Order (' + totals.quantity + ')');
+
+    // "Added" notes under the menu buttons would be out of date now.
+    $('[data-add-note]').text('');
+  }
+
+  function setQuantity(id, quantity) {
+    const line = cart.find((entry) => entry.id === id);
+    if (quantity <= 0) {
+      cart = cart.filter((entry) => entry.id !== id);
+    } else if (line) {
+      line.quantity = Math.min(quantity, MAX_QUANTITY);
+    } else {
+      cart.push({ id: id, quantity: Math.min(quantity, MAX_QUANTITY) });
+    }
+    order.$confirmation.addClass('d-none');
+    saveCart();
+    renderCart();
+  }
+
+  order.$list.on('click', '[data-action]', function () {
+    const $button = $(this);
+    const id = $button.closest('li').attr('data-id');
+    const action = $button.attr('data-action');
+    const item = findItem(id);
+
+    if (action === 'remove') {
+      setQuantity(id, 0);
+      order.$status.text(item.name + ' was removed from your order.');
+      order.$title.trigger('focus');
+      return;
+    }
+
+    setQuantity(id, getQuantity(id) + (action === 'plus' ? 1 : -1));
+    order.$status.text(item.name + ': ' + getQuantity(id) + '.');
+    restoreFocus(id, action);
+  });
+
+  $('main').on('click', '.add-to-order', function () {
+    const $button = $(this);
+    const id = $button.attr('data-id');
+    const name = $button.closest('article').find('.dish-title').text().trim();
+    const $note = $button.siblings('[data-add-note]');
+    const quantity = getQuantity(id);
+
+    if (quantity === MAX_QUANTITY) {
+      $note.text('You already have the maximum of ' + MAX_QUANTITY + '.');
+      return;
+    }
+    setQuantity(id, quantity + 1);
+    $note.text('Added ' + name + '. ' + (quantity + 1) + ' in your order.');
+  });
+
+  order.$clear.on('click', function () {
+    cart = [];
+    saveCart();
+    renderCart();
+    order.$status.text('Your order was cleared.');
+    order.$title.trigger('focus');
+  });
+
+  order.$checkout.on('click', function () {
+    const totals = cartTotals(cart);
+    const summary = cart.map((line) => line.quantity + ' × ' + findItem(line.id).name).join(', ');
+
+    order.$confirmation.empty().append(
+      $('<p>', { class: 'fw-semibold mb-2', text: 'Demo order ' + makeReference() + ' is ready' }),
+      $('<p>', { class: 'mb-2', text: summary + '. ' + countLabel(totals.quantity) + ', total ' + formatPrice(totals.price) + '.' }),
+      $('<p>', { class: 'mb-0', text: 'This is a demonstration: nothing was sent to Golden Coffee and no payment was made. To order, call +7 775 072 96 70 or ask at the counter.' })
+    );
+
+    cart = [];
+    saveCart();
+    renderCart();
+    order.$status.text('');
+    order.$confirmation.removeClass('d-none').trigger('focus');
+  });
+
+  order.$modal.on('hidden.bs.modal', function () {
+    order.$confirmation.addClass('d-none');
+    order.$status.text('');
+  });
+
   renderCart();
-  order.status.textContent = 'Your order was cleared.';
-  order.title.focus();
 });
-
-order.checkout.addEventListener('click', () => {
-  const totals = cartTotals(cart);
-  const summary = cart.map((line) => line.quantity + ' × ' + findItem(line.id).name).join(', ');
-
-  order.confirmation.replaceChildren(
-    createElement('p', 'fw-semibold mb-2', 'Demo order ' + makeReference() + ' is ready'),
-    createElement('p', 'mb-2', summary + '. ' + countLabel(totals.quantity) + ', total ' + formatPrice(totals.price) + '.'),
-    createElement('p', 'mb-0', 'This is a demonstration: nothing was sent to Golden Coffee and no payment was made. To order, call +7 775 072 96 70 or ask at the counter.')
-  );
-
-  cart = [];
-  saveCart();
-  renderCart();
-  order.status.textContent = '';
-  order.confirmation.classList.remove('d-none');
-  order.confirmation.focus();
-});
-
-order.modal.addEventListener('hidden.bs.modal', () => {
-  order.confirmation.classList.add('d-none');
-  order.status.textContent = '';
-});
-
-renderCart();
 
 // ---------- Form helpers (feedback and visit forms) ----------
 
