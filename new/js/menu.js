@@ -46,15 +46,29 @@ $(function () {
     $resetColumn
   );
 
+  // The panel can be folded away on a phone, where the filters push the dishes down the screen.
+  const $filterToggle = makeButton('btn btn-outline-primary mb-3', 'Hide filters').attr('aria-expanded', 'true');
+  $filterToggle.on('click', function () {
+    $controls.slideToggle(300, function () {
+      const isOpen = $(this).is(':visible');
+      $filterToggle.text(isOpen ? 'Hide filters' : 'Show filters').attr('aria-expanded', String(isOpen));
+    });
+  });
+
   const $resultCount = $('<p>', { class: 'source-note mb-4', role: 'status' });
-  const $emptyState = $('<p>', { class: 'form-note p-3 p-md-4 d-none', text: 'Nothing matches your search. Try another word or press Reset to see the whole menu.' });
+  const $emptyState = $('<p>', { class: 'form-note p-3 p-md-4', text: 'Nothing matches your search. Try another word or press Reset to see the whole menu.' }).hide();
   const $grid = $('<div>', { id: 'menu-grid', class: 'row g-4' });
 
   function renderMenu() {
     const results = filterItems(menuItems, $categorySelect.val(), $searchInput.val());
     $grid.empty().append(results.map(createMenuCard));
     $resultCount.text('Showing ' + results.length + ' of ' + menuItems.length + ' items.');
-    $emptyState.toggleClass('d-none', results.length !== 0);
+    $emptyState.stop(true, true);
+    if (results.length === 0) {
+      $emptyState.slideDown(200);
+    } else {
+      $emptyState.slideUp(200);
+    }
   }
 
   $categorySelect.on('change', renderMenu);
@@ -66,6 +80,6 @@ $(function () {
   });
 
   $('#breakfasts-title').text('Breakfast and drinks');
-  $('#breakfasts .row:first').before($controls, $resultCount, $emptyState, $grid).remove();
+  $('#breakfasts .row:first').before($filterToggle, $controls, $resultCount, $emptyState, $grid).remove();
   renderMenu();
 });

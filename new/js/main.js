@@ -103,7 +103,7 @@ $(function () {
     const $header = $('<div>', { class: 'modal-header' }).append($title, $close);
 
     const $status = $('<p>', { class: 'source-note mb-2', role: 'status' });
-    const $confirmation = $('<div>', { class: 'form-note p-3 mb-3 d-none', tabindex: -1 });
+    const $confirmation = $('<div>', { class: 'form-note p-3 mb-3', tabindex: -1 }).hide();
     // .html() and not .text(): this string is our own markup with a link in it, and .text() would print the tags.
     const $empty = $('<p>', { class: 'mb-0' }).html('Your order is empty. <a href="menu.html">Browse the menu</a> to add breakfasts or drinks.');
     const $list = $('<ul>', { id: 'order-list', class: 'list-unstyled mb-0' });
@@ -163,7 +163,7 @@ $(function () {
     $orderButton.text('Order (' + totals.quantity + ')');
 
     // "Added" notes under the menu buttons would be out of date now.
-    $('[data-add-note]').text('');
+    $('[data-add-note]').stop(true, true).text('');
   }
 
   function setQuantity(id, quantity) {
@@ -175,7 +175,7 @@ $(function () {
     } else {
       cart.push({ id: id, quantity: Math.min(quantity, MAX_QUANTITY) });
     }
-    order.$confirmation.addClass('d-none');
+    order.$confirmation.hide();
     saveCart();
     renderCart();
   }
@@ -187,9 +187,12 @@ $(function () {
     const item = findItem(id);
 
     if (action === 'remove') {
-      setQuantity(id, 0);
-      order.$status.text(item.name + ' was removed from your order.');
-      order.$title.trigger('focus');
+      // The line slides away first, and only the callback rebuilds the list, otherwise nobody would see the slide.
+      $button.closest('li').slideUp(200, function () {
+        setQuantity(id, 0);
+        order.$status.text(item.name + ' was removed from your order.');
+        order.$title.trigger('focus');
+      });
       return;
     }
 
@@ -210,7 +213,9 @@ $(function () {
       return;
     }
     setQuantity(id, quantity + 1);
-    $note.text('Added ' + name + '. ' + (quantity + 1) + ' in your order.');
+    $note.text('Added ' + name + '. ' + (quantity + 1) + ' in your order.').delay(2000).fadeOut(600, function () {
+      $(this).text('').show();
+    });
   });
 
   order.$clear.on('click', function () {
@@ -235,11 +240,13 @@ $(function () {
     saveCart();
     renderCart();
     order.$status.text('');
-    order.$confirmation.removeClass('d-none').trigger('focus');
+    order.$confirmation.fadeIn(400, function () {
+      $(this).trigger('focus');
+    });
   });
 
   order.$modal.on('hidden.bs.modal', function () {
-    order.$confirmation.addClass('d-none');
+    order.$confirmation.hide();
     order.$status.text('');
   });
 
@@ -347,9 +354,9 @@ function setUpFieldErrors($form, names, getErrors) {
 }
 
 function createSummaryBox($form) {
-  const $summary = $('<div>', { class: 'form-note p-3 p-md-4 mt-4 d-none', tabindex: -1, role: 'status' });
+  const $summary = $('<div>', { class: 'form-note p-3 p-md-4 mt-4', tabindex: -1, role: 'status' }).hide();
   $form.after($summary).on('reset', function () {
-    $summary.addClass('d-none');
+    $summary.stop(true, true).hide();
   });
   return $summary;
 }
@@ -364,5 +371,7 @@ function showSummary($summary, title, rows, notes) {
     $('<p>', { text: note }).appendTo($summary);
   });
   $summary.children().last().addClass('mb-0');
-  $summary.removeClass('d-none').trigger('focus');
+  $summary.fadeIn(500, function () {
+    $(this).trigger('focus');
+  });
 }
