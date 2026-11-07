@@ -1,9 +1,18 @@
 'use strict';
 
-function filterItems(items, category, query) {
+// JQUERY. Menu catalogue with category filter, sorting and search.
+
+const sortOrders = {
+  menu: () => 0,
+  'price-low': (a, b) => a.price - b.price,
+  'price-high': (a, b) => b.price - a.price
+};
+
+function filterItems(items, category, query, sort) {
   const text = query.trim().toLowerCase();
+  // .filter() returns a new array, so sorting it never changes the order of menuItems.
   return items.filter((item) => (category === 'all' || item.category === category) &&
-    (text === '' || item.name.toLowerCase().includes(text) || item.description.toLowerCase().includes(text)));
+    (text === '' || item.name.toLowerCase().includes(text) || item.description.toLowerCase().includes(text))).sort(sortOrders[sort]);
 }
 
 // REWRITE 2, menu catalogue. $('<div>', {...}) and .append() replaced createElement() with append(), .val() replaced .value,
@@ -24,9 +33,9 @@ function createMenuCard(item) {
   return $('<div>', { class: 'col-12 col-md-6 col-lg-4' }).append($article);
 }
 
-function createField(labelText, $control) {
+function createField(labelText, $control, columnClass) {
   const $label = $('<label>', { class: 'form-label', for: $control.attr('id'), text: labelText });
-  return $('<div>', { class: 'col-12 col-md-5' }).append($label, $control);
+  return $('<div>', { class: 'col-12 ' + columnClass }).append($label, $control);
 }
 
 $(function () {
@@ -38,13 +47,20 @@ $(function () {
     $('<option>', { value: category, text: categoryLabels[category] }).appendTo($categorySelect);
   });
 
+  const $sortSelect = $('<select>', { id: 'menu-sort', class: 'form-select' }).append(
+    $('<option>', { value: 'menu', text: 'Menu order' }),
+    $('<option>', { value: 'price-low', text: 'Price: low to high' }),
+    $('<option>', { value: 'price-high', text: 'Price: high to low' })
+  );
+
   const $searchInput = $('<input>', { id: 'menu-search', class: 'form-control', type: 'search', placeholder: 'Salmon, latte, honey...' });
   const $resetButton = makeButton('btn btn-outline-primary w-100', 'Reset');
   const $resetColumn = $('<div>', { class: 'col-12 col-md-2' }).append($resetButton);
 
   const $controls = $('<div>', { class: 'row g-3 align-items-end mb-3' }).append(
-    createField('Category', $categorySelect),
-    createField('Search by name or ingredient', $searchInput),
+    createField('Category', $categorySelect, 'col-md-3'),
+    createField('Sort', $sortSelect, 'col-md-3'),
+    createField('Search by name or ingredient', $searchInput, 'col-md-4'),
     $resetColumn
   );
 
@@ -62,7 +78,7 @@ $(function () {
   const $grid = $('<div>', { id: 'menu-grid', class: 'row g-4' });
 
   function renderMenu() {
-    const results = filterItems(menuItems, $categorySelect.val(), $searchInput.val());
+    const results = filterItems(menuItems, $categorySelect.val(), $searchInput.val(), $sortSelect.val());
     // The cards exist nowhere in menu.html: they are built here from the menuItems array.
     $grid.empty().append(results.map(createMenuCard));
     $resultCount.text('Showing ' + results.length + ' of ' + menuItems.length + ' items.');
@@ -74,10 +90,12 @@ $(function () {
     }
   }
 
-  $categorySelect.on('change', renderMenu);
+  // One delegated handler for both selects: they live inside $controls, which already exists.
+  $controls.on('change', 'select', renderMenu);
   $searchInput.on('input', renderMenu);
   $resetButton.on('click', function () {
     $categorySelect.val('all');
+    $sortSelect.val('menu');
     $searchInput.val('').trigger('focus');
     renderMenu();
   });

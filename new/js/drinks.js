@@ -1,5 +1,7 @@
 'use strict';
 
+// JQUERY. "Add to order" buttons on the drink cards.
+
 $(function () {
   // Each drink card on the page gets an "Add to order" button for the matching menu item.
   $('.drink-entry').each(function () {
