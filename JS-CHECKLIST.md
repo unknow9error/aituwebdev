@@ -1,106 +1,49 @@
-# JavaScript Checklist
+# Endterm checklist
 
-Paths are relative to `new/`. Author of all JavaScript: Arlan Kudabay.
+Paths are relative to `new/`. Author of all JavaScript and jQuery: Arlan Kudabay.
+References name the function or the comment to search for, so they stay correct when lines move.
 
-## jQuery assignment
+## Plain JavaScript
 
-| Requirement | File:line |
+| Requirement | Where |
 | --- | --- |
-| jQuery from a CDN before our scripts, with a comment | every page, above the Bootstrap script tag; `js/main.js:3-5` |
-| Code inside `$(function () { ... })` | `js/main.js:97`; `js/menu.js:32`; `js/drinks.js:3`; `js/feedback.js:84`; `js/visit.js:71` |
-| Three rewritten features with comparison comments | order list `js/main.js:132`; menu `js/menu.js:9`; validation `js/main.js:316` |
-| Old versions, not linked | `js/old-js-version.js` |
-| Selectors: id, class, element, attribute | `$('#order-date')` `js/feedback.js`; `$('.drink-entry')` `js/drinks.js:5`; `$('main')` `js/main.js:214`; `[data-action]` `js/main.js:192` |
-| Filters | `:first` `js/main.js:369`, `js/menu.js:86`; `:checked` `js/feedback.js:111`, `js/visit.js:83`; `:not()` `js/main.js:156` |
-| Traversal | `.find()` and `.closest()` `js/main.js:217`; `.siblings()` `js/main.js:218`; `.parent()` `js/main.js:343`; `.each()` `js/drinks.js:5` |
-| `$(this)` in handlers | `js/main.js:193`, `js/main.js:215`; `js/menu.js:55` |
-| Chains of 3+ methods, one explained | explained `js/main.js:311-313`; `js/main.js:226`; `js/visit.js:100` |
-| `.text()`, `.html()`, `.val()`, `.attr()`, `.prop()` | `.html()` `js/main.js:112`; `.text()` `js/main.js:226`; `.val()` `js/menu.js`; `.attr()` `js/main.js:194`; `.prop()` `js/feedback.js` (checkbox) |
-| Class methods | `.addClass()`, `.removeClass()` `js/main.js:313`; `.toggleClass()` `js/main.js:166`; `.hasClass()` `js/main.js:349` |
-| List built from an array | `js/menu.js` (`renderMenu`), `.appendTo()` `js/drinks.js:12` |
-| Event types through `.on()` | click, submit, input, change, reset, `hidden.bs.modal` (see lines above) |
-| Delegated handlers, with the reason in a comment | `js/main.js:189-192`; `js/main.js:213-214`; `js/main.js:347` |
-| `event.preventDefault()`, with the reason | `js/feedback.js:133-134`; `js/visit.js:112-113` |
-| Effects | `.fadeIn()` `js/main.js:253`, `js/main.js:392`; `.fadeOut()` `js/main.js:226`; `.slideUp()` `js/main.js:200`; `.slideToggle()` `js/menu.js:54`; `.slideDown()` `js/menu.js:71` |
-| Durations and callbacks | all of the above; callbacks `js/main.js:200`, `js/main.js:253`, `js/menu.js:54` |
-| Validation in jQuery | helpers `js/main.js:309-396`; rules `js/feedback.js`, `js/visit.js` |
-| Why the browser check does not replace the server | `js/main.js:306-308` |
+| Real data in arrays and objects at the top of the file | `openingHours` in `js/hours.js`; `reviews` in `js/feedback.js`; `menuItems` in `js/main.js` (shared data) |
+| Page built from data with a loop | reviews: `for...of` in `renderReviews()` (`js/feedback.js`); group drinks: `forEach` over `groupDrinks()`; time slots: `for` loop in `timeSlots()` (`js/visit.js`) |
+| Own functions with parameters and a return value, called from more than one place | `getOpenStatus(date)`: home and visit status lines, visit validation, order confirmation; `validateContact()`: both forms; `estimateGroupOrder()`: live estimate and summary; `toMinutes()`, `hoursFor()`: `hours.js` and `visit.js` |
+| Conditions | open or closed in `getOpenStatus()`; topic rules in `validateInquiry()` (`switch`); guest limits in `validateVisit()` |
+| Calculated values | estimated total `drink.price * quantity`; review count and "would recommend" count in `reviewsSummary()`; time slots and last table from the hours |
+| Event object | `event.preventDefault()` in both submit handlers; `event.target` in the form listener in `setUpFieldErrors()` (`js/forms.js`) |
+| Delegated handler | one `input`/`change` listener on each form in `setUpFieldErrors()` also catches the time select and the drink select created in code |
 
-The sections below describe the plain JavaScript of Assignments 4 and 5. Their line numbers and DOM calls refer to that version (commit `9807064`). The rules themselves are unchanged.
+## jQuery
 
-## Setup
-
-| Requirement | File:line |
+| Requirement | Where |
 | --- | --- |
-| `js` folder, shared `main.js`, page files | `js/main.js`, `js/menu.js`, `js/drinks.js`, `js/feedback.js`, `js/visit.js` |
-| Scripts loaded with `defer` | `index.html:117`; `menu.html:176-177`; `drinks.html:184-185`; `feedback.html:222-223`; `visit.html:212-213`; `colophon.html:116` |
-| `'use strict'` | `js/main.js:1`; `js/menu.js:1`; `js/drinks.js:1`; `js/feedback.js:1`; `js/visit.js:1` |
-| `const` by default, `let` only for changing values | `let cart` `js/main.js:71`; loop counter `js/visit.js:26` |
-| No `var`, `==`, `!=`, inline events, `document.write()`, `innerHTML`, `element.style` | all files (checked with a search) |
+| CDN link before our scripts, code in `$(function () { ... })` | every page; `js/main.js`, `js/menu.js`, `js/drinks.js` |
+| Selectors: id, class, element, attribute | `$('#breakfasts-title')`; `$('.drink-entry')`; `$('main')`; `$('[data-add-note]')` |
+| Filters | `:first` in `$('#breakfasts .row:first')`; `:not(:disabled)` in `restoreFocus()`; `:visible` in the filter toggle |
+| Traversal and `$(this)` | `$button.closest('article').find('.dish-title')` and `$button.siblings('[data-add-note]')` in the "Add to order" handler; `.closest('li')` in the order list handler; `.each()` in `js/drinks.js` |
+| Chains of 3+ methods | `setButtonDisabled()`; the "Added" note `.text().delay().fadeOut()`; `.before(...).remove()` in `js/menu.js` |
+| Delegated handlers | `order.$list.on('click', '[data-action]', ...)`; `$('main').on('click', '.add-to-order', ...)`; `$controls.on('change', 'select', ...)` |
+| Effects tied to visitor actions | `slideUp` when a line is removed; `fadeIn` for the order confirmation; `fadeOut` for the "Added" note; `slideToggle` for the filter panel; `slideDown`/`slideUp` for "Nothing matches" |
+| Empty states | empty order message; "Nothing matches your search"; "No guest comments yet" |
 
-## Assignment 4 — data and logic
+## Form validation (plain JavaScript)
 
-| Requirement | File:line |
+| Requirement | Where |
 | --- | --- |
-| Array of 8 objects with 6 properties each (`id`, `name`, `category`, `price`, `description`, `photo`) | `js/main.js:4-13` |
-| Second data array (reviews) | `js/feedback.js:5-7` |
-| Filter | `js/menu.js:8` (menu search and category); `js/main.js:238` (remove an order line) |
-| Find | `js/main.js:53` (`findItem`); `js/main.js:93`; `js/drinks.js:6` |
-| Transform (map) | `js/main.js:221` (order lines); `js/main.js:281` (order summary text); `js/menu.js:45`, `js/menu.js:69` |
-| Total (reduce) | `js/main.js:86-89` (`cartTotals`) |
-| Loops | `for` `js/visit.js:26`; `forEach` `js/main.js:183`, `js/main.js:422`, `js/menu.js:46` |
-| Reusable functions with parameters and return values | `formatPrice` `js/main.js:44`; `findItem` `js/main.js:52`; `lineSubtotal` `js/main.js:81`; `cartTotals` `js/main.js:85`; `validateContact` `js/main.js:327`; `filterItems` `js/menu.js:6`; `validateInquiry` `js/feedback.js:77`; `validateVisit` `js/visit.js:49`; `describeVisit` `js/visit.js:86` |
-| A function that calls another | `cartTotals` calls `lineSubtotal` `js/main.js:88`; `validateVisit` calls `validateContact` `js/visit.js:50`; `validateInquiry` calls `validateContact` `js/feedback.js:78` |
-| Arithmetic | `js/main.js:82` (price × quantity); `js/main.js:87-88` (totals); `js/visit.js:13` (minutes → time); `js/visit.js:73` (now + 60 min) |
-| `if/else` | `js/main.js:237-243`; `js/feedback.js:86-92`; `js/visit.js:54-58` |
-| `switch` | `js/feedback.js:10` (`recommendLabel`); `js/feedback.js:99` (topic rules) |
-| Logical operators `&&`, `||`, `!` | `js/menu.js:8-9`; `js/main.js:65`; `js/main.js:210`; `js/visit.js:54`; `js/feedback.js:82` |
-| `===` and `!==` in project logic | `js/main.js:53`, `js/main.js:219`, `js/main.js:238`, `js/menu.js:16`, `js/menu.js:71`, `js/feedback.js:104` |
-| `Math.random()` | `js/main.js:98` — demo order reference `GC-xxxx`, shown as a demonstration only |
+| Prevent default, trim, check every field | submit handlers in `js/feedback.js` and `js/visit.js`; `.trim()` in `readValues()` and `readVisit()` |
+| E-mail and phone format | `EMAIL_PATTERN`, `PHONE_PATTERN` in `validateContact()` (`js/forms.js`) |
+| Error beside each field | `setUpFieldErrors()` creates one `invalid-feedback` element per field |
+| Error cleared once the field is fixed | the form listener in `setUpFieldErrors()` re-checks the field with `getErrors()` |
+| Confirmation only when every check passes, then reset | `if (!reportErrors(...)) return;` followed by `form.reset()` and `showSummary()` |
+| Browser attributes kept, server note | `required` stays in the HTML; comment above `enableForm()` |
 
-## Assignment 5 — DOM, events, validation
+## Technical floor
 
-| Requirement | File:line |
+| Requirement | Status |
 | --- | --- |
-| One reusable function renders repeated items | menu cards `js/menu.js:12` (`createMenuCard`); order lines `js/main.js:160` (`createCartLine`); reviews `js/feedback.js:20` (`createReviewCard`) |
-| Create elements with DOM methods | `js/main.js:19-28` (`createElement` helper); order modal `js/main.js:112-155`; time field `js/visit.js:17-32` |
-| Remove / replace elements | `js/main.js:221` (`replaceChildren`); `js/menu.js:69`; `js/menu.js:84` (`replaceWith`); `js/feedback.js:42` |
-| Attributes | `js/main.js:105-106` (`data-bs-*`); `js/main.js:171` (`aria-label`); `js/feedback.js:120` (`min`); `js/visit.js:98-100` (`min`, `max`) |
-| `classList` states: hidden, active/disabled, error, success | hidden `js/main.js:222-223`, `js/menu.js:71`; disabled `js/main.js:40-41`; error `js/main.js:362`, `js/main.js:366`; success summary `js/main.js:428` |
-| `textContent` for user text | `js/main.js:25` (every element made with `createElement`); summary rows `js/main.js:423`; review text `js/feedback.js:23` |
-| `addEventListener` — `submit` | `js/feedback.js:134`; `js/visit.js:118` |
-| `addEventListener` — `click` | `js/main.js:187`, `js/main.js:192`, `js/main.js:197`, `js/main.js:257`, `js/main.js:271`, `js/main.js:279`; `js/menu.js:76` |
-| `addEventListener` — `input` / `change` | `js/menu.js:74-75`; `js/main.js:390-396`; `js/feedback.js:165`; `js/visit.js:114-115` |
-| Other events | `reset` `js/main.js:397`, `js/visit.js:116`; Bootstrap `hidden.bs.modal` `js/main.js:297` |
-| Search/filter with count, no-results state and reset | `js/menu.js:67-81` |
-| Calculation flow (order totals) | `js/main.js:81-90`, `js/main.js:217-233` |
-| Empty state for every generated list | order `js/main.js:135`, `js/main.js:222`; menu `js/menu.js:64`, `js/menu.js:71`; reviews `js/feedback.js:46-48` |
-| Checkout disabled when empty | `js/main.js:226` |
-
-## Form validation
-
-| Requirement | File:line |
-| --- | --- |
-| Trimmed required text | `js/main.js:329-333` (name); used by both forms |
-| Email / phone (regular expressions) | patterns `js/main.js:306-308`; checks `js/main.js:334-339` |
-| Number rule | `js/feedback.js:82`; `js/visit.js:54-58` |
-| Date rule (no past dates, limited range) | `js/feedback.js:86-92`; `js/visit.js:60-66` |
-| Selection rule | recommend `js/feedback.js:94`; time `js/visit.js:68`; contact method `js/visit.js:79` |
-| Rule combining fields | topic + quantity/date `js/feedback.js:99-107`; topic + message length `js/feedback.js:108-113`; date + time `js/visit.js:70-77` |
-| Error beside each field | `js/main.js:379-388` |
-| Focus first invalid field | `js/main.js:404-406` |
-| Clear outdated errors | `js/main.js:390-397`, `js/main.js:401` |
-| Summary of choices + "no data sent" statement | `js/feedback.js:146-163`; `js/visit.js:126-137`; `js/main.js:420-430` |
-| Character counter | `js/feedback.js:125-132` |
-| Live booking summary | `js/visit.js:86-91`, `js/visit.js:105-116` |
-
-## Accessibility
-
-| Requirement | File:line |
-| --- | --- |
-| Real `<button>` elements for actions | `js/main.js:30-34` (`createButton`) |
-| Labels for generated controls | `js/menu.js:33-39`; `js/visit.js:20-21` |
-| Screen-reader status messages (`role="status"`) | `js/main.js:132`; `js/main.js:254`; `js/menu.js:63`; `js/main.js:414` |
-| Errors linked to fields (`aria-describedby`, `aria-invalid`) | `js/main.js:363`, `js/main.js:385` |
-| Keyboard focus kept after the order list re-renders | `js/main.js:207-215` |
-| Messages use text, not colour alone | every error and confirmation is written text |
+| No console errors | checked on all six pages |
+| No horizontal overflow at 375 px | checked on all six pages |
+| No `onclick` attributes | none in `new/*.html` |
+| No new hand-written HTML or CSS | only `<script>` tags, one comment and one `id` hook were added to HTML; `css/` unchanged |
