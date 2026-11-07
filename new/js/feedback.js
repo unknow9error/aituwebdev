@@ -1,10 +1,15 @@
 'use strict';
 
-// ---------- Guest reviews ----------
+// PLAIN JAVASCRIPT. Guest reviews and the inquiry form on feedback.html.
 
 const reviews = [
   { name: 'Aigerim', text: 'The atmosphere is quiet enough to study, and their Spanish latte is consistently great.', recommend: '', date: new Date(2026, 8, 14), source: '2GIS Astana' }
 ];
+const MIN_MESSAGE = 20;
+const MIN_GROUP = 5;
+
+// Field names in page order, so the first error found is the first one on screen.
+const checkedFields = ['client-name', 'client-email', 'client-tel', 'item-quantity', 'order-date', 'group-drink', 'recommend', 'client-comment'];
 
 function recommendLabel(answer) {
   switch (answer) {
@@ -18,26 +23,45 @@ function recommendLabel(answer) {
 }
 
 function createReviewCard(review) {
-  const $quote = $('<blockquote>', { class: 'blockquote mb-3' }).append($('<p>', { text: review.text }));
+  const figure = createElement('figure', 'review-quote mb-4');
+  const quote = createElement('blockquote', 'blockquote mb-3');
+  quote.append(createElement('p', '', review.text));
 
+  const caption = createElement('figcaption', 'source-note');
   const parts = [review.name, recommendLabel(review.recommend)].filter((part) => part !== '');
-  // text: is .text(), so a review with <b> in it is shown as plain characters. .html() would run it as markup.
-  const $intro = $('<span>', { text: parts.join(' · ') + ' · ' + (review.source !== '' ? review.source + ', accessed ' : 'Added ') });
+  caption.append(parts.join(' · ') + ' · ' + (review.source !== '' ? review.source + ', accessed ' : 'Added '));
 
   // Reviews from other sites have only a date; reviews written here also show the time.
   const options = review.source !== ''
     ? { day: 'numeric', month: 'long', year: 'numeric' }
     : { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
-  const $time = $('<time>', { datetime: review.date.toISOString(), text: review.date.toLocaleString('en-GB', options) });
-  const $caption = $('<figcaption>', { class: 'source-note' }).append($intro, $time, '.');
+  const time = createElement('time', '', review.date.toLocaleString('en-GB', options));
+  time.dateTime = review.date.toISOString();
+  caption.append(time, '.');
 
-  return $('<figure>', { class: 'review-quote mb-4' }).append($quote, $caption);
+  figure.append(quote, caption);
+  return figure;
 }
 
-const MIN_MESSAGE = 20;
+// Count line above the reviews, e.g. "2 comments · 1 would recommend Golden Coffee".
+function reviewsSummary(list) {
+  const recommending = list.filter((review) => review.recommend === 'yes').length;
+  const comments = list.length + (list.length === 1 ? ' comment' : ' comments');
+  return recommending > 0 ? comments + ' · ' + recommending + ' would recommend Golden Coffee' : comments;
+}
 
-// Field names in page order, so the first error found is the first one on screen.
-const checkedFields = ['client-name', 'client-email', 'client-tel', 'item-quantity', 'order-date', 'recommend', 'client-comment'];
+// Drinks offered for a group pre-order, taken from the shared menu data.
+function groupDrinks() {
+  return menuItems.filter((item) => item.category !== 'breakfast');
+}
+
+function estimateGroupOrder(drinkId, quantity) {
+  const drink = groupDrinks().find((item) => item.id === drinkId);
+  if (drink === undefined || !Number.isInteger(quantity) || quantity < 1) {
+    return '';
+  }
+  return quantity + ' × ' + drink.name + ' = ' + formatPrice(drink.price * quantity);
+}
 
 function validateInquiry(values) {
   const contact = validateContact(values.name, values.email, values.phone);
@@ -63,11 +87,14 @@ function validateInquiry(values) {
   // Rules that depend on the chosen topic.
   switch (values.topic) {
     case 'preorder':
-      if (errors['item-quantity'] === undefined && values.quantity < 5) {
-        errors['item-quantity'] = 'Group pre-orders start from 5 cups or guests.';
+      if (errors['item-quantity'] === undefined && values.quantity < MIN_GROUP) {
+        errors['item-quantity'] = 'Group pre-orders start from ' + MIN_GROUP + ' cups or guests.';
       }
       if (errors['order-date'] === undefined && values.date === today) {
         errors['order-date'] = 'The cafe needs one day to prepare a group order. Choose tomorrow or later.';
+      }
+      if (values.drink === '') {
+        errors['group-drink'] = 'Choose the drink for your group.';
       }
       break;
     case 'review':
@@ -81,91 +108,131 @@ function validateInquiry(values) {
   return errors;
 }
 
-$(function () {
-  const $reviewsList = $('<div>');
-  $('#reviews .review-quote').replaceWith($reviewsList);
+// ---------- Reviews ----------
 
-  function renderReviews() {
-    $reviewsList.empty().append(reviews.map(createReviewCard));
-    if (reviews.length === 0) {
-      $('<p>', { class: 'source-note', text: 'No guest comments yet.' }).appendTo($reviewsList);
-    }
+const reviewsCount = createElement('p', 'source-note');
+const reviewsList = createElement('div', '');
+document.querySelector('#reviews .review-quote').replaceWith(reviewsCount, reviewsList);
+
+function renderReviews() {
+  reviewsList.replaceChildren();
+  for (const review of reviews) {
+    reviewsList.append(createReviewCard(review));
   }
-
-  renderReviews();
-
-  // ---------- Inquiry form ----------
-
-  const $form = $('.practice-form');
-  const $messageField = $('#client-comment');
-
-  function readValues() {
-    return {
-      name: $('#client-name').val().trim(),
-      email: $('#client-email').val().trim(),
-      phone: $('#client-tel').val().trim(),
-      quantity: Number($('#item-quantity').val()),
-      date: $('#order-date').val(),
-      topic: $('#inquiry-type').val(),
-      topicLabel: $('#inquiry-type option:selected').text(),
-      recommend: $form.find('input[name="recommend"]:checked').val() || '',
-      message: $messageField.val().trim(),
-      // .prop('checked') is the current state of the box; .attr('checked') only says what the HTML said at page load.
-      newsletter: $('#newsletter').prop('checked')
-    };
+  if (reviews.length === 0) {
+    reviewsList.append(createElement('p', 'source-note', 'No guest comments yet.'));
   }
+  reviewsCount.textContent = reviewsSummary(reviews);
+}
 
-  enableForm($form);
-  $('#order-date').attr('min', addDays(0));
-  const reportErrors = setUpFieldErrors($form, checkedFields, () => validateInquiry(readValues()));
-  const $summary = createSummaryBox($form);
+renderReviews();
 
-  // Character counter for the message
-  const $counter = $('<span>', { id: 'client-comment-counter', class: 'form-text d-block' });
-  $('#client-comment-error').after($counter);
-  $messageField.attr('aria-describedby', 'client-comment-error client-comment-counter');
+// ---------- Inquiry form ----------
 
-  function updateCounter() {
-    $counter.text($messageField.val().length + ' / ' + $messageField.attr('maxlength') + ' characters');
-  }
+const form = document.querySelector('.practice-form');
+const messageField = document.getElementById('client-comment');
+const topicField = document.getElementById('inquiry-type');
 
-  $form.on('submit', function (event) {
-    // Without this the browser would send the form and reload the page, and the error messages would be lost.
-    event.preventDefault();
-    const values = readValues();
-    if (!reportErrors(validateInquiry(values))) {
-      return;
-    }
-
-    if (values.topic === 'review') {
-      reviews.unshift({ name: values.name, text: values.message, recommend: values.recommend, date: new Date(), source: '' });
-      renderReviews();
-    }
-
-    const notes = ['This is a demonstration: nothing was sent to Golden Coffee and no booking or order was created. To reach the cafe, call +7 775 072 96 70.'];
-    if (values.topic === 'review') {
-      notes.unshift('Your comment now appears under Recent Guest Comments on this page until you reload it.');
-    }
-
-    $form.trigger('reset');
-    showSummary($summary, 'Thank you, ' + values.name + '. Your inquiry is ready.', [
-      ['Name', values.name],
-      ['Email', values.email],
-      ['Phone', values.phone],
-      ['Cups or guests', String(values.quantity)],
-      ['Date', formatDate(values.date)],
-      ['Topic', values.topicLabel],
-      ['Would recommend', recommendLabel(values.recommend)],
-      ['Message', values.message !== '' ? values.message : 'No message'],
-      ['Seasonal menu emails', values.newsletter ? 'Yes' : 'No']
-    ], notes);
-  });
-
-  $messageField.on('input', updateCounter);
-  // The browser empties the fields after the reset event, so update the counter on the next tick.
-  $form.on('reset', function () {
-    setTimeout(updateCounter, 0);
-  });
-
-  updateCounter();
+// Drink choice for group pre-orders, created here and shown only for that topic.
+const drinkSelect = createElement('select', 'form-select');
+drinkSelect.id = 'group-drink';
+drinkSelect.name = 'group-drink';
+drinkSelect.append(new Option('Choose a drink', ''));
+groupDrinks().forEach((item) => {
+  drinkSelect.append(new Option(item.name + ' · ' + formatPrice(item.price), item.id));
 });
+const drinkLabel = createElement('label', 'form-label', 'Drink for the group');
+drinkLabel.htmlFor = 'group-drink';
+const estimate = createElement('span', 'form-text d-block');
+estimate.setAttribute('role', 'status');
+const drinkColumn = createElement('div', 'col-12 col-md-4 d-none');
+drinkColumn.append(drinkLabel, drinkSelect, estimate);
+topicField.closest('.col-12').after(drinkColumn);
+
+function readValues() {
+  return {
+    name: form.elements['client-name'].value.trim(),
+    email: form.elements['client-email'].value.trim(),
+    phone: form.elements['client-tel'].value.trim(),
+    quantity: Number(form.elements['item-quantity'].value),
+    date: form.elements['order-date'].value,
+    topic: topicField.value,
+    topicLabel: topicField.selectedOptions[0].textContent,
+    drink: drinkSelect.value,
+    recommend: form.elements.recommend.value,
+    message: messageField.value.trim(),
+    newsletter: form.elements.newsletter.checked
+  };
+}
+
+function updateGroupOrder() {
+  const values = readValues();
+  drinkColumn.classList.toggle('d-none', values.topic !== 'preorder');
+  estimate.textContent = estimateGroupOrder(values.drink, values.quantity);
+}
+
+enableForm(form);
+form.elements['order-date'].min = addDays(0);
+const reportErrors = setUpFieldErrors(form, checkedFields, () => validateInquiry(readValues()));
+const summary = createSummaryBox(form);
+
+// Character counter for the message
+const counter = createElement('span', 'form-text d-block');
+counter.id = 'client-comment-counter';
+document.getElementById('client-comment-error').after(counter);
+messageField.setAttribute('aria-describedby', 'client-comment-error client-comment-counter');
+
+function updateCounter() {
+  counter.textContent = messageField.value.length + ' / ' + messageField.maxLength + ' characters';
+}
+
+form.addEventListener('submit', (event) => {
+  // Without this the browser would send the form and reload the page, and the error messages would be lost.
+  event.preventDefault();
+  const values = readValues();
+  if (!reportErrors(validateInquiry(values))) {
+    return;
+  }
+
+  if (values.topic === 'review') {
+    reviews.unshift({ name: values.name, text: values.message, recommend: values.recommend, date: new Date(), source: '' });
+    renderReviews();
+  }
+
+  const notes = ['This is a demonstration: nothing was sent to Golden Coffee and no booking or order was created. To reach the cafe, call +7 775 072 96 70.'];
+  if (values.topic === 'review') {
+    notes.unshift('Your comment now appears under Recent Guest Comments on this page until you reload it.');
+  }
+
+  const rows = [
+    ['Name', values.name],
+    ['Email', values.email],
+    ['Phone', values.phone],
+    ['Cups or guests', String(values.quantity)],
+    ['Date', formatDate(values.date)],
+    ['Topic', values.topicLabel]
+  ];
+  if (values.topic === 'preorder') {
+    rows.push(['Estimated total', estimateGroupOrder(values.drink, values.quantity)]);
+  }
+  rows.push(
+    ['Would recommend', recommendLabel(values.recommend)],
+    ['Message', values.message !== '' ? values.message : 'No message'],
+    ['Seasonal menu emails', values.newsletter ? 'Yes' : 'No']
+  );
+
+  form.reset();
+  showSummary(summary, 'Thank you, ' + values.name + '. Your inquiry is ready.', rows, notes);
+});
+
+form.addEventListener('input', updateGroupOrder);
+form.addEventListener('change', updateGroupOrder);
+messageField.addEventListener('input', updateCounter);
+// The browser empties the fields after the reset event, so update on the next tick.
+form.addEventListener('reset', () => setTimeout(() => {
+  updateCounter();
+  updateGroupOrder();
+}, 0));
+
+updateCounter();
+updateGroupOrder();

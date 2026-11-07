@@ -1,8 +1,9 @@
 'use strict';
 
+// JQUERY. Menu data, the order (cart) and the "Add to order" buttons.
 // jQuery 3.7.1 is linked from a CDN in every page, before this file, because $ must exist before our code calls it.
 // $(function () { ... }) is the short form of $(document).ready(): the code inside waits until the page is parsed.
-// Data and helpers stay outside it, so that menu.js, drinks.js, feedback.js and visit.js can use them.
+// Data and helpers stay outside it, so that menu.js, drinks.js and feedback.js can use them.
 
 // Golden Coffee menu. Prices in KZT match the price tables on menu.html and drinks.html.
 const menuItems = [
@@ -243,6 +244,7 @@ $(function () {
     order.$confirmation.empty().append(
       $('<p>', { class: 'fw-semibold mb-2', text: 'Demo order ' + makeReference() + ' is ready' }),
       $('<p>', { class: 'mb-2', text: summary + '. ' + countLabel(totals.quantity) + ', total ' + formatPrice(totals.price) + '.' }),
+      $('<p>', { class: 'mb-2', text: getOpenStatus(new Date()) + '.' }),
       $('<p>', { class: 'mb-0', text: 'This is a demonstration: nothing was sent to Golden Coffee and no payment was made. To order, call +7 775 072 96 70 or ask at the counter.' })
     );
 
@@ -262,134 +264,3 @@ $(function () {
 
   renderCart();
 });
-
-// ---------- Form helpers (feedback and visit forms) ----------
-
-const NAME_PATTERN = /^[\p{L}][\p{L}\s'-]*$/u;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE_PATTERN = /^(\+7|8)\d{10}$/;
-
-// Date as "YYYY-MM-DD" in local time, the same format as <input type="date">.
-function toDateValue(date) {
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return date.getFullYear() + '-' + month + '-' + day;
-}
-
-function addDays(days) {
-  const today = new Date();
-  return toDateValue(new Date(today.getFullYear(), today.getMonth(), today.getDate() + days));
-}
-
-function formatDate(value) {
-  return new Date(value + 'T00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
-}
-
-// Name, email and phone rules shared by both forms. Returns an object: field key → error message.
-function validateContact(name, email, phone) {
-  const errors = {};
-  if (name.length < 2) {
-    errors.name = 'Enter your name, at least 2 letters.';
-  } else if (!NAME_PATTERN.test(name)) {
-    errors.name = 'Use letters, spaces, hyphens or apostrophes only.';
-  }
-  if (!EMAIL_PATTERN.test(email)) {
-    errors.email = 'Enter an email address like name@example.kz.';
-  }
-  if (!PHONE_PATTERN.test(phone.replace(/[\s()-]/g, ''))) {
-    errors.phone = 'Enter a Kazakhstan number: +7 or 8 followed by 10 digits.';
-  }
-  return errors;
-}
-
-// The midterm forms had a disabled submit button; jQuery validation now replaces the browser's.
-// .prop() and not .attr(): noValidate and disabled are live properties of the element, not text in the markup.
-// The required attributes stay in the HTML as the first line of defence: without JavaScript the browser still enforces them.
-// No browser check replaces a check on the server: the visitor controls the browser and can switch it off or send the request directly.
-function enableForm($form) {
-  $form.prop('noValidate', true);
-  // Chain, each link returns the same button: .find() gets it from the form, .prop() switches it on,
-  // .removeClass() takes away the grey look and .addClass() gives it the active brown look.
-  $form.find('button[type="submit"]').prop('disabled', false).removeClass('btn-secondary').addClass('btn-primary');
-}
-
-// REWRITE 3, form validation. .addClass()/.removeClass() replaced classList, .text() replaced textContent, $form.find() replaced form.elements,
-// and $form.on('input change', '[name]', ...) replaced two addEventListener() calls in a loop. Somewhat shorter, and no RadioNodeList special case.
-// Adds an error message under each listed field and returns the function that reports errors.
-// getErrors reads the form again and returns the current errors, so a field is cleared only once it is really fixed.
-function setUpFieldErrors($form, names, getErrors) {
-  function controlsOf(name) {
-    return $form.find('[name="' + name + '"]');
-  }
-
-  function errorOf(name) {
-    return $('#' + name + '-error');
-  }
-
-  function showError(name, message) {
-    controlsOf(name).addClass('is-invalid').attr('aria-invalid', 'true');
-    errorOf(name).text(message).addClass('d-block');
-  }
-
-  function clearError(name) {
-    controlsOf(name).removeClass('is-invalid').removeAttr('aria-invalid');
-    errorOf(name).text('').removeClass('d-block');
-  }
-
-  // For radio buttons the message goes under the last option.
-  names.forEach((name) => {
-    const $last = controlsOf(name).last();
-    const $error = $('<span>', { id: name + '-error', class: 'invalid-feedback' });
-    ($last.is(':radio') ? $last.parent() : $last).after($error);
-    controlsOf(name).attr('aria-describedby', $error.attr('id'));
-  });
-
-  $form.on('input change', '[name]', function () {
-    const name = $(this).attr('name');
-    if (!$(this).hasClass('is-invalid')) {
-      return;
-    }
-    const message = getErrors()[name];
-    if (message === undefined) {
-      clearError(name);
-    } else {
-      showError(name, message);
-    }
-  });
-  $form.on('reset', function () {
-    names.forEach(clearError);
-  });
-
-  // Shows the errors, focuses the first invalid field and returns true when there are none.
-  return function report(errors) {
-    names.forEach(clearError);
-    const invalid = names.filter((name) => errors[name] !== undefined);
-    invalid.forEach((name) => showError(name, errors[name]));
-    // :first keeps only the first match, which is the first invalid field on the page.
-    $form.find('.is-invalid:first').trigger('focus');
-    return invalid.length === 0;
-  };
-}
-
-function createSummaryBox($form) {
-  const $summary = $('<div>', { class: 'form-note p-3 p-md-4 mt-4', tabindex: -1, role: 'status' }).hide();
-  $form.after($summary).on('reset', function () {
-    $summary.stop(true, true).hide();
-  });
-  return $summary;
-}
-
-function showSummary($summary, title, rows, notes) {
-  const $list = $('<dl>', { class: 'row mb-3' });
-  rows.forEach((row) => {
-    $list.append($('<dt>', { class: 'col-sm-4 fw-semibold', text: row[0] }), $('<dd>', { class: 'col-sm-8 mb-2', text: row[1] }));
-  });
-  $summary.empty().append($('<h3>', { class: 'subheading', text: title }), $list);
-  notes.forEach((note) => {
-    $('<p>', { text: note }).appendTo($summary);
-  });
-  $summary.children().last().addClass('mb-0');
-  $summary.fadeIn(500, function () {
-    $(this).trigger('focus');
-  });
-}
