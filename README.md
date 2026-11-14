@@ -11,14 +11,15 @@ Each feature is written in one approach only, and the two approaches are kept in
 
 | File | Approach | Loaded on | Feature |
 | --- | --- | --- | --- |
+| [`new/js/auth.js`](new/js/auth.js) | Plain JavaScript | every page | Visitor accounts: create an account, sign in, log out; fills in the forms for a signed-in visitor |
 | [`new/js/hours.js`](new/js/hours.js) | Plain JavaScript | every page | Opening hours data, "Open now / Closed now" status |
-| [`new/js/forms.js`](new/js/forms.js) | Plain JavaScript | `feedback.html`, `visit.html` | Shared form helpers: errors beside fields, contact checks, dates, summary box |
+| [`new/js/forms.js`](new/js/forms.js) | Plain JavaScript | every page | Shared form helpers: errors beside fields, contact checks, dates, summary box, filling in account details |
 | [`new/js/feedback.js`](new/js/feedback.js) | Plain JavaScript | `feedback.html` | Guest reviews and the inquiry form |
 | [`new/js/visit.js`](new/js/visit.js) | Plain JavaScript | `visit.html` | Visit request form with time slots and live summary |
 | [`new/js/main.js`](new/js/main.js) | jQuery | every page | Menu data, the order (cart) window and "Add to order" buttons |
-| [`new/js/menu.js`](new/js/menu.js) | jQuery | `menu.html` | Menu catalogue with category filter, sorting and search |
-| [`new/js/drinks.js`](new/js/drinks.js) | jQuery | `drinks.html` | "Add to order" buttons on the drink cards |
-| [`new/js/auth.js`](new/js/auth.js), [`new/js/ncalayer.js`](new/js/ncalayer.js) | Plain JavaScript | every page | Demo sign-in (from an earlier assignment, unchanged) |
+| [`new/js/catalogue.js`](new/js/catalogue.js) | jQuery | `menu.html`, `drinks.html` | Catalogue built from `menuItems` with category filter, sorting and search |
+| [`new/js/menu.js`](new/js/menu.js) | jQuery | `menu.html` | Shows the dishes in the catalogue |
+| [`new/js/drinks.js`](new/js/drinks.js) | jQuery | `drinks.html` | Shows the drinks in the catalogue, with a Coffee / Tea filter |
 
 jQuery 3.7.1 is linked from a CDN before our scripts, so the site needs an internet connection for its scripts to work.
 The plain-JavaScript files share pure functions (no page work) from `main.js`, such as `formatPrice()` and the `menuItems` array, and the jQuery order window calls `getOpenStatus()` from `hours.js`; no feature changes the page with both approaches.
@@ -28,11 +29,14 @@ The plain-JavaScript files share pure functions (no page work) from `main.js`, s
 | Defect | Change |
 | --- | --- |
 | The header symbol `golden-coffee-mark.png` was a 1254 × 1254 px, 430 KB file shown at 44 px | Resized to 128 × 128 px (9 KB); it is still sharp on high-density screens and as the favicon |
-| The linked full logo was 2172 × 724 px, 360 KB | Resized to 900 × 300 px (76 KB) |
+| The "About this site" (colophon) page described how the site was made, not the cafe, and was the only page linking the 360 KB full logo | The page, its link in the navigation and the logo file were removed |
 | `js/old-js-version.js` was not linked from any page | Deleted, together with the comparison comments that pointed to it |
-| A debugging `console.log(response)` was left in `js/ncalayer.js` | Removed |
+| A debugging `console.log(response)` was left in `js/ncalayer.js` | Removed; the whole electronic-signature (ECP) sign-in was later removed, see below |
+| The menu page also listed the drinks, so the same drinks appeared on two pages, while Americano and Cappuccino could not be ordered from the Drinks page | `menu.html` now shows only the dishes and `drinks.html` shows all five drinks from the same data, with a Coffee / Tea filter |
+| The drinks price table called the sea buckthorn tea "Berry Tea", while the cards and the order used "Sea Buckthorn Tea" | The table row was renamed to match |
+| Sign-in only worked with one shared test account or with NCALayer (ECP) installed, and there was no way to register | Replaced with a clear account dialog: create an account (name, email, phone, password with confirmation, an error beside each field) or sign in; a signed-in visitor gets the feedback and visit forms filled in. The ECP script and its styles were removed |
 
-Checked after the changes: all six pages pass the W3C validator, the console shows no errors, every image has an `alt`, every form field has a label, every control is reachable with Tab, and both forms submit with Enter.
+Checked after the changes: all five pages pass the W3C validator, the console shows no errors, every image has an `alt`, every form field has a label, every control is reachable with Tab, and both forms submit with Enter.
 
 ## Added at the endterm
 
@@ -54,7 +58,7 @@ Checked after the changes: all six pages pass the W3C validator, the console sho
 - Reviews and complaints need a message of at least 20 characters (800 maximum).
 - An order holds up to 10 of each item. Prices match the price tables on the Menu and Drinks pages.
 
-Nothing is sent to a server. Every confirmation says it is a demonstration and that no order, booking or payment was created. Only the order contents are kept in `localStorage`, so the order survives moving between pages; no personal data or passwords are stored.
+Nothing is sent to a server. Every confirmation says it is a demonstration and that no order, booking or payment was created. The order contents and visitor accounts are kept in `localStorage`, only in the visitor's own browser; a password is stored only as a salted SHA-256 hash, and the account dialog warns not to reuse a password from another site.
 
 ## HTML/CSS freeze
 

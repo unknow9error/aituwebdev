@@ -19,11 +19,11 @@ References name the function or the comment to search for, so they stay correct 
 
 | Requirement | Where |
 | --- | --- |
-| CDN link before our scripts, code in `$(function () { ... })` | every page; `js/main.js`, `js/menu.js`, `js/drinks.js` |
-| Selectors: id, class, element, attribute | `$('#breakfasts-title')`; `$('.drink-entry')`; `$('main')`; `$('[data-add-note]')` |
-| Filters | `:first` in `$('#breakfasts .row:first')`; `:not(:disabled)` in `restoreFocus()`; `:visible` in the filter toggle |
-| Traversal and `$(this)` | `$button.closest('article').find('.dish-title')` and `$button.siblings('[data-add-note]')` in the "Add to order" handler; `.closest('li')` in the order list handler; `.each()` in `js/drinks.js` |
-| Chains of 3+ methods | `setButtonDisabled()`; the "Added" note `.text().delay().fadeOut()`; `.before(...).remove()` in `js/menu.js` |
+| CDN link before our scripts, code in `$(function () { ... })` | every page; `js/main.js`, `js/catalogue.js`, `js/menu.js`, `js/drinks.js` |
+| Selectors: id, class, element, attribute | `$(page.heading)` with `'#breakfasts-title'` or `'#espresso-title'` (`js/catalogue.js`); `$section.find('.row:first')`; `$('main')`; `$('[data-add-note]')` |
+| Filters | `:first` in `$section.find('.row:first')` (`js/catalogue.js`); `:not(:disabled)` in `restoreFocus()`; `:visible` in the filter toggle |
+| Traversal and `$(this)` | `$button.closest('article').find('.dish-title')` and `$button.siblings('[data-add-note]')` in the "Add to order" handler; `.closest('li')` in the order list handler; `.closest('section')` in `setUpCatalogue()` |
+| Chains of 3+ methods | `setButtonDisabled()`; the "Added" note `.text().delay().fadeOut()`; `$('<li>').append($button).appendTo(...)` in `buildOrderButton()` |
 | Delegated handlers | `order.$list.on('click', '[data-action]', ...)`; `$('main').on('click', '.add-to-order', ...)`; `$controls.on('change', 'select', ...)` |
 | Effects tied to visitor actions | `slideUp` when a line is removed; `fadeIn` for the order confirmation; `fadeOut` for the "Added" note; `slideToggle` for the filter panel; `slideDown`/`slideUp` for "Nothing matches" |
 | Empty states | empty order message; "Nothing matches your search"; "No guest comments yet" |
@@ -43,7 +43,7 @@ References name the function or the comment to search for, so they stay correct 
 
 | Requirement | Status |
 | --- | --- |
-| No console errors | checked on all six pages |
-| No horizontal overflow at 375 px | checked on all six pages |
+| No console errors | checked on all five pages |
+| No horizontal overflow at 375 px | checked on all five pages |
 | No `onclick` attributes | none in `new/*.html` |
 | No new hand-written HTML or CSS | only `<script>` tags, one comment and one `id` hook were added to HTML; `css/` unchanged |
