@@ -1,5 +1,4 @@
 .agents/**/*
-.claude/**/*
 
 .vscode/**/*
 .DS_Store
