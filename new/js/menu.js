@@ -1,104 +1,15 @@
 'use strict';
 
-// JQUERY. Menu catalogue with category filter, sorting and search.
-
-const sortOrders = {
-  menu: () => 0,
-  'price-low': (a, b) => a.price - b.price,
-  'price-high': (a, b) => b.price - a.price
-};
-
-function filterItems(items, category, query, sort) {
-  const text = query.trim().toLowerCase();
-  // .filter() returns a new array, so sorting it never changes the order of menuItems.
-  return items.filter((item) => (category === 'all' || item.category === category) &&
-    (text === '' || item.name.toLowerCase().includes(text) || item.description.toLowerCase().includes(text))).sort(sortOrders[sort]);
-}
-
-function createMenuCard(item) {
-  const $article = $('<article>', { class: 'menu-entry' });
-
-  if (item.photo !== '') {
-    $('<div>', { class: item.photo, role: 'img', 'aria-label': 'Illustration of ' + item.name }).appendTo($article);
-  }
-  $article.append(
-    $('<p>', { class: 'eyebrow mb-2', text: categoryLabels[item.category] }),
-    $('<h3>', { class: 'dish-title', text: item.name }),
-    $('<p>', { class: 'menu-description mb-0', text: item.description }),
-    createAddButton(item)
-  );
-
-  return $('<div>', { class: 'col-12 col-md-6 col-lg-4' }).append($article);
-}
-
-function createField(labelText, $control, columnClass) {
-  const $label = $('<label>', { class: 'form-label', for: $control.attr('id'), text: labelText });
-  return $('<div>', { class: 'col-12 ' + columnClass }).append($label, $control);
-}
+// JQUERY. menu.html shows the dishes only; drinks are on drinks.html.
 
 $(function () {
-  // Controls
-  const $categorySelect = $('<select>', { id: 'menu-category', class: 'form-select' });
-  $('<option>', { value: 'all', text: 'All dishes and drinks' }).appendTo($categorySelect);
-  const categories = [...new Set(menuItems.map((item) => item.category))];
-  categories.forEach((category) => {
-    $('<option>', { value: category, text: categoryLabels[category] }).appendTo($categorySelect);
+  setUpCatalogue({
+    categories: ['breakfast'],
+    heading: '#breakfasts-title',
+    cardClass: 'menu-entry',
+    photoClass: '',
+    buttonClass: '',
+    allLabel: 'All dishes',
+    placeholder: 'Salmon, eggs, dates...'
   });
-
-  const $sortSelect = $('<select>', { id: 'menu-sort', class: 'form-select' }).append(
-    $('<option>', { value: 'menu', text: 'Menu order' }),
-    $('<option>', { value: 'price-low', text: 'Price: low to high' }),
-    $('<option>', { value: 'price-high', text: 'Price: high to low' })
-  );
-
-  const $searchInput = $('<input>', { id: 'menu-search', class: 'form-control', type: 'search', placeholder: 'Salmon, latte, honey...' });
-  const $resetButton = makeButton('btn btn-outline-primary w-100', 'Reset');
-  const $resetColumn = $('<div>', { class: 'col-12 col-md-2' }).append($resetButton);
-
-  const $controls = $('<div>', { class: 'row g-3 align-items-end mb-3' }).append(
-    createField('Category', $categorySelect, 'col-md-3'),
-    createField('Sort', $sortSelect, 'col-md-3'),
-    createField('Search by name or ingredient', $searchInput, 'col-md-4'),
-    $resetColumn
-  );
-
-  // The panel can be folded away on a phone, where the filters push the dishes down the screen.
-  const $filterToggle = makeButton('btn btn-outline-primary mb-3', 'Hide filters').attr('aria-expanded', 'true');
-  $filterToggle.on('click', function () {
-    $controls.slideToggle(300, function () {
-      const isOpen = $(this).is(':visible');
-      $filterToggle.text(isOpen ? 'Hide filters' : 'Show filters').attr('aria-expanded', String(isOpen));
-    });
-  });
-
-  const $resultCount = $('<p>', { class: 'source-note mb-4', role: 'status' });
-  const $emptyState = $('<p>', { class: 'form-note p-3 p-md-4', text: 'Nothing matches your search. Try another word or press Reset to see the whole menu.' }).hide();
-  const $grid = $('<div>', { id: 'menu-grid', class: 'row g-4' });
-
-  function renderMenu() {
-    const results = filterItems(menuItems, $categorySelect.val(), $searchInput.val(), $sortSelect.val());
-    // The cards exist nowhere in menu.html: they are built here from the menuItems array.
-    $grid.empty().append(results.map(createMenuCard));
-    $resultCount.text('Showing ' + results.length + ' of ' + menuItems.length + ' items.');
-    $emptyState.stop(true, true);
-    if (results.length === 0) {
-      $emptyState.slideDown(200);
-    } else {
-      $emptyState.slideUp(200);
-    }
-  }
-
-  // One delegated handler for both selects: they live inside $controls, which already exists.
-  $controls.on('change', 'select', renderMenu);
-  $searchInput.on('input', renderMenu);
-  $resetButton.on('click', function () {
-    $categorySelect.val('all');
-    $sortSelect.val('menu');
-    $searchInput.val('').trigger('focus');
-    renderMenu();
-  });
-
-  $('#breakfasts-title').text('Breakfast and drinks');
-  $('#breakfasts .row:first').before($filterToggle, $controls, $resultCount, $emptyState, $grid).remove();
-  renderMenu();
 });
