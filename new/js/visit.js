@@ -133,6 +133,7 @@ dateField.addEventListener('change', fillTimeSlots);
 visitForm.addEventListener('input', updateLiveSummary);
 visitForm.addEventListener('change', updateLiveSummary);
 visitForm.addEventListener('reset', () => setTimeout(() => {
+  fillContactFields(visitForm, contactFields);
   fillTimeSlots();
   updateLiveSummary();
 }, 0));
@@ -157,6 +158,13 @@ visitForm.addEventListener('submit', (event) => {
     'This is a demonstration request: nothing was sent to Golden Coffee and no table is reserved.',
     'To book a table, call +7 775 072 96 70 or send a WhatsApp message.'
   ]);
+});
+
+const contactFields = { name: 'guest-name', email: 'guest-email', phone: 'guest-phone' };
+fillContactFields(visitForm, contactFields);
+document.addEventListener('accountchange', () => {
+  fillContactFields(visitForm, contactFields);
+  updateLiveSummary();
 });
 
 updateLiveSummary();

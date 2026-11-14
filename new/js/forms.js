@@ -148,3 +148,17 @@ function showSummary(summary, title, rows, notes) {
   summary.classList.remove('d-none');
   summary.focus();
 }
+
+// Fills empty name, email and phone fields from the signed-in account (auth.js). fields maps name/email/phone to field names.
+function fillContactFields(form, fields) {
+  const account = getSignedInAccount();
+  if (account === null) {
+    return;
+  }
+  Object.keys(fields).forEach((key) => {
+    const field = form.elements[fields[key]];
+    if (field.value.trim() === '') {
+      field.value = account[key];
+    }
+  });
+}

@@ -230,9 +230,14 @@ form.addEventListener('change', updateGroupOrder);
 messageField.addEventListener('input', updateCounter);
 // The browser empties the fields after the reset event, so update on the next tick.
 form.addEventListener('reset', () => setTimeout(() => {
+  fillContactFields(form, contactFields);
   updateCounter();
   updateGroupOrder();
 }, 0));
+
+const contactFields = { name: 'client-name', email: 'client-email', phone: 'client-tel' };
+fillContactFields(form, contactFields);
+document.addEventListener('accountchange', () => fillContactFields(form, contactFields));
 
 updateCounter();
 updateGroupOrder();

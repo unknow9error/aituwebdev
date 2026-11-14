@@ -613,16 +613,7 @@ textarea:focus-visible {
   margin-bottom: 0.5rem;
   overflow-wrap: anywhere;
 }
-.auth-demo-fill {
-  padding: 0.25rem 0;
-  border: 0;
-  background: transparent;
-  color: #78501e;
-  font: inherit;
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-.auth-eds-button {
+.auth-secondary {
   width: 100%;
   min-height: 46px;
   padding: 0.65rem 1rem;
@@ -633,7 +624,7 @@ textarea:focus-visible {
   font: inherit;
   font-weight: 500;
 }
-.auth-eds-button:hover {
+.auth-secondary:hover {
   background: #f3e9d7;
 }
 @media (min-width: 992px) and (max-width: 1199.98px) {
