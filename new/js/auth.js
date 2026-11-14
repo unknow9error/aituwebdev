@@ -2,7 +2,7 @@
 
 // PLAIN JAVASCRIPT. Visitor accounts: create an account, sign in, sign out.
 // There is no server, so accounts are kept in this browser's localStorage; the password is stored only as a SHA-256 hash.
-// A signed-in visitor gets their name, email and phone filled in on the feedback and visit forms.
+// A signed-in visitor gets their name, email and phone filled in on the visit form.
 
 const ACCOUNTS_KEY = 'golden-coffee-accounts';
 const SESSION_KEY = 'golden-coffee-session';
@@ -116,8 +116,8 @@ function validatePassword(password, confirmation) {
   const registerFields = ['name', 'email', 'phone', 'password', 'confirm'];
 
   const views = {
-    'sign-in': { form: signInForm, title: 'Sign in', note: 'Sign in to have your name, email and phone filled in on our forms.' },
-    register: { form: registerForm, title: 'Create an account', note: 'It takes a minute. Your details will then be filled in for you on the feedback and visit forms.' }
+    'sign-in': { form: signInForm, title: 'Sign in', note: 'Sign in to have your name, email and phone filled in on the visit form.' },
+    register: { form: registerForm, title: 'Create an account', note: 'It takes a minute. Your details will then be filled in for you on the visit form.' }
   };
 
   function showView(name) {

@@ -373,15 +373,6 @@ textarea:focus-visible {
   color: #85581f;
   margin-bottom: 0.5rem;
 }
-.code-sample {
-  padding: 1.25rem;
-  border-radius: 0.3rem;
-  background: #382719;
-  color: #fff5df;
-  font-size: 0.9rem;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
 .site-footer {
   padding-block: 1.8rem;
   font-size: 0.85rem;

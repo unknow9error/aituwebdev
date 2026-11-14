@@ -1,6 +1,6 @@
 'use strict';
 
-// PLAIN JAVASCRIPT. Helpers shared by the feedback and visit forms.
+// PLAIN JAVASCRIPT. Helpers for the visit form, also used by the account dialog and the reviews.
 
 const NAME_PATTERN = /^[\p{L}][\p{L}\s'-]*$/u;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;

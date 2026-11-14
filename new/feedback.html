@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Send feedback or inquire about pre-orders and events at Golden Coffee in Astana.">
+    <meta name="description" content="Read guest reviews of Golden Coffee in Astana and see photos of the cafe.">
     <meta name="author" content="Arlan Kudabay">
-    <title>Feedback and Inquiries - Golden Coffee</title>
+    <title>Guest Feedback - Golden Coffee</title>
     <link rel="icon" type="image/png" href="images/golden-coffee-mark.png">
     <!-- Bootstrap 5.3.8, served locally for this separate /new/ version. -->
     <link rel="stylesheet" href="vendor/bootstrap.min.css">
@@ -48,10 +48,9 @@
         <section class="page-section container-fluid site-width pb-4">
           <div class="row g-4 g-lg-5 align-items-center">
             <div class="col-12 col-lg-4">
-              <h1 class="page-title page-title-small">Guest Feedback and Requests</h1>
+              <h1 class="page-title page-title-small">Guest Feedback</h1>
               <p class="section-links d-flex flex-wrap gap-4 mt-4">
                 <a href="#reviews">Guest Reviews</a>
-                <a href="#inquiry-form">Send Inquiry ↓</a>
               </p>
             </div>
             <section class="col-12 col-lg-8" aria-labelledby="cafe-views">
@@ -105,101 +104,6 @@
               </div>
             </section>
           </div>
-        </section>
-        <section id="inquiry-form" class="page-section container-fluid site-width border-top" aria-labelledby="form-title">
-          <h2 class="form-heading mb-3" id="form-title">Send a Feedback or Pre-Order Inquiry</h2>
-          <p class="source-note">Tell us about your recent experience or send an inquiry for group coffee sets. Check our photos on <a href="https://www.instagram.com/goldencoffee.ast/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>.</p>
-          <p id="feedback-form-note" class="form-note p-3 p-md-4 mb-4">This practice form does
-          not send requests to the cafe. To arrange a visit or share feedback, <a href="tel:+77750729670">call the
-            cafe</a>.</p>
-          <form class="practice-form" action="feedback.html#inquiry-form" method="get">
-            <fieldset class="form-section p-3 p-md-4 mb-4">
-              <legend class="float-none w-auto fs-4 fw-semibold mb-3">Sender Information</legend>
-              <div class="row g-3">
-                <div class="col-12 col-md-4">
-                  <p class="mb-0">
-                    <label for="client-name" class="form-label">Your Full Name</label>
-                    <br class="d-none">
-                    <input id="client-name" name="client-name" type="text" required placeholder="Arlan Kudabay" autocomplete="off" maxlength="80" class="form-control">
-                  </p>
-                </div>
-                <div class="col-12 col-md-4">
-                  <p class="mb-0">
-                    <label for="client-email" class="form-label">Email Address</label>
-                    <br class="d-none">
-                    <input id="client-email" name="client-email" type="email" required placeholder="arlan@example.kz" autocomplete="off" class="form-control">
-                  </p>
-                </div>
-                <div class="col-12 col-md-4">
-                  <p class="mb-0">
-                    <label for="client-tel" class="form-label">Phone Number</label>
-                    <br class="d-none">
-                    <input id="client-tel" name="client-tel" type="tel" required placeholder="+7 701 000 00 00" autocomplete="off" maxlength="30" class="form-control">
-                  </p>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset class="form-section p-3 p-md-4 mb-4">
-              <legend class="float-none w-auto fs-4 fw-semibold mb-3">Inquiry Details</legend>
-              <div class="row g-3">
-                <div class="col-12 col-md-4">
-                  <p class="quantity-field mb-0">
-                    <label for="item-quantity" class="form-label">Number of Coffee Cups or Guests</label>
-                    <br class="d-none">
-                    <input id="item-quantity" name="item-quantity" type="number" min="1" max="50" step="1" required placeholder="1" class="form-control">
-                  </p>
-                </div>
-                <div class="col-12 col-md-4">
-                  <p class="mb-0">
-                    <label for="order-date" class="form-label">Requested Date</label>
-                    <br class="d-none">
-                    <input id="order-date" name="order-date" type="date" required class="form-control">
-                  </p>
-                </div>
-                <div class="col-12 col-md-4">
-                  <p class="topic-field mb-0">
-                    <label for="inquiry-type" class="form-label">Topic of Message</label>
-                    <br class="d-none">
-                    <select id="inquiry-type" name="inquiry-type" class="form-select">
-                      <option value="review">General Feedback</option>
-                      <option value="preorder">Group Coffee Pre-Order</option>
-                      <option value="complaint">Service Issue</option>
-                    </select>
-                  </p>
-                </div>
-                <div class="col-12">
-                  <fieldset class="border-0 p-0 m-0">
-                    <legend class="float-none w-auto fs-6 mb-2">Would you recommend Golden Coffee?</legend>
-                    <p class="form-check form-check-inline mb-2 me-4">
-                      <input id="rec-yes" name="recommend" type="radio" value="yes" required class="form-check-input">
-                      <label for="rec-yes" class="form-check-label">Yes, definitely</label>
-                    </p>
-                    <p class="form-check form-check-inline mb-2 me-4">
-                      <input id="rec-no" name="recommend" type="radio" value="no" class="form-check-input">
-                      <label for="rec-no" class="form-check-label">Not sure yet</label>
-                    </p>
-                  </fieldset>
-                </div>
-                <div class="col-12">
-                  <p class="message-field mb-0">
-                    <label for="client-comment" class="form-label">Your Message</label>
-                    <br class="d-none">
-                    <textarea id="client-comment" name="client-comment" rows="4" cols="30" maxlength="800" placeholder="Write your comments or drink preferences here..." class="form-control"></textarea>
-                  </p>
-                </div>
-                <div class="col-12">
-                  <p class="newsletter-option mb-0 form-check mb-2">
-                    <input id="newsletter" name="newsletter" type="checkbox" value="subscribed" class="form-check-input">
-                    <label for="newsletter" class="form-check-label">Send me seasonal menu updates by email</label>
-                  </p>
-                </div>
-              </div>
-            </fieldset>
-            <div class="d-flex flex-wrap gap-3 align-items-center mt-4">
-              <button type="submit" class="btn btn-secondary btn-lg" disabled aria-describedby="feedback-form-note">Submit Inquiry</button>
-              <button type="reset" class="btn btn-outline-primary btn-lg">Clear Form</button>
-            </div>
-          </form>
         </section>
       </main>
       <footer class="site-footer">
