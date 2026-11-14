@@ -70,8 +70,6 @@
           return;
         }
 
-        console.log(response);
-
         if (!signing) {
           // NCALayer announces its version before accepting a signing request.
           if (!response?.result?.version) {

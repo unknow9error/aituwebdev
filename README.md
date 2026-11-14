@@ -23,9 +23,18 @@ Each feature is written in one approach only, and the two approaches are kept in
 jQuery 3.7.1 is linked from a CDN before our scripts, so the site needs an internet connection for its scripts to work.
 The plain-JavaScript files share pure functions (no page work) from `main.js`, such as `formatPrice()` and the `menuItems` array, and the jQuery order window calls `getOpenStatus()` from `hours.js`; no feature changes the page with both approaches.
 
-[`new/js/old-js-version.js`](new/js/old-js-version.js) is the plain-JavaScript comparison file from the jQuery assignment. It is not linked from any page.
+## Final quality pass
 
-## Added since the last defense
+| Defect | Change |
+| --- | --- |
+| The header symbol `golden-coffee-mark.png` was a 1254 × 1254 px, 430 KB file shown at 44 px | Resized to 128 × 128 px (9 KB); it is still sharp on high-density screens and as the favicon |
+| The linked full logo was 2172 × 724 px, 360 KB | Resized to 900 × 300 px (76 KB) |
+| `js/old-js-version.js` was not linked from any page | Deleted, together with the comparison comments that pointed to it |
+| A debugging `console.log(response)` was left in `js/ncalayer.js` | Removed |
+
+Checked after the changes: all six pages pass the W3C validator, the console shows no errors, every image has an `alt`, every form field has a label, every control is reachable with Tab, and both forms submit with Enter.
+
+## Added at the endterm
 
 | Feature | New in the endterm |
 | --- | --- |

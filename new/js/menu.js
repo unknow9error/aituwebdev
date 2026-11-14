@@ -15,8 +15,6 @@ function filterItems(items, category, query, sort) {
     (text === '' || item.name.toLowerCase().includes(text) || item.description.toLowerCase().includes(text))).sort(sortOrders[sort]);
 }
 
-// REWRITE 2, menu catalogue. $('<div>', {...}) and .append() replaced createElement() with append(), .val() replaced .value,
-// and .empty().append(cards) replaced replaceChildren(). Only a little shorter: the logic is the same, it just reads more compactly.
 function createMenuCard(item) {
   const $article = $('<article>', { class: 'menu-entry' });
 
