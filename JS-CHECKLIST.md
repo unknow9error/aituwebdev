@@ -8,12 +8,12 @@ References name the function or the comment to search for, so they stay correct 
 | Requirement | Where |
 | --- | --- |
 | Real data in arrays and objects at the top of the file | `openingHours` in `js/hours.js`; `reviews` in `js/feedback.js`; `menuItems` in `js/main.js` (shared data) |
-| Page built from data with a loop | reviews: `for...of` in `renderReviews()` (`js/feedback.js`); group drinks: `forEach` over `groupDrinks()`; time slots: `for` loop in `timeSlots()` (`js/visit.js`) |
-| Own functions with parameters and a return value, called from more than one place | `getOpenStatus(date)`: home and visit status lines, visit validation, order confirmation; `validateContact()`: both forms; `estimateGroupOrder()`: live estimate and summary; `toMinutes()`, `hoursFor()`: `hours.js` and `visit.js` |
-| Conditions | open or closed in `getOpenStatus()`; topic rules in `validateInquiry()` (`switch`); guest limits in `validateVisit()` |
-| Calculated values | estimated total `drink.price * quantity`; review count and "would recommend" count in `reviewsSummary()`; time slots and last table from the hours |
-| Event object | `event.preventDefault()` in both submit handlers; `event.target` in the form listener in `setUpFieldErrors()` (`js/forms.js`) |
-| Delegated handler | one `input`/`change` listener on each form in `setUpFieldErrors()` also catches the time select and the drink select created in code |
+| Page built from data with a loop | reviews: `for...of` loop in `js/feedback.js`; catalogue cards: `.map()` over `menuItems` in `renderCatalogue()` (jQuery); time slots: `for` loop in `timeSlots()` (`js/visit.js`) |
+| Own functions with parameters and a return value, called from more than one place | `getOpenStatus(date)`: home and visit status lines, visit validation, order confirmation; `validateContact()`: visit form and account registration; `fillContactFields()`: on page load, after sign-in and after a reset; `toMinutes()`, `hoursFor()`: `hours.js` and `visit.js` |
+| Conditions | open or closed in `getOpenStatus()`; `switch` in `recommendLabel()`; guest limits in `validateVisit()` |
+| Calculated values | order totals in `cartTotals()` (`js/main.js`); review count and "would recommend" count in `reviewsSummary()`; time slots and last table from the hours |
+| Event object | `event.preventDefault()` in the visit and account submit handlers; `event.target` in the form listener in `setUpFieldErrors()` (`js/forms.js`) |
+| Delegated handler | one `input`/`change` listener on the visit form in `setUpFieldErrors()` also catches the time select created in code |
 
 ## jQuery
 
@@ -32,7 +32,7 @@ References name the function or the comment to search for, so they stay correct 
 
 | Requirement | Where |
 | --- | --- |
-| Prevent default, trim, check every field | submit handlers in `js/feedback.js` and `js/visit.js`; `.trim()` in `readValues()` and `readVisit()` |
+| Prevent default, trim, check every field | submit handler in `js/visit.js` and the register handler in `js/auth.js`; `.trim()` in `readVisit()` and `readRegistration()` |
 | E-mail and phone format | `EMAIL_PATTERN`, `PHONE_PATTERN` in `validateContact()` (`js/forms.js`) |
 | Error beside each field | `setUpFieldErrors()` creates one `invalid-feedback` element per field |
 | Error cleared once the field is fixed | the form listener in `setUpFieldErrors()` re-checks the field with `getErrors()` |

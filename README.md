@@ -14,7 +14,7 @@ Each feature is written in one approach only, and the two approaches are kept in
 | [`new/js/auth.js`](new/js/auth.js) | Plain JavaScript | every page | Visitor accounts: create an account, sign in, log out; fills in the forms for a signed-in visitor |
 | [`new/js/hours.js`](new/js/hours.js) | Plain JavaScript | every page | Opening hours data, "Open now / Closed now" status |
 | [`new/js/forms.js`](new/js/forms.js) | Plain JavaScript | every page | Shared form helpers: errors beside fields, contact checks, dates, summary box, filling in account details |
-| [`new/js/feedback.js`](new/js/feedback.js) | Plain JavaScript | `feedback.html` | Guest reviews and the inquiry form |
+| [`new/js/feedback.js`](new/js/feedback.js) | Plain JavaScript | `feedback.html` | Guest reviews, built from the `reviews` array |
 | [`new/js/visit.js`](new/js/visit.js) | Plain JavaScript | `visit.html` | Visit request form with time slots and live summary |
 | [`new/js/main.js`](new/js/main.js) | jQuery | every page | Menu data, the order (cart) window and "Add to order" buttons |
 | [`new/js/catalogue.js`](new/js/catalogue.js) | jQuery | `menu.html`, `drinks.html` | Catalogue built from `menuItems` with category filter, sorting and search |
@@ -22,7 +22,7 @@ Each feature is written in one approach only, and the two approaches are kept in
 | [`new/js/drinks.js`](new/js/drinks.js) | jQuery | `drinks.html` | Shows the drinks in the catalogue, with a Coffee / Tea filter |
 
 jQuery 3.7.1 is linked from a CDN before our scripts, so the site needs an internet connection for its scripts to work.
-The plain-JavaScript files share pure functions (no page work) from `main.js`, such as `formatPrice()` and the `menuItems` array, and the jQuery order window calls `getOpenStatus()` from `hours.js`; no feature changes the page with both approaches.
+The jQuery order window calls `getOpenStatus()` from `hours.js`; no feature changes the page with both approaches.
 
 ## Final quality pass
 
@@ -34,9 +34,10 @@ The plain-JavaScript files share pure functions (no page work) from `main.js`, s
 | A debugging `console.log(response)` was left in `js/ncalayer.js` | Removed; the whole electronic-signature (ECP) sign-in was later removed, see below |
 | The menu page also listed the drinks, so the same drinks appeared on two pages, while Americano and Cappuccino could not be ordered from the Drinks page | `menu.html` now shows only the dishes and `drinks.html` shows all five drinks from the same data, with a Coffee / Tea filter |
 | The drinks price table called the sea buckthorn tea "Berry Tea", while the cards and the order used "Sea Buckthorn Tea" | The table row was renamed to match |
+| The feedback page had a second form under the reviews (feedback or group pre-order inquiry) that duplicated what the visit form and the phone already offer, and its reviews were never sent anywhere | The form, its link at the top of the page and its code were removed; the page now shows the reviews, photos and contacts, and its title and description say so |
 | Sign-in only worked with one shared test account or with NCALayer (ECP) installed, and there was no way to register | Replaced with a clear account dialog: create an account (name, email, phone, password with confirmation, an error beside each field) or sign in; a signed-in visitor gets the feedback and visit forms filled in. The ECP script and its styles were removed |
 
-Checked after the changes: all five pages pass the W3C validator, the console shows no errors, every image has an `alt`, every form field has a label, every control is reachable with Tab, and both forms submit with Enter.
+Checked after the changes: all five pages pass the W3C validator, the console shows no errors, every image has an `alt`, every form field has a label, every control is reachable with Tab, and the visit form and the account dialog submit with Enter.
 
 ## Added at the endterm
 
@@ -44,7 +45,7 @@ Checked after the changes: all five pages pass the W3C validator, the console sh
 | --- | --- |
 | Opening hours (new) | Weekly hours kept in an array; the home and visit pages show whether the cafe is open now and when it closes or opens |
 | Visit form | Time slots are built from the hours of the chosen day and change when the date changes; a hint shows that day's hours and last table; an error explains the cafe's current status |
-| Inquiry form | A group pre-order now asks for a drink from the menu data and shows a live estimated total (cups × price); the total appears in the summary |
+| Inquiry form | A group pre-order asked for a drink and showed an estimated total (removed at the final together with the form) |
 | Form validation | Moved back to plain JavaScript in its own file; an error now disappears only when the field is really fixed, not on any keystroke |
 | Guest reviews | A count above the reviews: number of comments and how many would recommend the cafe |
 | Menu catalogue | Sorting by price (low to high, high to low); both selects use one delegated handler |
@@ -54,8 +55,6 @@ Checked after the changes: all five pages pass the W3C validator, the console sh
 
 - Opening hours 08:00–23:00 every day (from the Visit page and 2GIS); the last table is offered at 22:00.
 - Visit requests: 1–12 guests (larger groups are asked to call), a date within the next 30 days, and at least one hour's notice for a visit today.
-- Group pre-orders: at least 5 cups or guests, at least one day's notice and a chosen drink.
-- Reviews and complaints need a message of at least 20 characters (800 maximum).
 - An order holds up to 10 of each item. Prices match the price tables on the Menu and Drinks pages.
 
 Nothing is sent to a server. Every confirmation says it is a demonstration and that no order, booking or payment was created. The order contents and visitor accounts are kept in `localStorage`, only in the visitor's own browser; a password is stored only as a salted SHA-256 hash, and the account dialog warns not to reuse a password from another site.
